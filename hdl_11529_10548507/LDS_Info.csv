@@ -1,0 +1,27 @@
+Elements,Qualifier,Particulars
+Title,Title of resource,CSISA_IND_LDS_Whe_2018
+Creator ,Name of resource creator,Anurag Ajay
+Subject,AGROVOC subject term,Agriculture Extension
+Description,Abstract of work,"The objective of the Landscape Diagnostic Survey (LDS) for wheat is to bridge the existing data-gap around current production practices of wheat,  and also to help in evidence-based planning. The LDS is designed in a way that data is collected from randomly selected farmers spread uniformly within a KVK (government extension system) domain/district. Survey questionnaire captures all production practices applied by farmers from land preparation to harvesting, including detailed sections on fertilizer use, weed control and irrigation application. Data is captured through electronically enabled Open Data Kit (ODK) tool on mobile phone or tablet. "
+Variables & observations,, 226 variables; 7648 observations
+Data Anonymization,De-identify PII,"Name of the farmers, contact numbers and AADHAR number (National UID) removed; GPS coordinates of farmers' largest plot truncated"
+Contributor,CGIAR Center name,CIMMYT
+Contributor,non-CGIAR entity name,ICAR
+Contributor,Funding agency,BMGF
+Contributor,Project,CSISA
+Date,Creation date,19-Dec
+Type,Type of resource,Dataset
+Format,File format,.xlsx
+Questions and choices,File format,ODK programme file as .xlsx
+Data Summary,Readable format,R fiel
+Language,Language ,English
+Relation,File related to resource,See 'LDS_Guideline'
+Coverage,Country,India
+Coverage,State,Bihar and Uttar Pradesh
+Coverage,District,31 Districts in Bihar and 9 Districts of eastern Uttar Pradesh
+Coverage,Start date of survey,16/05/2018
+Coverage,End date of survey,08/02/2019
+Rights,Terms of use,CIMMYT policy
+Contact,Point of contact,a.ajay@cgiar.org
+Data Collectors,Persons involved in data generation,"Ajay Pundir, Anurag Kumar, Pankaj Kumar, Deepak Kumar Singh, Madhulika Singh, Prabhat Kumar, Moben Ignetius with respective KVK personnel"
+Data citation,"Persons involved in planning, designing, organizing and managing the data","Anurag Ajay, Peter Craufurd, Sachin Sharma, Harshit Ranjan, Gokul Poudel, Ram Kanwar Malik, Balwinder Singh, Ashok Kumar Singh, Arindam Samaddar, Ashok Rai, Alwin Keil and Andrew McDonald  2020, ""Landscape diagnostic survey data of wheat production practices and yield of 2018 in eastern India"""

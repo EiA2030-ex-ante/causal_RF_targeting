@@ -1,0 +1,779 @@
+{
+  "status": ["OK"],
+  "data": {
+    "id": [14919],
+    "identifier": ["10548507"],
+    "persistentUrl": ["https://hdl.handle.net/11529/10548507"],
+    "protocol": ["hdl"],
+    "authority": ["11529"],
+    "publisher": ["CIMMYT Research Data & Software Repository Network"],
+    "publicationDate": ["2020-08-24"],
+    "storageIdentifier": ["file://11529/10548507"],
+    "metadataLanguage": ["undefined"],
+    "latestVersion": {
+      "id": [2969],
+      "datasetId": [14919],
+      "datasetPersistentId": ["hdl:11529/10548507"],
+      "storageIdentifier": ["file://11529/10548507"],
+      "versionNumber": [1],
+      "versionMinorNumber": [0],
+      "versionState": ["RELEASED"],
+      "UNF": ["UNF:6:ACX3w1PnF4Otyf++Z6mO3g=="],
+      "lastUpdateTime": ["2020-08-24T18:12:00Z"],
+      "releaseTime": ["2020-08-24T18:12:00Z"],
+      "createTime": ["2020-08-22T19:43:21Z"],
+      "termsOfUse": ["This dataset is made available without information on how it can be used. You should communicate with the Contact(s) specified before use."],
+      "fileAccessRequest": [false],
+      "metadataBlocks": {
+        "citation": {
+          "displayName": ["Citation Metadata"],
+          "name": ["citation"],
+          "fields": [
+            {
+              "typeName": "title",
+              "multiple": false,
+              "typeClass": "primitive",
+              "value": ["Landscape diagnostic survey data of wheat production practices and yield of 2018 from eastern India"]
+            },
+            {
+              "typeName": "author",
+              "multiple": true,
+              "typeClass": "compound",
+              "value": [
+                {
+                  "authorName": {
+                    "typeName": "authorName",
+                    "multiple": false,
+                    "typeClass": "primitive",
+                    "value": "Ajay, Anurag"
+                  },
+                  "authorAffiliation": {
+                    "typeName": "authorAffiliation",
+                    "multiple": false,
+                    "typeClass": "primitive",
+                    "value": "CIMMYT"
+                  },
+                  "authorIdentifierScheme": {
+                    "typeName": "authorIdentifierScheme",
+                    "multiple": false,
+                    "typeClass": "controlledVocabulary",
+                    "value": "ORCID"
+                  },
+                  "authorIdentifier": {
+                    "typeName": "authorIdentifier",
+                    "multiple": false,
+                    "typeClass": "primitive",
+                    "value": "0000-0001-7502-6166"
+                  }
+                },
+                {
+                  "authorName": {
+                    "typeName": "authorName",
+                    "multiple": false,
+                    "typeClass": "primitive",
+                    "value": "Craufurd, Peter"
+                  },
+                  "authorAffiliation": {
+                    "typeName": "authorAffiliation",
+                    "multiple": false,
+                    "typeClass": "primitive",
+                    "value": "CIMMYT"
+                  },
+                  "authorIdentifierScheme": {
+                    "typeName": "authorIdentifierScheme",
+                    "multiple": false,
+                    "typeClass": "controlledVocabulary",
+                    "value": "ORCID"
+                  },
+                  "authorIdentifier": {
+                    "typeName": "authorIdentifier",
+                    "multiple": false,
+                    "typeClass": "primitive",
+                    "value": "0000-0001-8559-0174"
+                  }
+                },
+                {
+                  "authorName": {
+                    "typeName": "authorName",
+                    "multiple": false,
+                    "typeClass": "primitive",
+                    "value": "Sharma, Sachin"
+                  },
+                  "authorAffiliation": {
+                    "typeName": "authorAffiliation",
+                    "multiple": false,
+                    "typeClass": "primitive",
+                    "value": "CIMMYT"
+                  },
+                  "authorIdentifierScheme": {},
+                  "authorIdentifier": {}
+                },
+                {
+                  "authorName": {
+                    "typeName": "authorName",
+                    "multiple": false,
+                    "typeClass": "primitive",
+                    "value": "Ranjan, Harshit"
+                  },
+                  "authorAffiliation": {
+                    "typeName": "authorAffiliation",
+                    "multiple": false,
+                    "typeClass": "primitive",
+                    "value": "CIMMYT"
+                  },
+                  "authorIdentifierScheme": {},
+                  "authorIdentifier": {}
+                },
+                {
+                  "authorName": {
+                    "typeName": "authorName",
+                    "multiple": false,
+                    "typeClass": "primitive",
+                    "value": "Poudel, Gokul"
+                  },
+                  "authorAffiliation": {
+                    "typeName": "authorAffiliation",
+                    "multiple": false,
+                    "typeClass": "primitive",
+                    "value": "CIMMYT"
+                  },
+                  "authorIdentifierScheme": {
+                    "typeName": "authorIdentifierScheme",
+                    "multiple": false,
+                    "typeClass": "controlledVocabulary",
+                    "value": "ORCID"
+                  },
+                  "authorIdentifier": {
+                    "typeName": "authorIdentifier",
+                    "multiple": false,
+                    "typeClass": "primitive",
+                    "value": "000-0002-5277-6287"
+                  }
+                },
+                {
+                  "authorName": {
+                    "typeName": "authorName",
+                    "multiple": false,
+                    "typeClass": "primitive",
+                    "value": "Malik, RK"
+                  },
+                  "authorAffiliation": {
+                    "typeName": "authorAffiliation",
+                    "multiple": false,
+                    "typeClass": "primitive",
+                    "value": "CIMMYT"
+                  },
+                  "authorIdentifierScheme": {},
+                  "authorIdentifier": {}
+                },
+                {
+                  "authorName": {
+                    "typeName": "authorName",
+                    "multiple": false,
+                    "typeClass": "primitive",
+                    "value": "Singh, Balwinder"
+                  },
+                  "authorAffiliation": {
+                    "typeName": "authorAffiliation",
+                    "multiple": false,
+                    "typeClass": "primitive",
+                    "value": "CIMMYT"
+                  },
+                  "authorIdentifierScheme": {
+                    "typeName": "authorIdentifierScheme",
+                    "multiple": false,
+                    "typeClass": "controlledVocabulary",
+                    "value": "ORCID"
+                  },
+                  "authorIdentifier": {
+                    "typeName": "authorIdentifier",
+                    "multiple": false,
+                    "typeClass": "primitive",
+                    "value": "0000-0002-6715-2207"
+                  }
+                },
+                {
+                  "authorName": {
+                    "typeName": "authorName",
+                    "multiple": false,
+                    "typeClass": "primitive",
+                    "value": "Singh, AK"
+                  },
+                  "authorAffiliation": {
+                    "typeName": "authorAffiliation",
+                    "multiple": false,
+                    "typeClass": "primitive",
+                    "value": "ICAR"
+                  },
+                  "authorIdentifierScheme": {},
+                  "authorIdentifier": {}
+                },
+                {
+                  "authorName": {
+                    "typeName": "authorName",
+                    "multiple": false,
+                    "typeClass": "primitive",
+                    "value": "Samaddar, Arindam"
+                  },
+                  "authorAffiliation": {
+                    "typeName": "authorAffiliation",
+                    "multiple": false,
+                    "typeClass": "primitive",
+                    "value": "IRRI"
+                  },
+                  "authorIdentifierScheme": {},
+                  "authorIdentifier": {}
+                },
+                {
+                  "authorName": {
+                    "typeName": "authorName",
+                    "multiple": false,
+                    "typeClass": "primitive",
+                    "value": "Rai, Ashok"
+                  },
+                  "authorAffiliation": {
+                    "typeName": "authorAffiliation",
+                    "multiple": false,
+                    "typeClass": "primitive",
+                    "value": "DRC"
+                  },
+                  "authorIdentifierScheme": {
+                    "typeName": "authorIdentifierScheme",
+                    "multiple": false,
+                    "typeClass": "controlledVocabulary",
+                    "value": "ORCID"
+                  },
+                  "authorIdentifier": {
+                    "typeName": "authorIdentifier",
+                    "multiple": false,
+                    "typeClass": "primitive",
+                    "value": "0000-0002-7774-2323"
+                  }
+                },
+                {
+                  "authorName": {
+                    "typeName": "authorName",
+                    "multiple": false,
+                    "typeClass": "primitive",
+                    "value": "Keil, Alwin"
+                  },
+                  "authorAffiliation": {
+                    "typeName": "authorAffiliation",
+                    "multiple": false,
+                    "typeClass": "primitive",
+                    "value": "Unique forestry and land use"
+                  },
+                  "authorIdentifierScheme": {},
+                  "authorIdentifier": {}
+                },
+                {
+                  "authorName": {
+                    "typeName": "authorName",
+                    "multiple": false,
+                    "typeClass": "primitive",
+                    "value": "McDonald, Andrew"
+                  },
+                  "authorAffiliation": {
+                    "typeName": "authorAffiliation",
+                    "multiple": false,
+                    "typeClass": "primitive",
+                    "value": "Cornell University"
+                  },
+                  "authorIdentifierScheme": {
+                    "typeName": "authorIdentifierScheme",
+                    "multiple": false,
+                    "typeClass": "controlledVocabulary",
+                    "value": "ORCID"
+                  },
+                  "authorIdentifier": {
+                    "typeName": "authorIdentifier",
+                    "multiple": false,
+                    "typeClass": "primitive",
+                    "value": "0000-0002-2660-3470"
+                  }
+                }
+              ]
+            },
+            {
+              "typeName": "datasetContact",
+              "multiple": true,
+              "typeClass": "compound",
+              "value": [
+                {
+                  "datasetContactName": {
+                    "typeName": "datasetContactName",
+                    "multiple": false,
+                    "typeClass": "primitive",
+                    "value": "Ajay, Anurag"
+                  },
+                  "datasetContactAffiliation": {
+                    "typeName": "datasetContactAffiliation",
+                    "multiple": false,
+                    "typeClass": "primitive",
+                    "value": "CIMMYT"
+                  },
+                  "datasetContactEmail": {
+                    "typeName": "datasetContactEmail",
+                    "multiple": false,
+                    "typeClass": "primitive",
+                    "value": "a.ajay@cgiar.org"
+                  }
+                }
+              ]
+            },
+            {
+              "typeName": "dsDescription",
+              "multiple": true,
+              "typeClass": "compound",
+              "value": [
+                {
+                  "dsDescriptionValue": {
+                    "typeName": "dsDescriptionValue",
+                    "multiple": false,
+                    "typeClass": "primitive",
+                    "value": "The objective of the Landscape Diagnostic Survey (LDS) for wheat is to bridge the existing data-gap around current production practices of wheat,  and also to help in evidence-based planning. The LDS is designed in a way that data is collected from randomly selected farmers spread uniformly within a KVK (government extension system) domain/district. Data has been collected from farmers largest wheat plot for winter season of 2018. Survey questionnaire captures all production practices applied by farmers from land preparation to harvesting, including detailed sections on fertilizer use, weed control and irrigation application. Data is captured through electronically enabled Open Data Kit (ODK) tool on mobile phone or tablet."
+                  },
+                  "dsDescriptionDate": {
+                    "typeName": "dsDescriptionDate",
+                    "multiple": false,
+                    "typeClass": "primitive",
+                    "value": "2019-12-31"
+                  }
+                }
+              ]
+            },
+            {
+              "typeName": "subject",
+              "multiple": true,
+              "typeClass": "controlledVocabulary",
+              "value": ["Agricultural Sciences"]
+            },
+            {
+              "typeName": "keyword",
+              "multiple": true,
+              "typeClass": "compound",
+              "value": [
+                {
+                  "keywordValue": {
+                    "typeName": "keywordValue",
+                    "multiple": false,
+                    "typeClass": "primitive",
+                    "value": "Wheat"
+                  },
+                  "keywordVocabulary": {
+                    "typeName": "keywordVocabulary",
+                    "multiple": false,
+                    "typeClass": "primitive",
+                    "value": "AGROVOC"
+                  },
+                  "keywordVocabularyURI": {
+                    "typeName": "keywordVocabularyURI",
+                    "multiple": false,
+                    "typeClass": "primitive",
+                    "value": "http://aims.fao.org/aos/agrovoc/c_8373"
+                  }
+                },
+                {
+                  "keywordValue": {
+                    "typeName": "keywordValue",
+                    "multiple": false,
+                    "typeClass": "primitive",
+                    "value": "Yields"
+                  },
+                  "keywordVocabulary": {
+                    "typeName": "keywordVocabulary",
+                    "multiple": false,
+                    "typeClass": "primitive",
+                    "value": "AGROVOC"
+                  },
+                  "keywordVocabularyURI": {
+                    "typeName": "keywordVocabularyURI",
+                    "multiple": false,
+                    "typeClass": "primitive",
+                    "value": "http://aims.fao.org/aos/agrovoc/c_8488"
+                  }
+                },
+                {
+                  "keywordValue": {
+                    "typeName": "keywordValue",
+                    "multiple": false,
+                    "typeClass": "primitive",
+                    "value": "Agronomy"
+                  },
+                  "keywordVocabulary": {
+                    "typeName": "keywordVocabulary",
+                    "multiple": false,
+                    "typeClass": "primitive",
+                    "value": "AGROVOC"
+                  },
+                  "keywordVocabularyURI": {
+                    "typeName": "keywordVocabularyURI",
+                    "multiple": false,
+                    "typeClass": "primitive",
+                    "value": "http://aims.fao.org/aos/agrovoc/c_211"
+                  }
+                },
+                {
+                  "keywordValue": {
+                    "typeName": "keywordValue",
+                    "multiple": false,
+                    "typeClass": "primitive",
+                    "value": "Household Surveys"
+                  },
+                  "keywordVocabulary": {
+                    "typeName": "keywordVocabulary",
+                    "multiple": false,
+                    "typeClass": "primitive",
+                    "value": "AGROVOC"
+                  },
+                  "keywordVocabularyURI": {
+                    "typeName": "keywordVocabularyURI",
+                    "multiple": false,
+                    "typeClass": "primitive",
+                    "value": "http://aims.fao.org/aos/agrovoc/c_53e2fc30"
+                  }
+                },
+                {
+                  "keywordValue": {
+                    "typeName": "keywordValue",
+                    "multiple": false,
+                    "typeClass": "primitive",
+                    "value": "Bihar"
+                  },
+                  "keywordVocabulary": {
+                    "typeName": "keywordVocabulary",
+                    "multiple": false,
+                    "typeClass": "primitive",
+                    "value": "AGROVOC"
+                  },
+                  "keywordVocabularyURI": {
+                    "typeName": "keywordVocabularyURI",
+                    "multiple": false,
+                    "typeClass": "primitive",
+                    "value": "http://aims.fao.org/aos/agrovoc/c_901"
+                  }
+                },
+                {
+                  "keywordValue": {
+                    "typeName": "keywordValue",
+                    "multiple": false,
+                    "typeClass": "primitive",
+                    "value": "Uttar Pradesh"
+                  },
+                  "keywordVocabulary": {
+                    "typeName": "keywordVocabulary",
+                    "multiple": false,
+                    "typeClass": "primitive",
+                    "value": "AGROVOC"
+                  },
+                  "keywordVocabularyURI": {
+                    "typeName": "keywordVocabularyURI",
+                    "multiple": false,
+                    "typeClass": "primitive",
+                    "value": "http://aims.fao.org/aos/agrovoc/c_8128"
+                  }
+                }
+              ]
+            },
+            {
+              "typeName": "notesText",
+              "multiple": false,
+              "typeClass": "primitive",
+              "value": ["The csv file named 'CSISA_IND_LDS_Whe_2018_Data' is the final cleaned version of the survey data. It has been anonymized by removing name of farmers, their phone numbers and AADHAR numbers (National UID). The GPS coordinates of the farmers' wheat plot are truncated to two decimal points."]
+            },
+            {
+              "typeName": "language",
+              "multiple": true,
+              "typeClass": "controlledVocabulary",
+              "value": ["English"]
+            },
+            {
+              "typeName": "depositor",
+              "multiple": false,
+              "typeClass": "primitive",
+              "value": ["Ajay, Anurag"]
+            },
+            {
+              "typeName": "dateOfDeposit",
+              "multiple": false,
+              "typeClass": "primitive",
+              "value": ["2020-08-22"]
+            }
+          ]
+        },
+        "geospatial": {
+          "displayName": ["Geospatial Metadata"],
+          "name": ["geospatial"],
+          "fields": []
+        }
+      },
+      "files": [
+        {
+          "description": "Cleaned survey data anonymized file",
+          "label": "CSISA_IND_LDS_Whe_2018_Data.tab",
+          "restricted": false,
+          "version": 3,
+          "datasetVersionId": 2969,
+          "dataFile": {
+            "id": 14929,
+            "persistentId": "hdl:11529/10548507/8",
+            "pidURL": "https://hdl.handle.net/11529/10548507/8",
+            "filename": "CSISA_IND_LDS_Whe_2018_Data.tab",
+            "contentType": "text/tab-separated-values",
+            "filesize": 14525833,
+            "description": "Cleaned survey data anonymized file",
+            "storageIdentifier": "s3://datarepository:174219f4338-f0870b5044e1",
+            "originalFileFormat": "text/csv",
+            "originalFormatLabel": "Comma Separated Values",
+            "originalFileSize": 14754456,
+            "originalFileName": "CSISA_IND_LDS_Whe_2018_Data.csv",
+            "UNF": "UNF:6:yZNo6PKuFZkLIvQtPh7/0g==",
+            "rootDataFileId": -1,
+            "md5": "ff71e70f865ae3fb35e2c0a002b38131",
+            "checksum": {
+              "type": "MD5",
+              "value": "ff71e70f865ae3fb35e2c0a002b38131"
+            },
+            "creationDate": "2020-08-24"
+          }
+        },
+        {
+          "description": "Location map of districts covered",
+          "label": "Districts_Covered.png",
+          "restricted": false,
+          "version": 1,
+          "datasetVersionId": 2969,
+          "dataFile": {
+            "id": 14928,
+            "persistentId": "hdl:11529/10548507/7",
+            "pidURL": "https://hdl.handle.net/11529/10548507/7",
+            "filename": "Districts_Covered.png",
+            "contentType": "image/png",
+            "filesize": 1320502,
+            "description": "Location map of districts covered",
+            "storageIdentifier": "s3://datarepository:17417ab4525-6d71976deeaa",
+            "rootDataFileId": -1,
+            "md5": "5b70f724fbe8f2db2b4cd612ecde763f",
+            "checksum": {
+              "type": "MD5",
+              "value": "5b70f724fbe8f2db2b4cd612ecde763f"
+            },
+            "creationDate": "2020-08-22"
+          }
+        },
+        {
+          "description": "Another version of questionnaire with coded options",
+          "label": "LDS_Codebook.pdf",
+          "restricted": false,
+          "version": 1,
+          "datasetVersionId": 2969,
+          "dataFile": {
+            "id": 14925,
+            "persistentId": "hdl:11529/10548507/5",
+            "pidURL": "https://hdl.handle.net/11529/10548507/5",
+            "filename": "LDS_Codebook.pdf",
+            "contentType": "application/pdf",
+            "filesize": 247160,
+            "description": "Another version of questionnaire with coded options",
+            "storageIdentifier": "s3://datarepository:17417a91a6d-c88d79796fdc",
+            "rootDataFileId": -1,
+            "md5": "0755cb661b3cd0729434e862a58e992f",
+            "checksum": {
+              "type": "MD5",
+              "value": "0755cb661b3cd0729434e862a58e992f"
+            },
+            "creationDate": "2020-08-22"
+          }
+        },
+        {
+          "description": "Covers survey design and tools",
+          "label": "LDS_Guideline.pdf",
+          "restricted": false,
+          "version": 1,
+          "datasetVersionId": 2969,
+          "dataFile": {
+            "id": 14924,
+            "persistentId": "hdl:11529/10548507/4",
+            "pidURL": "https://hdl.handle.net/11529/10548507/4",
+            "filename": "LDS_Guideline.pdf",
+            "contentType": "application/pdf",
+            "filesize": 963337,
+            "description": "Covers survey design and tools",
+            "storageIdentifier": "s3://datarepository:174179fca96-820e0f1cd10b",
+            "rootDataFileId": -1,
+            "md5": "51909fc22f853301ed6dc4e6bfc92a58",
+            "checksum": {
+              "type": "MD5",
+              "value": "51909fc22f853301ed6dc4e6bfc92a58"
+            },
+            "creationDate": "2020-08-22"
+          }
+        },
+        {
+          "description": "Basic information about the data - purpose, collection time, collaborators, collectors, etc.",
+          "label": "LDS_Info.tab",
+          "restricted": false,
+          "version": 3,
+          "datasetVersionId": 2969,
+          "dataFile": {
+            "id": 14923,
+            "persistentId": "hdl:11529/10548507/3",
+            "pidURL": "https://hdl.handle.net/11529/10548507/3",
+            "filename": "LDS_Info.tab",
+            "contentType": "text/tab-separated-values",
+            "filesize": 2474,
+            "description": "Basic information about the data - purpose, collection time, collaborators, collectors, etc.",
+            "storageIdentifier": "s3://datarepository:174179cf29e-6603a14b3f53",
+            "originalFileFormat": "text/csv",
+            "originalFormatLabel": "Comma Separated Values",
+            "originalFileSize": 2386,
+            "originalFileName": "LDS_Info.csv",
+            "UNF": "UNF:6:zIsvUIdL/V+S5JRpZF1eXg==",
+            "rootDataFileId": -1,
+            "md5": "2ab6fca2b6e1baf2f23ea8953e837947",
+            "checksum": {
+              "type": "MD5",
+              "value": "2ab6fca2b6e1baf2f23ea8953e837947"
+            },
+            "creationDate": "2020-08-22"
+          }
+        },
+        {
+          "description": "Details of variables captured in the survey",
+          "label": "LDS_Variables_Details.tab",
+          "restricted": false,
+          "version": 3,
+          "datasetVersionId": 2969,
+          "dataFile": {
+            "id": 14921,
+            "persistentId": "hdl:11529/10548507/1",
+            "pidURL": "https://hdl.handle.net/11529/10548507/1",
+            "filename": "LDS_Variables_Details.tab",
+            "contentType": "text/tab-separated-values",
+            "filesize": 22782,
+            "description": "Details of variables captured in the survey",
+            "storageIdentifier": "s3://datarepository:17417aa7d49-4ec0130fc3cb",
+            "originalFileFormat": "text/csv",
+            "originalFormatLabel": "Comma Separated Values",
+            "originalFileSize": 21310,
+            "originalFileName": "LDS_Variables_Details.csv",
+            "UNF": "UNF:6:XBAyo74FzVmDf7H3ZVg8UQ==",
+            "rootDataFileId": -1,
+            "md5": "7f20fa2986da29868126145c5065538a",
+            "checksum": {
+              "type": "MD5",
+              "value": "7f20fa2986da29868126145c5065538a"
+            },
+            "creationDate": "2020-08-22"
+          }
+        },
+        {
+          "description": "R linked markdown file showing basic summary statistics of the survey data",
+          "label": "LDS_Whe_2018_R_Markdown.html",
+          "restricted": false,
+          "version": 1,
+          "datasetVersionId": 2969,
+          "dataFile": {
+            "id": 14931,
+            "persistentId": "hdl:11529/10548507/10",
+            "pidURL": "https://hdl.handle.net/11529/10548507/10",
+            "filename": "LDS_Whe_2018_R_Markdown.html",
+            "contentType": "text/html",
+            "filesize": 1212660,
+            "description": "R linked markdown file showing basic summary statistics of the survey data",
+            "storageIdentifier": "s3://datarepository:17421a4e3c7-a882ab6ece50",
+            "rootDataFileId": -1,
+            "md5": "dda5cecd3df19a804a9dea1ee68752c3",
+            "checksum": {
+              "type": "MD5",
+              "value": "dda5cecd3df19a804a9dea1ee68752c3"
+            },
+            "creationDate": "2020-08-24"
+          }
+        },
+        {
+          "description": "Script to read the data file in R Studio",
+          "label": "LDS_Wheat_2018_Script.R",
+          "restricted": false,
+          "version": 1,
+          "datasetVersionId": 2969,
+          "dataFile": {
+            "id": 14930,
+            "persistentId": "hdl:11529/10548507/9",
+            "pidURL": "https://hdl.handle.net/11529/10548507/9",
+            "filename": "LDS_Wheat_2018_Script.R",
+            "contentType": "type/x-r-syntax",
+            "filesize": 40042,
+            "description": "Script to read the data file in R Studio",
+            "storageIdentifier": "s3://datarepository:17421a4e5cd-d6874d8f84fa",
+            "rootDataFileId": -1,
+            "md5": "d3ac79c4ab8d69041b6ebb61b26e05ec",
+            "checksum": {
+              "type": "MD5",
+              "value": "d3ac79c4ab8d69041b6ebb61b26e05ec"
+            },
+            "creationDate": "2020-08-24"
+          }
+        },
+        {
+          "description": "ODK program file of options for all survey questions",
+          "label": "ODK_Prog_Choices_Sheet.tab",
+          "restricted": false,
+          "version": 3,
+          "datasetVersionId": 2969,
+          "dataFile": {
+            "id": 14922,
+            "persistentId": "hdl:11529/10548507/2",
+            "pidURL": "https://hdl.handle.net/11529/10548507/2",
+            "filename": "ODK_Prog_Choices_Sheet.tab",
+            "contentType": "text/tab-separated-values",
+            "filesize": 33182,
+            "description": "ODK program file of options for all survey questions",
+            "storageIdentifier": "s3://datarepository:17417a1eb7b-460eac8a2966",
+            "originalFileFormat": "text/csv",
+            "originalFormatLabel": "Comma Separated Values",
+            "originalFileSize": 26867,
+            "originalFileName": "ODK_Prog_Choices_Sheet.csv",
+            "UNF": "UNF:6:TtkoK9faNxnOfjOjTtnoAQ==",
+            "rootDataFileId": -1,
+            "md5": "8d66f26dd119bd4d8104bdb6b4204ba6",
+            "checksum": {
+              "type": "MD5",
+              "value": "8d66f26dd119bd4d8104bdb6b4204ba6"
+            },
+            "creationDate": "2020-08-22"
+          }
+        },
+        {
+          "description": "ODK program file of questions",
+          "label": "ODK_Prog_Survey_Sheet.tab",
+          "restricted": false,
+          "version": 3,
+          "datasetVersionId": 2969,
+          "dataFile": {
+            "id": 14927,
+            "persistentId": "hdl:11529/10548507/6",
+            "pidURL": "https://hdl.handle.net/11529/10548507/6",
+            "filename": "ODK_Prog_Survey_Sheet.tab",
+            "contentType": "text/tab-separated-values",
+            "filesize": 74270,
+            "description": "ODK program file of questions",
+            "storageIdentifier": "s3://datarepository:17417a0c911-1bcb165414df",
+            "originalFileFormat": "text/csv",
+            "originalFormatLabel": "Comma Separated Values",
+            "originalFileSize": 67357,
+            "originalFileName": "ODK_Prog_Survey_Sheet.csv",
+            "UNF": "UNF:6:kyIt+QAt3NTnuDvorM41sQ==",
+            "rootDataFileId": -1,
+            "md5": "1035a09030ec1e3367ce406f4d378022",
+            "checksum": {
+              "type": "MD5",
+              "value": "1035a09030ec1e3367ce406f4d378022"
+            },
+            "creationDate": "2020-08-22"
+          }
+        }
+      ]
+    }
+  }
+}

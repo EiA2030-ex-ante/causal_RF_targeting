@@ -1,0 +1,227 @@
+Variable,Description,Type ,Unit,Mean,Median,Minimum,Maximum,STDEV,Missing_Values
+A:q101_country,Select country,Text,,,,,,,0
+A:q102_state,Select state,Text,,,,,,,0
+A:q103_district,Select district,Text,,,,,,,0
+A:q104_subDistrict,Select block/mandal/upzilla,Text,,,,,,,0
+A:q105_village,Enter village,Text,,,,,,,0
+A:q110_fName,Farmer's name,Text,,,,,,,0
+A:q111_fGender,Gender of farmer,Text,,,,,,,0
+A:q112_fEdu,Education level of farmer,Text,,,,,,,0
+A:q113_aadharNum,Aadhar number of farmer,Text,,,,,,,0
+A:q114_socialCategory,Social category of farmer,Text,,,,,,,0
+A:q115_mobile,Mobile number of farmer,Text,,,,,,,0
+A:q116_crop,Select the crop for the survey,Text,,,,,,,0
+A:q117_season,Select the season of the crop,Text,,,,,,,0
+A:q118_harvYear,Select the year in which crop was harvested,Text,,,,,,,0
+cropCutDone,"Was crop cut done in farmer's plot for this crop (if yes, floowing responses)",Text,,,,,,,0
+B:district,Select district,Text,,,,,,,464
+B:block,Select block/subdistrict,Text,,,,,,,464
+B:village,Enter village name,Text,,,,,,,464
+B:farmerName,Name of farmer,Text,,,,,,,464
+B:mobile,Mobile number of farmer,Text,,,,,,,464
+B:q201_q1tagb,Total above ground biomass (kg) from 1st quadrant (2 X 2 sq m),Numeral,Kilogram (kg) per 4m2,3.65,3.56, 1.23 ,6.02,0.93,464
+B:q202_q1gWeight,Grain weight (kg) from 1st quadrant,Numeral,Kilogram (kg) per 4m2,1.36,1.32,0.32,2.54,0.38,464
+B:q203_q1gMoist,Grain moisture content from 1st quadrant,Numeral,Percent,13.6,14.0,10.0,14.0,1.4,464
+B:q204_q2tagb,Total above ground biomass (kg) from 2nd quadrant (2 X 2 sq m),Numeral,Kilogram (kg) per 4m2,3.66,3.62,0.56,6.85,0.97,464
+B:q205_q2gWeight,Grain weight (kg) from 2nd quadrant,Numeral,Kilogram (kg) per 4m2,1.36,1.33,0.00,2.70,0.39,464
+B:q206_q2gMoist,Grain moisture content from 2nd quadrant,Numeral,Percent,13.3,14.0,10.0,14.0,1.4,464
+B:q207_q3tagb,Total above ground biomass (kg) from 3rd quadrant (2 X 2 sq m),Numeral,Kilogram (kg) per 4m2,0.00,0.00,0.00,0.00,0.00,765
+B:q208_q3gWeight,Grain weight (kg) from 3rd quadrant,Numeral,Kilogram (kg) per 4m2,0.00,0.00,0.00,0.00,0.00,765
+B:q209_q3gMoist,Grain moisture content from 3rd quadrant,Numeral,Percent,0.0,0.0,0.0,0.0,0.0,765
+C:q301_LLU,Select the local land unit used by farmer referring to the largest plot,Text,,,,,,,0
+C:q302_acreConv,One LLU equals how many Acre,Numeral,Number,,,,,,0
+C:q303_cultLand,Total area of operational land during the survey season in LLU,Numeral,Number,,,,,,0
+C:q304_cropCultLand,Total area of selected crop cultivated in this season in LLU,Numeral,Number,,,,,,0
+C:q305_cropLargestArea,Largest plot area of selected crop in this season in LLU,Numeral,Number,,,,,,0
+C:q306_cropLarestAreaAcre,Largest plot area of selected crop in this season in Acre,Numeral,Acre,0.62,0.45,0.03,20.00,0.67,0
+C:q307_largestPlotType,Is the largest plot for selected crop leased or owned,Text,,,,,,,0
+D:q401_soilTexture,Soil texture of largest plot,Text,,,,,,,0
+D:q402_drainClass,Drainage class of largest plot,Text,,,,,,,0
+D:q403_soilPerception,Farmer's perception of soil quality of the largest plot,Text,,,,,,,0
+D:q404_prevCrop,Previous major crop cultivated just before selected crop,Text,,,,,,,0
+D:q405_prevCropTillage,What was the tillage type for previous crop ,Text,,,,,,,0
+D:q406_prevCropHarvest,Enter date of previous crop harvest,Numeral,MM.DD.YYYY,,,,,,0
+D:q407_cropResiduePcnt,What percentage of residue was retained from previous crop,Numeral,Percent,6.24,5.00,0.00,100.00,7.63,0
+D:q408_residueBurnt,Were previous crop residue burnt,Text,,,,,,,0
+D:q409_varType,What is the variety type of selected survey crop,Text,,,,,,,0
+D-q410_varName,Variety name of selected crop,Text,,,,,,,0
+D:q411_LandPrep,Land preparation method in the largest selected plot,Text,,,,,,,0
+D:q412_RotUseYear,"If tillage by rotavator, number of years of continuous use",Text,,,,,,,0
+D-q413_CropEst,Crop establishment method in largest plot,Text,,,,,,,0
+D:q415_seedingSowingTransDate,Date of sowing in the largest plot for selected crop,Numeral,MM.DD.YYYY,,,,,,0
+D-q416_whSDelayReason,"If planting was delayed past November 30 in this season, Why",Text,,,,,,,0
+D:q417_whComDelayReason,"If wheat planting is commonly delayed past November 30th, Why",Text,,,,,,,0
+D:q420_cropSeedAmt,Seed amount used for the largest plot in Kg,Numeral,Kilogram (Kg) per plot,,,,,,0
+D:q421_seedSource,What is the source of seed for selected crop in the largest plot,Text,,,,,,,0
+E:q5105_statSHC,Soil health card status of the largest plot,Text,,,,,,,0
+E:q5101_FYM,Was organic compost (FYM) applied in the largest plot,Text,,,,,,,0
+E:q5102_typeFYM,"If yes, type of FYM applied in the largest plot",Text,,,,,,,0
+E:q5103_amtFYM,"If yes, total compost applied in the largest plot in Kg",Numeral,Kilogram (Kg) per plot,,,,,,0
+E:q5104_applyMineralFert,Did you apply mineral fertilizer in the largest plot,Text,,,,,,,0
+F:basalFerts,Select the fertilizers applied at planting in the largest plot,Text,,,,,,,0
+F:q5202_basalDAP,DAP at planting in the largest plot in Kg,Numeral,Kilogram (Kg) per plot,,,,,,0
+F:q5203_basalNPK,NPK at planting in the largest plot in Kg,Numeral,Kilogram (Kg) per plot,,,,,,0
+F:q5204_basalUrea,Urea at planting in the largest plot in Kg,Numeral,Kilogram (Kg) per plot,,,,,,0
+F:q5205_basalNPKS,NPKS at planting in the largest plot in Kg,Numeral,Kilogram (Kg) per plot,,,,,,0
+F:q5206_basalMoP,MoP at planting in the largest plot in Kg,Numeral,Kilogram (Kg) per plot,,,,,,0
+F:q5207_basalSSP,SSP at planting in the largest plot in Kg,Numeral,Kilogram (Kg) per plot,,,,,,0
+F:q5208_basalTSP,TSP at planting in the largest plot in Kg,Numeral,Kilogram (Kg) per plot,,,,,,0
+F:q5209_basalZnSO4,ZnSO4 at planting in the largest plot in Kg,Numeral,Kilogram (Kg) per plot,,,,,,0
+F:q5210_basalGypsum,Gypsum at planting in the largest plot in Kg,Numeral,Kilogram (Kg) per plot,,,,,,0
+F:q5211_basalBoron,Boron at planting in the largest plot in Kg,Numeral,Kilogram (Kg) per plot,,,,,,0
+F:q52111_otherBasalFert,Enter other fertilizer applied at planting,Text,,,,,,,0
+F:q52112_otherBasalFertAmt,Other fertilizer at planting in the largest plot in Kg,Numeral,Kilogram (Kg) per plot,,,,,,0
+F:firstTopDressFert,Select the fertilizers applied for first top dressing in the largest plot,Text,,,,,,,0
+F:q5212_1tdDAP,Enter DAP amount applied at first top dressing,Numeral,Kilogram (Kg) per plot,,,,,,0
+F:q5213_1appDaysDAP,Days of application of first top dressing DAP after sowing,Numeral,Days after Sowing,,,,,,0
+F:q5214_1tdNPK,Enter NPK amount applied at first top dressing,Numeral,Kilogram (Kg) per plot,,,,,,0
+F:q5215_1appDaysNPK,Days of application of first top dressing NPK after sowing,Numeral,Days after Sowing,,,,,,0
+F:q5216_1tdUrea,Enter Urea amount applied at first top dressing,Numeral,Kilogram (Kg) per plot,,,,,,0
+F:q5217_1appDaysUrea,Days of application of first top dressing Urea after sowing,Numeral,Days after Sowing,,,,,,0
+F:q5218_1tdNPKS,Enter NPKS amount applied at first top dressing,Numeral,Kilogram (Kg) per plot,,,,,,0
+F:q5219_1appDaysNPKS,Days of application of first top dressing NPKS after sowing,Numeral,Days after Sowing,,,,,,0
+F:q5220_1tdMoP,Enter MoP amount applied at first top dressing,Numeral,Kilogram (Kg) per plot,,,,,,0
+F:q5221_1appDaysMoP,Days of application of first top dressing MoP after sowing,Numeral,Days after Sowing,,,,,,0
+F:q5223_1tdSSP,Enter SSP amount applied at first top dressing,Numeral,Kilogram (Kg) per plot,,,,,,0
+F:q5224_1appDaysSSP,Days of application of first top dressing SSP after sowing,Numeral,Days after Sowing,,,,,,0
+F:q5225_1tdTSP,Enter TSP amount applied at first top dressing,Numeral,Kilogram (Kg) per plot,,,,,,0
+F:q5226_1appDaysTSP,Days of application of first top dressing TSP after sowing,Numeral,Days after Sowing,,,,,,0
+F:q5227_1tdZnSO4,Enter ZNSO4 amount applied at first top dressing,Numeral,Kilogram (Kg) per plot,,,,,,0
+F:q5228_1appDaysZnSO4,Days of application of first top dressing ZNSO4 after sowing,Numeral,Days after Sowing,,,,,,0
+F:q5229_1tdGypsum,Enter Gypsum amount applied at first top dressing,Numeral,Kilogram (Kg) per plot,,,,,,0
+F:q5230_1appDaysGypsum,Days of application of first top dressing Gypsum after sowing,Numeral,Days after Sowing,,,,,,0
+F:q5231_1tdBoron,Enter Boron amount applied at first top dressing,Numeral,Kilogram (Kg) per plot,,,,,,0
+F:q5232_1appDaysBoron,Days of application of first top dressing Boron after sowing,Numeral,Days after Sowing,,,,,,0
+F:q52321_1tdOtherFert,Enter other fertilizer applied for first top dressing in the largest plot,Numeral,Kilogram (Kg) per plot,,,,,,0
+F:q52322_1tdOtherFertAmt,Enter other fertilizer amount applied at first top dressing,Text,,,,,,,0
+F:q52323_1appDaysOtherFert,Days of application of first top dressing other fertilizer after sowing,Numeral,Number,,,,,,0
+F:secondTopDressFert,Select the fertilizers applied for second top dressing in the largest plot,Text,,,,,,,0
+F:q5233_2tdDAP,Enter DAP amount applied at second top dressing,Numeral,Kilogram (Kg) per plot,,,,,,0
+F:q5234_2appDaysDAP,Days of application of second top dressing DAP after sowing,Numeral,Days after Sowing,,,,,,0
+F:q5235_2tdNPK,Enter NPK amount applied at second top dressing,Numeral,Kilogram (Kg) per plot,,,,,,0
+F:q5236_2appDaysNPK,Days of application of second top dressing NPK after sowing,Numeral,Days after Sowing,,,,,,0
+F:q5237_2tdUrea,Enter Urea amount applied at second top dressing,Numeral,Kilogram (Kg) per plot,,,,,,0
+F:q5238_2appDaysUrea,Days of application of second top dressing Urea after sowing,Numeral,Days after Sowing,,,,,,0
+F:q5239_2tdNPKS,Enter NPKS amount applied at second top dressing,Numeral,Kilogram (Kg) per plot,,,,,,0
+F:q5240_2appDaysNPKS,Days of application of second top dressing NPKS after sowing,Numeral,Days after Sowing,,,,,,0
+F:q5241_2tdMoP,Enter MoP amount applied at second top dressing,Numeral,Kilogram (Kg) per plot,,,,,,0
+F:q5242_2appDaysMoP,Days of application of second top dressing MoP after sowing,Numeral,Days after Sowing,,,,,,0
+F:q5243_2tdSSP,Enter SSP amount applied at second top dressing,Numeral,Kilogram (Kg) per plot,,,,,,0
+F:q5244_2appDaysSSP,Days of application of second top dressing SSP after sowing,Numeral,Days after Sowing,,,,,,0
+F:q5245_2tdTSP,Enter TSP amount applied at second top dressing,Numeral,Kilogram (Kg) per plot,,,,,,0
+F:q5246_2appDaysTSP,Days of application of second top dressing TSP after sowing,Numeral,Days after Sowing,,,,,,0
+F:q5247_2tdZnSO4,Enter ZNSO4 amount applied at second top dressing,Numeral,Kilogram (Kg) per plot,,,,,,0
+F:q5248_2appDaysZnSO4,Days of application of second top dressing ZNSO4 after sowing,Numeral,Days after Sowing,,,,,,0
+F:q5249_2tdGypsum,Enter Gypsum amount applied at second top dressing,Numeral,Kilogram (Kg) per plot,,,,,,0
+F:q5250_2appDaysGypsum,Days of application of second top dressing Gypsum after sowing,Numeral,Days after Sowing,,,,,,0
+F:q5251_2tdBoron,Enter Boron amount applied at second top dressing,Numeral,Kilogram (Kg) per plot,,,,,,0
+F:q5252_2appDaysBoron,Days of application of second top dressing Boron after sowing,Numeral,Days after Sowing,,,,,,0
+F:q52521_2tdOtherFert,Enter other fertilizer applied for second top dressing in the largest plot,Numeral,Kilogram (Kg) per plot,,,,,,0
+F:q52522_2tdOtherFertAmt,Enter other fertilizer amount applied at second top dressing,Text,,,,,,,0
+F:q52523_2appDaysOtherFert,Days of application of second top dressing other fertilizer after sowing,Numeral,Number,,,,,,0
+F:thirdTopDressFert,Select the fertilizers applied for third top dressing in the largest plot,Text,,,,,,,0
+F:q5253_3tdDAP,Enter DAP amount applied at third top dressing,Numeral,Kilogram (Kg) per plot,,,,,,0
+F:q5254_3appDaysDAP,Days of application of third top dressing DAP after sowing,Numeral,Days after Sowing,,,,,,0
+F:q5255_3tdNPK,Enter NPK amount applied at third top dressing,Numeral,Kilogram (Kg) per plot,,,,,,0
+F:q5256_3appDaysNPK,Days of application of third top dressing NPK after sowing,Numeral,Days after Sowing,,,,,,0
+F:q5257_3tdUrea,Enter Urea amount applied at third top dressing,Numeral,Kilogram (Kg) per plot,,,,,,0
+F:q5258_3appDaysUrea,Days of application of third top dressing Urea after sowing,Numeral,Days after Sowing,,,,,,0
+F:q5259_3tdNPKS,Enter NPKS amount applied at third top dressing,Numeral,Kilogram (Kg) per plot,,,,,,0
+F:q5260_3appDaysNPKS,Days of application of third top dressing NPKS after sowing,Numeral,Days after Sowing,,,,,,0
+F:q5261_3tdMoP,Enter MoP amount applied at third top dressing,Numeral,Kilogram (Kg) per plot,,,,,,0
+F:q5262_3appDaysMoP,Days of application of third top dressing MoP after sowing,Numeral,Days after Sowing,,,,,,0
+F:q5263_3tdSSP,Enter SSP amount applied at third top dressing,Numeral,Kilogram (Kg) per plot,,,,,,0
+F:q5264_3appDaysSSP,Days of application of third top dressing SSP after sowing,Numeral,Days after Sowing,,,,,,0
+F:q5265_3tdTSP,Enter TSP amount applied at third top dressing,Numeral,Kilogram (Kg) per plot,,,,,,0
+F:q5266_3appDaysTSP,Days of application of third top dressing TSP after sowing,Numeral,Days after Sowing,,,,,,0
+F:q5267_3tdZnSO4,Enter ZNSO4 amount applied at third top dressing,Numeral,Kilogram (Kg) per plot,,,,,,0
+F:q5268_3appDaysZnSO4,Days of application of third top dressing ZNSO4 after sowing,Numeral,Days after Sowing,,,,,,0
+F:q5269_3tdGypsum,Enter Gypsum amount applied at third top dressing,Numeral,Kilogram (Kg) per plot,,,,,,0
+F:q5270_3appDaysGypsum,Days of application of third top dressing Gypsum after sowing,Numeral,Days after Sowing,,,,,,0
+F:q5271_3tdBoron,Enter Boron amount applied at third top dressing,Numeral,Kilogram (Kg) per plot,,,,,,0
+F:q5272_3appDaysBoron,Days of application of third top dressing Boron after sowing,Numeral,Days after Sowing,,,,,,0
+F:q52721_3tdOtherFert,Enter other fertilizer applied for third top dressing in the largest plot,Numeral,Kilogram (Kg) per plot,,,,,,0
+F:q52722_3tdOtherFertAmt,Enter other fertilizer amount applied at third top dressing,Text,,,,,,,0
+F:q52723_3appDaysOtherFert,Days of application of third top dressing other fertilizer after sowing,Numeral,Number,,,,,,0
+F:q5112_priceDAP,Purchase price of DAP,Numeral,INR per Kilogram (Kg),,,,,,7648
+F:q5113_priceNPK,Purchase price of NPK,Numeral,INR per Kilogram (Kg),,,,,,7648
+F:q5114_priceUrea,Purchase price of Urea,Numeral,INR per Kilogram (Kg),,,,,,7648
+F:q5127_priceMoP,Purchase price of MoP,Numeral,INR per Kilogram (Kg),,,,,,7648
+F:q5115_priceZnSO4,Purchase price of ZNSO4,Numeral,INR per Kilogram (Kg),,,,,,7648
+F:q5116_priceGypsum,Purchase price of Gypsum,Numeral,INR per Kilogram (Kg),,,,,,7648
+F:q5117_priceBoron,Purchase price of Boron,Numeral,INR per Kilogram (Kg),,,,,,7648
+F:q5126_priceNPKS,Purchase price of NPKS,Numeral,INR per Kilogram (Kg),,,,,,7648
+F:q5128_priceSSP,Purchase price of SSP,Numeral,INR per Kilogram (Kg),,,,,,7648
+F:q5129_priceTSP,Purchase price of TSP,Numeral,INR per Kilogram (Kg),,,,,,7648
+F:q5273_fertInfoSource,What is the source of information on fertilizer use,Text,,,,,,,84
+F:q5275_sourceDAP,Source of purchase of DAP,Text,,,,,,,400
+F:q5277_sourceNPK,Source of purchase of NPK,Text,,,,,,,7416
+F:q5279_sourceUrea,Source of purchase of Urea,Text,,,,,,,99
+F:q5281_sourceZnSO4,Source of purchase of ZNSO4,Text,,,,,,,6803
+F:q5283_sourceGypsum,Source of purchase of Gypsum,Text,,,,,,,7636
+F:q5285_sourceBoron,Source of purchase of Boron,Text,,,,,,,7524
+F:q5287_fertOnTime,Is fertilizer generally available on time,Text,,,,,,,84
+F:q5288_avgDelayWeeks,"If no, average delay in fertilizer availability in weeks",Numeral,Week,3.04,2,1,10,2.64,0
+G:q5301_irrigAvail,Is irrigation available for the largest plot,Text,,,,,,,0
+G:q5302_irrigSource,Source of irrigation for the largest plot,Text,,,,,,,30
+G:q5304_irrigGrthStage,At what growth stage was irrigation applied for selected crop,Text,,,,,,,13
+G:q5305_irrigTimes,Number of times of irrigation applied after crop establishment,Numeral,Number,2.28,2,1,5,0.76,27
+G:q5306_drySpellReason,"If irrigation was not applied during specified stages, why?",Text,,,,,,,23
+H:q5401_irrigDecision,How do you decide when to irrigate the selected crop,Text,,,,,,,110
+H:q5403_notIrrigReason,"If plot was not irrigated when required, why",Text,,,,,,,23
+H:q5405_tubewellDepthFeet,Depth of tubewell in feet used to irrigate,Numeral,Feet,97.5,80,10,555,51.7,782
+H:pumpUse,Did farmer use pump to irrigate,Text,,,,,,,127
+H:q5406_pumpEnergy,Energy source for the pump,Text,,,,,,,2
+H:q5407_layFlatPipe,Did you use lay flat pipe to irrigate the largest plot,Text,,,,,,,148
+I:q5501_droughtGS,In which growth stage did drought affect the crop,Text,,,,,,,0
+I:q5502_droughtSeverity,Severity of overall drought stress in the largest plot,Text,,,,,,,0
+I:q5503_floodGS,In which growth stage did flood affect the crop,Text,,,,,,,0
+I:q5504_floodSeverity,Severity of overall flood stress in the largest plot,Text,,,,,,,0
+I:q5505_weedSeverity,Severity of weed pressure in the largest plot,Text,,,,,,,0
+I:q5506_insectSeverity,Severity of insect pressure in the largest plot,Text,,,,,,,0
+I:q5507_insecticides,Was insecticide applied,Text,,,,,,,0
+I:q5508_insecticidesName,"If yes, name of insecticides",Text,,,,,,,48
+I:q5509_diseaseSeverity,Severity of disease pressure in the largest plot,Text,,,,,,,0
+I:q5510_pesticides,Was pesticide applied,Text,,,,,,,3
+I:q5511_pesticidesName,"If yes, name of pesticide",Text,,,,,,,1
+I:q5512_lodgingPercent,Percentage of crop that lodged in the largest plot,Numeral,Percent,6.1,5,0,100,10.7,1
+J:herbAppTimes,How many times did you apply herbicide in the largest plot,Numeral,Number,0.5,1,0,2,0.49,0
+J:q5601_1herbName,Name of herbicide for first application,Text,,,,,,,200
+J:q5602_1herbAppDays,Time of herbicide's first application (days after sowing),Numeral,Days after Sowing,31,31,0,60,6.27,45
+J:q5603_2herbName,Name of herbicide for second application,Text,,,,,,,0
+J:q5604_2herbAppDays,Time of herbicide's second application (days after sowing),Numeral,Days after Sowing,42.2,45,21,60,10.58,0
+J:q5605_3herbName,Name of herbicide for third application,Text,,,,,,,0
+J:q5606_3herbAppDays,Time of herbicide's third application (days after sowing),Numeral,Days after Sowing,,,,,,0
+J:manualWeedTimes,How many times did you do amnual weeding in the largest plot,Numeral,Number,0.26,0,0,3,0.47,2
+J:q5607_1manualWeeding,Time of first manual weeding (days after sowing),Numeral,Days after Sowing,31.3,30,0,100,8.51,0
+J:q5608_2manualWeeding,Time of second manual weeding (days after sowing),Numeral,Days after Sowing,48.2,46,2,90,12.07,0
+J:q5609_3manualWeeding,Time of third manual weeding (days after sowing),Numeral,Days after Sowing,70,70,70,70,0.0,0
+K:q5701_topTenWeeds,"Identify top 10 weeds in the largest plot based on severity, occurance & damage",Text,,,,,,,0
+K:q5702_top1stWeed,Identify weed_1,Text,,,,,,,0
+K:q5703_top2ndWeed,Identify weed_2,Text,,,,,,,0
+K:q5704_top3rdWeed,Identify weed_3,Text,,,,,,,0
+K:q5705_top4thWeed,Identify weed_4,Text,,,,,,,0
+K:q5706_top5thWeed,Identify weed_5,Text,,,,,,,0
+L:q601_harvestDate,Harvest date of the selected crop in the largest plot,Numeral,MM.DD.YYYY,,,,,,0
+L:q602_harvestMethod,Harvesting method of the crop,Text,,,,,,,0
+L:q603_residueBurnt,"If combine harvester, did you burn the residue",Text,,,,,,,0
+L:q604_threshing,"If reaper or manual, threshing method",Text,,,,,,,0
+L:q605_totalGrainYieldQUINTAL,Total crop yield from total cultivated land in quintal,Numeral,Kilogram (Kg) in all plots,,,,,,0
+L:q606_largestPlotYieldQUNITAL,Total crop yield from largest plot in quintal,Numeral,Kilogram (Kg) per plot,,,,,,0
+L-quintalPerAcre,Crop yield in quintal per acre,Numeral,Quintals per acre,11.96,12.00,0.80,26.00,3.42,0
+L-tonPerHectare,Crop yield in tonnes per hectare,Numeral,Tonnes per hectare,2.99,3.00,0.20,6.50,0.85,0
+L:q607_farmGatePrice,What is the farm gate price per quintal at the time of harvest,Numeral,INR per Quintal,1433.2,1400,800,2800,264.8,182
+L:q608_fiveYearGProd,How is the production compared to the last five years,Text,,,,,,,0
+M:q701_hhMember,Number of household members,Numeral,Number,8,8,1,12,2.72,0
+M:q702_hhMemAg,Number of household members engaged in agriculture,Numeral,Number,2,2,1,12,1.58,0
+M:q703_marketSaleShare,Share of total crop production sold to market in %,Numeral,Percent,22.9,10,0,100,24.5,0
+M:q704_agIncomeShare,Share of total household income derived from agriculture in %,Numeral,Percent,38,40,0,100,26.3,0
+M:q705_cropShareAg,Share of total agriculture income derived from selected crop in %,Numeral,Percent,23.3,20,0,100,18.7,0
+M:q706_cropSP,Current selling price of selected crop,Numeral,Number,1641.7,1700,1000,2500,328.3,250
+M:q707_cropAvgSP,Average selling price for selected crop (last 5 years),Numeral,Number,1393.2,1400,750,4500,259.6,161
+M:q708_marketDistance,Distance to market,Numeral,Kilometre,4.4,3,0,55,4.1,0
+O:newMgmtUse,Did you use new practices for surveyed crop management this season,Numeral,Decimal degrees,,,,,,0
+O:largestPlotGPS:Latitude,Largest plot latitude,Numeral,Decimal degrees,,,,,,0
+O:largestPlotGPS:Longitude,Largest plot longitude,Numeral,Decimal degrees,,,,,,0
+O:largestPlotGPS:Altitude,Largest plot altitude,Numeral,Meters (m),,,,,,0
+O:largestPlotGPS:Accuracy,GPS accuracy,Numeral,Meters (m),9.2,4.5,0.8,3734.0,118.7,0

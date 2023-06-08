@@ -1,0 +1,907 @@
+list_name,name,label,crop
+country,India,India,
+country,Nepal,Nepal,
+country,Bangladesh,Bangladesh,
+,,,
+fname_key,fname_key,fname_key,
+,,,
+yesno,yes,Yes,
+yesno,no,No,
+,,,
+gender,male,Male,
+gender,female,Female,
+,,,
+,,,
+edu,noSchooling,No schooling,
+edu,primary,Primary,
+edu,matriculation,Matriculation,
+edu,seniorSecondary,Senior secondary,
+edu,bachelors,Bachelors,
+edu,masters,Masters,
+edu,phD,PhD,
+,,,
+socialCategory,SC,SC,
+socialCategory,ST,ST,
+socialCategory,OBC,OBC,
+socialCategory,General,General,
+socialCategory,Other,Other,
+,,,
+crop,Rice,Rice,
+crop,Wheat,Wheat,
+crop,Maize,Maize,
+crop,Fallow,Fallow,
+,,,
+season,Aman,Aman,
+season,Aus,Aus,
+season,Boro,Boro,
+season,Kharif,Kharif,
+season,Rabi,Rabi,
+,,,
+year,2017,2017,
+year,2018,2018,
+year,2019,2019,
+year,2020,2020,
+year,2021,2021,
+year,2022,2022,
+year,2023,2023,
+year,2024,2024,
+year,2025,2025,
+,,,
+llu,Acre,Acre,
+llu,Bigha,Bigha,
+llu,Decimal,Decimal,
+llu,Dhur,Dhur,
+llu,Kattha,Kattha,
+llu,Guntha,Guntha,
+,,,
+plotType,Owned,Owned,
+plotType,Leased,Leased,
+plotType,FarmedContract,Farmed contract,
+,,,
+soil,Light,Light,
+soil,Medium,Medium,
+soil,Heavy,Heavy,
+,,,
+drain,Upland,Upland,
+drain,MediumLand,Medium land,
+drain,LowLand,Low land,
+drain,VeryLowLand,Very low land,
+,,,
+perception,High,High,
+perception,Medium,Medium,
+perception,Low,Low,
+,,,
+pCrop,Rice,Rice,
+pCrop,Wheat,Wheat,
+pCrop,Maize,Maize,
+pCrop,Cotton,Cotton,
+pCrop,Mungbean,Mungbean,
+pCrop,IndianMustard,IndianMustard,
+pCrop,Soybean,Soybean,
+pCrop,Groundnut,Groundnut,
+pCrop,Vegetables,Vegetables,
+pCrop,Jowar,Jowar,
+pCrop,Bajra,Bajra,
+pCrop,Banana,Banana,
+pCrop,Blackgram,Blackgram,
+pCrop,Greengram,Greengram,
+pCrop,Redgram,Redgram,
+pCrop,Sunflower,Sunflower,
+pCrop,Caster,Caster,
+pCrop,Sugarcane,Sugarcane,
+pCrop,Chilli,Chilli,
+pCrop,Turmeric,Turmeric,
+pCrop,Fallow,Fallow,
+pCrop,GreenManure,GreenManure,
+pCrop,PigeonPea,PigeonPea,
+pCrop,Pulses,Pulses,
+pCrop,Other,Other,
+,,,
+,,,
+pTill,WetTillagePuddling,Puddling (wet tillage) (NOT applicable for Wheat),
+pTill,DiscHarrow,Disc harrow,
+pTill,TyneCultivator,Tyne cultivator,
+pTill,FourWheelTracRotavator,4 wheel tractor rotavator,
+pTill,TwoWheelTractRotavator,2 wheel tractor rotavator,
+pTill,BullockPlough,Bullock drawn plough,
+pTill,StripTillage,Strip tillage,
+pTill,NoTillage,No tillage,
+pTill,machineDSR,DSR machine,
+pTill,handbroadcastDSR,DSR handbroadcasting,
+pTill,Other,Other,
+,,,
+percent,0,0,
+percent,5,5,
+percent,10,10,
+percent,20,20,
+percent,40,40,
+percent,60,60,
+percent,80,80,
+percent,100,100,
+,,,
+varType,Improved,Improved,Rice
+varType,Hybrid,Hybrid,Rice
+varType,Local,Local,Rice
+varType,Unknown,Unknown,Rice
+varType,Improved,Improved,Wheat
+varType,Local,Local,Wheat
+varType,Unknown,Unknown,Wheat
+varType,Improved,Improved,Maize
+varType,Hybrid,Hybrid,Maize
+varType,Local,Local,Maize
+varType,Unknown,Unknown,Maize
+varType,Improved,Improved,Cotton
+varType,Hybrid,Hybrid,Cotton
+varType,Local,Local,Cotton
+varType,Bt,Bt,Cotton
+varType,Unknown,Unknown,Cotton
+varType,Improved,Improved,Groundnut
+varType,Hybrid,Hybrid,Groundnut
+varType,Local,Local,Groundnut
+varType,Unknown,Unknown,Groundnut
+,,,
+,,,
+cropEst,ManualPuddled_Random,Manual puddled transplanted (Random),Rice
+cropEst,ManualPuddled_Line,Manual puddled transplanted in line,Rice
+cropEst,DirectBroadcast,Directly sown by broadcast method,Rice
+cropEst,DirectSown_SeedDrill,Directly sown by seed drill,Rice
+cropEst,DirectSown_Beushening,Directly sown followed by beushening,Rice
+cropEst,MachineTransplanted_Puddled,Machine transplanted in puddled soil,Rice
+cropEst,MachineTransplanted_NonPuddled,Machine transplanted in non - puddled soil,Rice
+cropEst,Other,Other,Rice
+cropEst,Broadcasting,Broadcasting,Wheat
+cropEst,LineSowingAfterTillage,Line sowing after tillage,Wheat
+cropEst,ZeroTillage,Zero tillage,Wheat
+cropEst,SurfaceSeeding,Surface seeding,Wheat
+cropEst,Broadcasting,Broadcasting,Maize
+cropEst,ManualLineSowing,Manual line sowing,Maize
+cropEst,SeedDrill,Seed drill,Maize
+cropEst,Other,Other,Maize
+cropEst,Broadcasting,Broadcasting,Cotton
+cropEst,ManualLineSowing,Manual line sowing,Cotton
+cropEst,SeedDrill,Seed drill,Cotton
+cropEst,Other,Other,Cotton
+cropEst,Broadcasting,Broadcasting,Groundnut
+cropEst,ManualLineSowing,Manual line sowing,Groundnut
+cropEst,SeedDrill,Seed drill,Groundnut
+cropEst,Other,Other,Groundnut
+,,,
+,,,
+,,,
+,,,
+nursFactor,CalendarDate,Calendar date,
+nursFactor,PreMonsoonShowers,Arrival of pre-monsoon showers,
+nursFactor,IrrigWaterAvailability,Irrigation water availability,
+nursFactor,WeatherForecastInfo,Weather forecast information,
+nursFactor,NeighboringFarmersPractice,Practices of neighboring farmers,
+nursFactor,SeedAvailability,Seed availability,
+nursFactor,Other,Other,
+,,,
+transFactor,CalendarDate,Calendar date,
+transFactor,SeedlingAge,Seedling age,
+transFactor,RainArrival,Arrival of rains,
+transFactor,IrrigWaterAvailability,Irrigation water availability,
+transFactor,LaborAvailability,Labor availability,
+,,,
+LandPrep,TyneCultivator,Tyne cultivator,
+LandPrep,DiscHarrow,Disc harrow,
+LandPrep,FourWhTractRotavator,4 wheel tractor rotavator,
+LandPrep,TwoWhTractRotavator,2 wheel tractor rotavator,
+LandPrep,BullockPlough,Bullock drawn plough,
+LandPrep,StripTillage,Strip tillage,
+LandPrep,NoTillage,No tillage,
+,,,
+rotYear,1,1,
+rotYear,2,2,
+rotYear,3,3,
+rotYear,4,4,
+rotYear,5,5,
+rotYear,6,6,
+rotYear,7,7,
+rotYear,8,8,
+rotYear,9,9,
+rotYear,10,10,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+whDelay,LateHarvestPrevCrop,Previous crop (e.g. rice) harvested late,
+whDelay,LandWetForPloughing,Land too wet for ploughing,
+whDelay,TillEquipNotAvailable,Non availability of tillage equipment,
+whDelay,SeedNotAvailable,Non availability of seed,
+whDelay,FertNotAvailable,No availability of fertilizers,
+whDelay,LaborShortage,Labor shortage,
+whDelay,NoMoistureAtSowing,Lack of moisture at sowing,
+whDelay,LackOfFunds,Lack of funds,
+whDelay,Other,Other,
+,,,
+whComDelay,LateHarvestPrevCrop,Previous crop (e.g. rice) harvested late,
+whComDelay,LandWetForPloughing,Land too wet for ploughing,
+whComDelay,TillEquipNotAvailable,Non availability of tillage equipment,
+whComDelay,SeedNotAvailable,Non availability of seed,
+whComDelay,FertNotAvailable,No availability of fertilizers,
+whComDelay,LaborShortage,Labor shortage,
+whComDelay,NoMoistureAtSowing,Lack of moisture at sowing,
+whComDelay,LackOfFunds,Lack of funds,
+whComDelay,NoDelay,No Delay,
+WhComDelay,Other,Other,
+,,,
+cEst,Broadcasting,Broadcasting,
+cEst,ManualLineSowing,Manual line sowing,
+cEst,SeedDrill,Seed drill,
+cEst,Other,Other,
+,,,
+seedSrc,SelfSaved,Self saved,
+seedSrc,NeighborRelative,Neighbor or Relative,
+seedSrc,PvtSeedDealer,Private seed dealer,
+seedSrc,Cooperative,Cooperative,
+seedSrc,GovernmentKVKSAU,Government / KVK / SAU,
+seedSrc,Other,Other,
+,,,
+FYM,Dry,Dry,
+FYM,Wet,Wet,
+,,,
+SHC,NoSHC,No soil health card,
+SHC,SHCAvailableAndInfoUsed,Soil health card available and information used,
+SHC,SHCAvailableButInfoNotUsed,Soil health card available but information not used,
+,,,
+otherFert,NPKS,NPKS,
+otherFert,SSP,SSP,
+otherFert,TSP,TSP,
+otherFert,Other,Other,
+,,,
+allFerts,DAP,DAP,
+allFerts,NPK,NPK,
+allFerts,Urea,Urea,
+allFerts,NPKS,NPKS,
+allFerts,MoP,MoP,
+allFerts,SSP,SSP,
+allFerts,TSP,TSP,
+allFerts,ZnSO4,ZnSO4,
+allFerts,Gypsum,Gypsum,
+allFerts,Boron,Boron,
+allFerts,Other,Other (e.g. Liquid fertilizers),
+allFerts,None,None,
+,,,
+mainFerts,DAP,DAP,
+mainFerts,NPK,NPK,
+mainFerts,Urea,Urea,
+mainFerts,NPKS,NPKS,
+mainFerts,MoP,MoP,
+mainFerts,SSP,SSP,
+mainFerts,TSP,TSP,
+mainFerts,ZnSO4,ZnSO4,
+mainFerts,Gypsum,Gypsum,
+mainFerts,Boron,Boron,
+,,,
+,,,
+NPKgrade,12_32_16,12 - 32 - 16,
+NPKgrade,10_26_26,10 - 26 - 26,
+NPKgrade,14_35_14,14 - 35 - 14,
+NPKgrade,17_17_17,17 - 17 - 17,
+NPKgrade,Other,Other,
+,,,
+NPKSgrade,20_20_0_13,20 - 20 - 0 - 13,
+NPKSgrade,16_20_0_13,16 - 20 - 0 - 13,
+NPKSgrade,Other,Other,
+,,,
+fertInfo,NeighborsFamily,Neighbors or family,
+fertInfo,ExtensionAgentsKVKUniversities,Extension agents / KVK / Universities,
+fertInfo,InputDealers,Input dealers,
+fertInfo,Cooperatives,Cooperatives,
+fertInfo,SHC,Soil Health Card,
+fertInfo,Other,Other,
+,,,
+fertSource,InputDealer,InputDealer,
+fertSource,Cooperative,Cooperative,
+fertSource,VillageLevelShop,Village level shop,
+fertSource,India_for_Nepal,India for Nepal,
+fertSource,Other,Other,
+,,,
+,,,
+weeks,1,1,
+weeks,2,2,
+weeks,3,3,
+weeks,4,4,
+weeks,5,5,
+weeks,6,6,
+weeks,7,7,
+weeks,8,8,
+weeks,9,9,
+weeks,10,10,
+,,,
+irrigSource,River,River,
+irrigSource,Canal,Canal,
+irrigSource,Pond,Pond,
+irrigSource,ShallowTubeWell,Shallow TubeWell,
+irrigSource,DeepTubeWell,Deep TubeWell,
+irrigSource,Lift,Lift,
+irrigSource,Dugwell,Dugwell,
+irrigSource,Tank,Tank,
+irrigSource,Other,Other,
+,,,
+,,,
+growth,PreSeeding,Pre seeding,Wheat
+growth,CRI,Crown Root Initiation (20 - 25 days),Wheat
+growth,Tillering,Tillering (40 - 45 days),Wheat
+growth,Jointing,Jointing (60 - 65 days),Wheat
+growth,Flowering,Flowering (80 - 85 days),Wheat
+growth,Milking,Milking (100- 105 days),Wheat
+growth,Dough,Dough (115 - 120 days),Wheat
+growth,None,None,Wheat
+growth,PreSeeding,Pre seeding,Rice
+growth,TilleringInitiation,Tillering Initiation,Rice
+growth,Tillering,Tillering,Rice
+growth,PanicIenitiation,Panicle initiation,Rice
+growth,BootLeafStage,Boot Leaf Stage,Rice
+growth,Heading_PanicleEmergence,Heading (Panicle Emergence),Rice
+growth,Flowering,Flowering,Rice
+growth,FloweringToMaturity,Flowering to maturity,Rice
+growth,None,None,Rice
+growth,PreSeeding,Pre seeding,Maize
+growth,VegetativeEmergence,Vegetative emergence,Maize
+growth,KneeHigh,Knee high,Maize
+growth,PreTasseling,Pre Tasseling,Maize
+growth,Flowering,Flowering,Maize
+growth,GrainFlowering,Grain flowering,Maize
+growth,None,None,Maize
+,,,
+irrigTimes,0,0,
+irrigTimes,1,1,
+irrigTimes,2,2,
+irrigTimes,3,3,
+irrigTimes,4,4,
+irrigTimes,5,5,
+irrigTimes,6,6,
+irrigTimes,7,7,
+irrigTimes,8,8,
+irrigTimes,9,9,
+irrigTimes,10,10,
+irrigTimes,11,11,
+irrigTimes,12,12,
+irrigTimes,13,13,
+irrigTimes,14,14,
+irrigTimes,15,15,
+irrigTimes,16,16,
+irrigTimes,17,17,
+irrigTimes,18,18,
+irrigTimes,19,19,
+irrigTimes,20,20,
+irrigTimes,21,21,
+irrigTimes,22,22,
+irrigTimes,23,23,
+irrigTimes,24,24,
+irrigTimes,25,25,
+irrigTimes,26,26,
+irrigTimes,27,27,
+irrigTimes,28,28,
+irrigTimes,29,29,
+irrigTimes,30,30,
+,,,
+drySpell,SufficientRainfall,Sufficient rainfall this year,
+drySpell,HighIrrigCost,Cost of irrigation too high,
+drySpell,InfraAvailableWaterNot,Irrigation infrastructure present but water unavailable,
+drySpell,DeepWaterTable,Water table too deep,
+drySpell,ElectricityFailure,Electricity failure,
+drySpell,Other,Other,
+drySpell,NotApplicable,Not Applicable,
+,,,
+irrigDec,CropCalendar,Crop calendar,
+irrigDec,CropGrowthStage,Crop growth stage,
+irrigDec,RainfallEvent,Rainfall event,
+irrigDec,WaterAvailability,Water availability,
+irrigDec,SoilMoistureCondition,Soil moisture condition,
+irrigDec,Other,Other,
+,,,
+notIrrig,Expensive,Expensive,
+notIrrig,SufficientRainfall,Sufficient Rainfall,
+notIrrig,IrrigNotRequired,Irrigation not required,
+notIrrig,WaterNotAvailable,Water not available when required,
+notIrrig,PumpNotAvailable,Pump not available when required,
+notIrrig,Other,Other,
+,,,
+pumpEnergy,Electricity,Electricity,
+pumpEnergy,Diesel,Diesel,
+pumpEnergy,BothElectricDiesel,Both electricity and diesel,
+,,,
+growthStages,CRI,Crown Root Initiation (20 - 25 days),Wheat
+growthStages,Tillering,Tillering (40 - 45 days),Wheat
+growthStages,Jointing,Jointing (60 - 65 days),Wheat
+growthStages,Flowering,Flowering (80 - 85 days),Wheat
+growthStages,Milking,Milking (100- 105 days),Wheat
+growthStages,Dough,Dough (115 - 120 days),Wheat
+growthStages,None,None,Wheat
+growthStages,TilleringInitiation,Tillering Initiation,Rice
+growthStages,Tillering,Tillering,Rice
+growthStages,PanicIenitiation,Panicle initiation,Rice
+growthStages,BootLeafStage,Boot Leaf Stage,Rice
+growthStages,Heading_PanicleEmergence,Heading (Panicle Emergence),Rice
+growthStages,Flowering,Flowering,Rice
+growthStages,FloweringToMaturity,Flowering to maturity,Rice
+growthStages,None,None,Rice
+growthStages,VegetativeEmergence,Vegetative emergence,Maize
+growthStages,KneeHigh,Knee high,Maize
+growthStages,PreTasseling,Pre Tasseling,Maize
+growthStages,Flowering,Flowering,Maize
+growthStages,GrainFlowering,Grain flowering,Maize
+growthStages,None,None,Maize
+,,,
+,,,
+,,,
+drought,Mild,Mild,
+drought,Moderate,Moderate,
+drought,Severe,Severe,
+drought,None,None,
+,,,
+severity,Low,Low,
+severity,Medium,Medium,
+severity,High,High,
+severity,None,None,
+,,,
+lodging,0,0,
+lodging,5,5,
+lodging,10,10,
+lodging,20,20,
+lodging,30,30,
+lodging,40,40,
+lodging,50,50,
+lodging,60,60,
+lodging,70,70,
+lodging,80,80,
+lodging,90,90,
+lodging,100,100,
+,,,
+weedTimes,0,0,
+weedTimes,1,1,
+weedTimes,2,2,
+weedTimes,3,3,
+,,,
+harvest,Combine,Combine,
+harvest,Reaper,Reaper,
+harvest,Manual,Manual,
+,,,
+threshing,Manual,Manual,
+threshing,Machine,Machine,
+,,,
+fiveyear,HigherThanAvg,Higher than average,
+fiveyear,Average,Average,
+fiveyear,BelowAvg,Below average,
+,,,
+hhMem,1,1,
+hhMem,2,2,
+hhMem,3,3,
+hhMem,4,4,
+hhMem,5,5,
+hhMem,6,6,
+hhMem,7,7,
+hhMem,8,8,
+hhMem,9,9,
+hhMem,10,10,
+hhMem,11,11,
+hhMem,12,12,
+,,,
+market,0,0,
+market,5,5,
+market,10,10,
+market,20,20,
+market,30,30,
+market,40,40,
+market,50,50,
+market,60,60,
+market,70,70,
+market,80,80,
+market,90,90,
+market,100,100,
+,,,
+newMgmt,NutrientManagement,Nutrient Management,
+newMgmt,CropEstablishment,Crop establishment,
+newMgmt,VarietyReplacement,Variety replacement,
+newMgmt,IrrigationManagement,Irrigation management,
+newMgmt,WeedManagement,Weed management,
+newMgmt,Other,Other,
+newMgmt,None,None,
+,,,
+weeds,Rc_Echinochloa_crusgalli,RiceWeed_1,Rice
+weeds,Rc_Echinochloa_colona,RiceWeed_2,Rice
+weeds,Rc_Ischaemum_rugosum,RiceWeed_3,Rice
+weeds,Rc_Dactyloctenium_aegyptium,RiceWeed_4,Rice
+weeds,Rc_Leptochloa_species,RiceWeed_5,Rice
+weeds,Rc_Eleusine_indica,RiceWeed_6,Rice
+weeds,Rc_Paspalum_distichium,RiceWeed_7,Rice
+weeds,Rc_Brachiaria_reptans,RiceWeed_8,Rice
+weeds,Rc_Cynadon_dactylon,RiceWeed_9,Rice
+weeds,Rc_Rottboellia_cochinchinensis,RiceWeed_10,Rice
+weeds,Rc_Digitaria_ciliaris,RiceWeed_11,Rice
+weeds,Rc_Leersia_hexandra,RiceWeed_12,Rice
+weeds,Rc_Weedy_rice,RiceWeed_13,Rice
+weeds,Rc_Eragrostis_japonica,RiceWeed_14,Rice
+weeds,Rc_Eragrostis_tenella,RiceWeed_15,Rice
+weeds,Rc_Sphenochlea_zeylanica,RiceWeed_16,Rice
+weeds,Rc_Ludwigia_hyssopifolia,RiceWeed_17,Rice
+weeds,Rc_Ludwigia_adscendens,RiceWeed_18,Rice
+weeds,Rc_Ludwigia_octovalvis,RiceWeed_19,Rice
+weeds,Rc_Ammania_spp,RiceWeed_20,Rice
+weeds,Rc_Monochoria_vaginalis,RiceWeed_21,Rice
+weeds,Rc_Lindernia_species,RiceWeed_22,Rice
+weeds,Rc_Pistia_stratiotes,RiceWeed_23,Rice
+weeds,Rc_Eichhornia_crassipes,RiceWeed_24,Rice
+weeds,Rc_Commelina_benghalensis,RiceWeed_25,Rice
+weeds,Rc_Commelina_diffusa,RiceWeed_26,Rice
+weeds,Rc_Alternenthera_philoxeroides,RiceWeed_27,Rice
+weeds,Rc_Alternenthera_sessils,RiceWeed_28,Rice
+weeds,Rc_Caesulia_axillaris,RiceWeed_29,Rice
+weeds,Rc_Sagittaria_spp,RiceWeed_30,Rice
+weeds,Rc_Marsilea_minuta,RiceWeed_31,Rice
+weeds,Rc_Ipomoea_aquatic,RiceWeed_32,Rice
+weeds,Rc_Eclipta_prostrate,RiceWeed_33,Rice
+weeds,Rc_Ageratum_conyzoides,RiceWeed_34,Rice
+weeds,Rc_Physallis_micrantha,RiceWeed_35,Rice
+weeds,Rc_Aeschynomene_indica,RiceWeed_36,Rice
+weeds,Rc_Trianthema_portulacastrum,RiceWeed_37,Rice
+weeds,Rc_Portulaca_oleracea,RiceWeed_38,Rice
+weeds,Rc_Phylanthus_niruri,RiceWeed_39,Rice
+weeds,Rc_Euphorbia_hirta,RiceWeed_40,Rice
+weeds,Rc_Euphorbia_thymifolia,RiceWeed_41,Rice
+weeds,Rc_Cyperus_difformis,RiceWeed_42,Rice
+weeds,Rc_Cyperus_iria,RiceWeed_43,Rice
+weeds,Rc_Scirpus_juncoides,RiceWeed_44,Rice
+weeds,Rc_Cyperus_rotundus,RiceWeed_45,Rice
+weeds,Rc_Fimbristylis_spp,RiceWeed_46,Rice
+weeds,Rc_Other,Other,Rice
+weeds,Wh_Phalaris_minor,WheatWeed_1,Wheat
+weeds,Wh_Polypogon_monspeliensis,WheatWeed_2,Wheat
+weeds,Wh_Poa_annua,WheatWeed_3,Wheat
+weeds,Wh_Avena_ludoviciana,WheatWeed_4,Wheat
+weeds,Wh_Cynadon_dactylon,WheatWeed_5,Wheat
+weeds,Wh_Chenopodium_album,WheatWeed_6,Wheat
+weeds,Wh_Anagalis_arvensis,WheatWeed_7,Wheat
+weeds,Wh_Melilotus_indica,WheatWeed_8,Wheat
+weeds,Wh_Medicago_denticulate,WheatWeed_9,Wheat
+weeds,Wh_Rumex_dentatus,WheatWeed_10,Wheat
+weeds,Wh_Amaranthus_spinosus,WheatWeed_11,Wheat
+weeds,Wh_Xanthium_strumarium,WheatWeed_12,Wheat
+weeds,Wh_Lathyrus_aphaca,WheatWeed_13,Wheat
+weeds,Wh_Coronopus_didymus,WheatWeed_14,Wheat
+weeds,Wh_Fumaria_parviflora,WheatWeed_15,Wheat
+weeds,Wh_Convolvulus_arvensis,WheatWeed_16,Wheat
+weeds,Wh_Malwa_parviflora,WheatWeed_17,Wheat
+weeds,Wh_Cirsium_arvense,WheatWeed_18,Wheat
+weeds,Wh_Argemone_mexicana,WheatWeed_19,Wheat
+weeds,Wh_Solanum_spp,WheatWeed_20,Wheat
+weeds,Wh_Cannabis_sativa,WheatWeed_21,Wheat
+weeds,Wh_Gnaphalium_purpurium,WheatWeed_22,Wheat
+weeds,Wh_Spergula_arvensis,WheatWeed_23,Wheat
+weeds,Wh_Oxalis_corniculata,WheatWeed_24,Wheat
+weeds,Wh_Vicia_sativa,WheatWeed_25,Wheat
+weeds,Wh_Parthenium_hysterophorus,WheatWeed_26,Wheat
+weeds,Wh_Euphorbia_helioscopia,WheatWeed_27,Wheat
+weeds,Wh_Amaranthus_viridis,WheatWeed_28,Wheat
+weeds,Wh_Other,Other,Wheat
+,,,
+variety,Aditya,Aditya,Wheat
+variety,Baaz,Baaz,Wheat
+variety,Bhrikuti,Bhrikuti,Wheat
+variety,Binayak,Binayak,Wheat
+variety,BL 4341,BL 4341,Wheat
+variety,CBW38,CBW38,Wheat
+variety,Dhaulagiri,Dhaulagiri,Wheat
+variety,DBW14,DBW14,Wheat
+variety,DBW17,DBW17,Wheat
+variety,DPW621_50,DPW621_50,Wheat
+variety,Gautam,Gautam,Wheat
+variety,HD2733,HD2733,Wheat
+variety,HD2824,HD2824,Wheat
+variety,HD2967,HD2967,Wheat
+variety,HD2985,HD2985,Wheat
+variety,HD3059,HD3059,Wheat
+variety,HD3086,HD3086,Wheat
+variety,HD3118,HD3118,Wheat
+variety,HI1563,HI1563,Wheat
+variety,HUW234,HUW234,Wheat
+variety,HW2045,HW2045,Wheat
+variety,K2888,K2888,Wheat
+variety,K307,K307,Wheat
+variety,K9107,K9107,Wheat
+variety,Kedar,Kedar,Wheat
+variety,Kundan,Kundan,Wheat
+variety,KW412,KW412,Wheat
+variety,Local,Local,Wheat
+variety,LOK1,LOK1,Wheat
+variety,NL1,NL1,Wheat
+variety,NL2,NL2,Wheat
+variety,NL3,NL3,Wheat
+variety,NL297,NL297,Wheat
+variety,NL971,NL971,Wheat
+variety,NW1012,NW1012,Wheat
+variety,NW2036,NW2036,Wheat
+variety,PBW154,PBW154,Wheat
+variety,PBW167,PBW167,Wheat
+variety,PBW2076,PBW2076,Wheat
+variety,PBW343,PBW343,Wheat
+variety,PBW373,PBW373,Wheat
+variety,PBW443,PBW443,Wheat
+variety,PBW502,PBW502,Wheat
+variety,PBW550,PBW550,Wheat
+variety,Prachanda,Prachanda,Wheat
+variety,RR21,RR21,Wheat
+variety,SabourNirjal,SabourNirjal,Wheat
+variety,SabourSamriddhi,SabourSamriddhi,Wheat
+variety,SabourShresth,SabourShresth,Wheat
+variety,SUPER172,SUPER172,Wheat
+variety,SUPER303,SUPER303,Wheat
+variety,Swargadwari,Swargadwari,Wheat
+variety,UP262,UP262,Wheat
+variety,UP306,UP306,Wheat
+variety,Vijay,Vijay,Wheat
+variety,WH711,WH711,Wheat
+variety,WH1105,WH1105,Wheat
+variety,WK1204,WK1204,Wheat
+variety,WR544,WR544,Wheat
+variety,Other,Other,Wheat
+variety,Agahani,Agahani,Rice
+variety,Ankur,Ankur,Rice
+variety,Arize6120,Arize6120,Rice
+variety,Arize6129,Arize6129,Rice
+variety,Arize6444,Arize6444,Rice
+variety,Arize6444Gold,Arize6444Gold,Rice
+variety,Basmati,Basmati,Rice
+variety,BH21,BH21,Rice
+variety,BhagalpurKatarni,BhagalpurKatarni,Rice
+variety,Bhagwan,Bhagwan,Rice
+variety,BPT5204,BPT5204,Rice
+variety,BPT5207,BPT5207,Rice
+variety,Chaite4,Chaite4,Rice
+variety,Dhanrekha,Dhanrekha,Rice
+variety,Dhanwan,Dhanwan,Rice
+variety,Dhanya775,Dhanya775,Rice
+variety,Diamond,Diamond,Rice
+variety,DKC835,DKC835,Rice
+variety,DY69,DY69,Rice
+variety,GangaKaveri_MTU7029,GangaKaveri_MTU7029,Rice
+variety,Gangotri,Gangotri,Rice
+variety,Garima,Garima,Rice
+variety,Golden_MTU7029,Golden_MTU7029,Rice
+variety,GoldenSambha_BPT5204,GoldenSambha_BPT5204,Rice
+variety,Gorakhnath,Gorakhnath,Rice
+variety,Hardinath,Hardinath,Rice
+variety,Janaki,Janaki,Rice
+variety,Jaya,Jaya,Rice
+variety,Jhapa,Jhapa,Rice
+variety,JK2082_hybrid,JK2082_hybrid,Rice
+variety,JK401_hybrid,JK401_hybrid,Rice
+variety,Kaberi,Kaberi,Rice
+variety,KalaNamak,KalaNamak,Rice
+variety,Khajura,Khajura,Rice
+variety,KP108,KP108,Rice
+variety,Kranti,Kranti,Rice
+variety,Laxmi,Laxmi,Rice
+variety,Loknath,Loknath,Rice
+variety,Maheen,Maheen,Rice
+variety,Maina,Maina,Rice
+variety,Mansuri_MTU7029,Mansuri_MTU7029,Rice
+variety,MiniMansuri_MTU7029,MiniMansuri_MTU7029,Rice
+variety,Moti,Moti,Rice
+variety,MotiGold,MotiGold,Rice
+variety,MTU1001,MTU1001,Rice
+variety,MTU1010,MTU1010,Rice
+variety,MTU52,MTU52,Rice
+variety,MTU7026,MTU7026,Rice
+variety,MTU7027,MTU7027,Rice
+variety,MTU7029,MTU7029,Rice
+variety,Nano_hybrid,Nano_hybrid,Rice
+variety,NHR31_hybrid,NHR31_hybrid,Rice
+variety,NK5251_hybrid,NK5251_hybrid,Rice
+variety,PAC835_hybrid,PAC835_hybrid,Rice
+variety,PHB71_hybrid,PHB71_hybrid,Rice
+variety,PHB72_hybrid,PHB72_hybrid,Rice
+variety,Pioneer27P31_hybrid,Pioneer27P31_hybrid,Rice
+variety,Pioneer27P63_hybrid,Pioneer27P63_hybrid,Rice
+variety,Poonam,Poonam,Rice
+variety,Prabhat,Prabhat,Rice
+variety,Prasanna,Prasanna,Rice
+variety,PusaSugandh5,PusaSugandh5,Rice
+variety,R20,R20,Rice
+variety,Radha4,Radha4,Rice
+variety,Radha9,Radha9,Rice
+variety,Radhika,Radhika,Rice
+variety,RajendraBhagwati,RajendraBhagwati,Rice
+variety,RajendraKasturi,RajendraKasturi,Rice
+variety,RajendraMansoori1,RajendraMansoori1,Rice
+variety,RajendraSaraswati,RajendraSaraswati,Rice
+variety,RajendraShweta,RajendraShweta,Rice
+variety,RajendraSuhasini,RajendraSuhasini,Rice
+variety,Ramdhan,Ramdhan,Rice
+variety,Ranjit,Ranjit,Rice
+variety,RHM406,RHM406,Rice
+variety,Sabitri,Sabitri,Rice
+variety,SabourArdhjal,SabourArdhjal,Rice
+variety,SabourDeep,SabourDeep,Rice
+variety,SabourHarshit,SabourHarshit,Rice
+variety,SabourSampann,SabourSampann,Rice
+variety,SabourShri,SabourShri,Rice
+variety,SabourSurbhit,SabourSurbhit,Rice
+variety,Sahabhagi,Sahabhagi,Rice
+variety,Sampada,Sampada,Rice
+variety,Sampoorna,Sampoorna,Rice
+variety,Sankar_hybrid,Sankar_hybrid,Rice
+variety,Sarju52,Sarju52,Rice
+variety,Sarwada,Sarwada,Rice
+variety,ShriRam505,ShriRam505,Rice
+variety,ShushkSamrat,ShushkSamrat,Rice
+variety,Silki,Silki,Rice
+variety,Sonali,Sonali,Rice
+variety,Sonam,Sonam,Rice
+variety,SpeedCrystal_hybrid,SpeedCrystal_hybrid,Rice
+variety,Sudha,Sudha,Rice
+variety,Sukkha1,Sukkha1,Rice
+variety,Sukkha2,Sukkha2,Rice
+variety,Sukkha3,Sukkha3,Rice
+variety,Sukkha4,Sukkha4,Rice
+variety,SuperMoti,SuperMoti,Rice
+variety,SupremeSona,SupremeSona,Rice
+variety,Suryamukhi,Suryamukhi,Rice
+variety,Swanam,Swanam,Rice
+variety,SwarnaSub1,SwarnaSub1,Rice
+variety,Tez_Arize_hybrid,Tez_Arize_hybrid,Rice
+variety,Upaj,Upaj,Rice
+variety,US312,US312,Rice
+variety,US382,US382,Rice
+variety,Binadhan10,Binadhan10,Rice
+variety,Binadhan11,Binadhan11,Rice
+variety,Binadhan12,Binadhan12,Rice
+variety,Binadhan13,Binadhan13,Rice
+variety,Binadhan14,Binadhan14,Rice
+variety,Binadhan15,Binadhan15,Rice
+variety,Binadhan16,Binadhan16,Rice
+variety,Binadhan17GSR,Binadhan17GSR,Rice
+variety,Binadhan18,Binadhan18,Rice
+variety,Binadhan4,Binadhan4,Rice
+variety,Binadhan5,Binadhan5,Rice
+variety,Binadhan6,Binadhan6,Rice
+variety,Binadhan7,Binadhan7,Rice
+variety,Binadhan8,Binadhan8,Rice
+variety,Binadhan9,Binadhan9,Rice
+variety,Binasail,Binasail,Rice
+variety,BR1,BR1,Rice
+variety,BR10,BR10,Rice
+variety,BR11,BR11,Rice
+variety,BR12,BR12,Rice
+variety,BR14,BR14,Rice
+variety,BR15,BR15,Rice
+variety,BR16,BR16,Rice
+variety,BR18,BR18,Rice
+variety,BR19,BR19,Rice
+variety,BR2,BR2,Rice
+variety,BR20,BR20,Rice
+variety,BR21,BR21,Rice
+variety,BR22,BR22,Rice
+variety,BR23,BR23,Rice
+variety,BR24,BR24,Rice
+variety,BR25,BR25,Rice
+variety,BR26,BR26,Rice
+variety,BR3,BR3,Rice
+variety,BR4,BR4,Rice
+variety,BR5,BR5,Rice
+variety,BR7,BR7,Rice
+variety,BR8,BR8,Rice
+variety,BR9,BR9,Rice
+variety,BRRIDhan27,BRRIDhan27,Rice
+variety,BRRIDhan28,BRRIDhan28,Rice
+variety,BRRIDhan29,BRRIDhan29,Rice
+variety,BRRIDhan30,BRRIDhan30,Rice
+variety,BRRIDhan31,BRRIDhan31,Rice
+variety,BRRIDhan32,BRRIDhan32,Rice
+variety,BRRIDhan33,BRRIDhan33,Rice
+variety,BRRIDhan34,BRRIDhan34,Rice
+variety,BRRIDhan39,BRRIDhan39,Rice
+variety,BRRIDhan40,BRRIDhan40,Rice
+variety,BRRIDhan41,BRRIDhan41,Rice
+variety,BRRIDhan42,BRRIDhan42,Rice
+variety,BRRIDhan43,BRRIDhan43,Rice
+variety,BRRIDhan44,BRRIDhan44,Rice
+variety,BRRIDhan45,BRRIDhan45,Rice
+variety,BRRIDhan46,BRRIDhan46,Rice
+variety,BRRIDhan47,BRRIDhan47,Rice
+variety,BRRIDhan48,BRRIDhan48,Rice
+variety,BRRIDhan49,BRRIDhan49,Rice
+variety,BRRIDhan50,BRRIDhan50,Rice
+variety,BRRIDhan51,BRRIDhan51,Rice
+variety,BRRIDhan52,BRRIDhan52,Rice
+variety,BRRIDhan56,BRRIDhan56,Rice
+variety,BRRIDhan58,BRRIDhan58,Rice
+variety,BRRIDhan62,BRRIDhan62,Rice
+variety,Damini,Damini,Rice
+variety,Iratom24,Iratom24,Rice
+variety,Minikit,Minikit,Rice
+variety,SL8,SL8,Rice
+variety,Subolata,Subolata,Rice
+variety,Other,Other,Rice
+variety,Dekalb3522,Dekalb3522,Maize
+variety,Dekalb6607,Dekalb6607,Maize
+variety,Dekalb9081,Dekalb9081,Maize
+variety,Dekalb9103,Dekalb9103,Maize
+variety,Dekalb9120,Dekalb9120,Maize
+variety,Dekalb9135,Dekalb9135,Maize
+variety,DKC835,DKC835,Maize
+variety,DKC9081,DKC9081,Maize
+variety,HaritaGold152,HaritaGold152,Maize
+variety,Hero22,Hero22,Maize
+variety,Janaki,Janaki,Maize
+variety,K9107,K9107,Maize
+variety,Kargil22,Kargil22,Maize
+variety,Laxmi,Laxmi,Maize
+variety,Local,Local,Maize
+variety,Monsanto9146,Monsanto9146,Maize
+variety,Moti,Moti,Maize
+variety,Mungeriya,Mungeriya,Maize
+variety,NK7720,NK7720,Maize
+variety,Other,Other,Maize
+variety,P2136,P2136,Maize
+variety,P2277,P2277,Maize
+variety,P3196,P3196,Maize
+variety,P3322,P3322,Maize
+variety,P3335,P3335,Maize
+variety,P3355,P3355,Maize
+variety,P3396,P3396,Maize
+variety,P3501,P3501,Maize
+variety,P3522,P3522,Maize
+variety,P3533,P3533,Maize
+variety,P6607,P6607,Maize
+variety,P7720,P7720,Maize
+variety,P9081,P9081,Maize
+variety,PAC740,PAC740,Maize
+variety,PAC751,PAC751,Maize
+variety,PAC751ADVANTA,PAC751ADVANTA,Maize
+variety,PAC835,PAC835,Maize
+variety,Pioneer27P31,Pioneer27P31,Maize
+variety,Pioneer27P63,Pioneer27P63,Maize
+variety,Pioneer30V92,Pioneer30V92,Maize
+variety,Pioneer3355,Pioneer3355,Maize
+variety,Pioneer3396,Pioneer3396,Maize
+variety,Pioneer3401,Pioneer3401,Maize
+variety,Pioneer3501,Pioneer3501,Maize
+variety,Pioneer3522,Pioneer3522,Maize
+variety,Pioneer3523,Pioneer3523,Maize
+variety,Pioneer3535,Pioneer3535,Maize
+variety,Pioneer9081,Pioneer9081,Maize
+variety,Pioneer9120,Pioneer9120,Maize
+variety,Tubuliya,Tubuliya,Maize
+variety,Unknown,Unknown,Maize
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,

@@ -1,0 +1,528 @@
+type,name,label,required,choice_filter,calculation,relevant,repeat_count,constraint,constraint_message,hint,default,appearance
+deviceid,deviceid,,,,,,,,,,,
+start,start,,,,,,,,,,,
+end,end,,,,,,,,,,,
+calculate,uniqueID,,,,"string(format-date-time(now(),'%Y%m%d%H%M%S3'))",,,,,,,
+today,collectionDate,,,,,,,,,,,
+note,wc,"
+
+
+Hi ! Welcome to  
+CROP YIELD & PRODUCTION PRACTICES SURVEY 
+form. 
+
+Kindly read the instructions carefully for each question before you fill in. 
+
+
+Unless otherwise indicated, all responses correspond to information 
+from __ the largest plot __
+for selected crop on each farm ! 
+
+
+Thank you for filling out !",,,,,,,,,,
+note,consentDisclaimer,"Thank you for the opportunity to speak with you. I would like to interview you and your household for a survey. Our investigation aims at getting insight into different crop production practices & grain yield.
+
+We are inviting you to be a participant in this study.  We value your opinion and there are no right or wrong answers to the questions we will be asking in the interview. All we ask is for your honest answer and opinion.  The interview takes approximately around forty minutes to complete. If you agree to participate, you can choose to stop at any time or to skip any questions you do not want to answer. Your answers will be completely confidential; we will not share information that identifies you with anyone and your name and location will be kept safe using a coding system. After entering the questionnaire into a database, we will also restrict access to all information such as your name which will link these responses to you so that you can not be identified and will remain completely anonymous.
+
+Your participation will be highly appreciated.  The answers you give will help provide better information to policy-makers, development practitioners, agricultural extension agents, and program managers so that they can plan for better services that will respond to your needs.   If in the future you have any questions regarding study and the interview, or concerns or complaints we welcome you to ask our (the data collector) contact details.",,,,,,,,,,
+select_one yesno,surveyConsent,Would you like to participate in the survey?,yes,,,,,,,,,quick
+begin group,A,"Crop, Season, contact and location information",yes,,,"selected(${surveyConsent},'yes')",,,,,,
+select_one_external country,q101_country,Select country,yes,,,,,,,,,quick
+select_one_external state,q102_state,Select state / hub,yes,q101_country=${q101_country},,,,,,,,quick
+select_one_external district,q103_district,Select district,yes,q101_country=${q101_country} and q102_state=${q102_state},,,,,,,,minimal
+select_one_external subDistrict,q104_subDistrict,Select block / mandal / upazila / (rural) municipality,yes,q101_country=${q101_country} and q102_state=${q102_state} and q103_district=${q103_district},,,,,,,,minimal
+text,q105_village,Enter village,yes,,,,,,,,,
+text,q110_fName,Farmer's name,yes,,,,,,,based on Aadhar card for India,,
+select_one gender,q111_fGender,Gender of ${q110_fName},yes,,,,,,,,,
+select_one edu,q112_fEdu,Education level of ${q110_fName},yes,,,,,,,,,minimal
+select_one socialCategory,q114_socialCategory,Social category of ${q110_fName},yes,,,"selected(${q101_country},'India')",,,,,,
+text,q115_mobile,Mobile number of ${q110_fName},yes,,,,,string-length(.)=10,Mobile number should be 10 digits !,,,
+select_one crop,q116_crop,Select the crop for the survey (single select),yes,,,,,,,,,
+select_one season,q117_season,Select the season of the ${q116_crop},yes,,,,,,,,,
+select_one year,q118_harvYear,Select the year in which ${q116_crop} was harvested,yes,,,"not(selected(${q116_crop},'Fallow'))",,".<=(format-date(now(),'%Y'))",No future year allowed to select !,,,
+end group,,,,,,,,,,,,
+,,,,,,,,,,,,
+select_one yesno,cropCutDone,Was crop cut done in ${q110_fName} 's plot for ${q116_crop}?,yes,,,"selected(${surveyConsent},'yes') and not(selected(${q116_crop},'Fallow'))",,,,,,
+,,,,,,,,,,,,
+begin group,B,Crop cut details,yes,,,"selected(${surveyConsent},'yes') and selected(${cropCutDone},'yes')",,,,,,
+select_one fname_key,fname,"Select the farmer. The name you select here should be 
+matching linked with the farmer name that you entered before",yes,,,"selected(${surveyConsent},'yes') and selected(${cropCutDone},'yes')",,,,,,"search('cropcutdata','startswith','fname_key',${fname})"
+calculate,district,,,,"pulldata('cropcutdata', 'district', 'fname_key', ${fname})",,,,,,,
+calculate,farmerName,,,,"pulldata('cropcutdata', 'farmer', 'fname_key', ${fname})",,,,,,,
+calculate,block,,,,"pulldata('cropcutdata', 'block', 'fname_key', ${fname})",,,,,,,
+calculate,village,,,,"pulldata('cropcutdata', 'village', 'fname_key', ${fname})",,,,,,,
+calculate,mobile,,,,"string(pulldata('cropcutdata', 'mobile', 'fname_key', ${fname}))",,,,,,,
+calculate,q201_q1tagb,,,,"number(pulldata('cropcutdata', 'q1tagb', 'fname_key', ${fname}))",,,,,,,
+calculate,q202_q1gWeight,,,,"number(pulldata('cropcutdata', 'q1gweight', 'fname_key', ${fname}))",,,,,,,
+calculate,q203_q1gMoist,,,,"number(pulldata('cropcutdata', 'q1gmoist', 'fname_key', ${fname}))",,,,,,,
+calculate,q204_q2tagb,,,,"number(pulldata('cropcutdata', 'q2tagb', 'fname_key', ${fname}))",,,,,,,
+calculate,q205_q2gWeight,,,,"number(pulldata('cropcutdata', 'q2gweight', 'fname_key', ${fname}))",,,,,,,
+calculate,q206_q2gMoist,,,,"number(pulldata('cropcutdata', 'q2gmoist', 'fname_key', ${fname}))",,,,,,,
+calculate,q207_q3tagb,,,,"number(pulldata('cropcutdata', 'q3tagb', 'fname_key', ${fname}))",,,,,,,
+calculate,q208_q3gWeight,,,,"number(pulldata('cropcutdata', 'q3gweight', 'fname_key', ${fname}))",,,,,,,
+calculate,q209_q3gMoist,,,,"number(pulldata('cropcutdata', 'q3gmoist', 'fname_key', ${fname}))",,,,,,,
+calculate,grainYield_tonPerHa,,,,"number(pulldata('cropcutdata', 'grainYld_tonPerHa', 'fname_key', ${fname}))",,,,,,,
+,,,,,,,,,,,,
+,,,,,,,,,,,,
+note,ccCheck,"You have pulled data for ${fname} who resides in village: ${village}; 
+block : ${block}; 
+district : ${district} ;
+contact number is : ${mobile} ;
+grain yield is : ${grainYield_tonPerHa} ton per hectare
+
+If all the information entered is true then proceed ahead else go back and recheck the farmer's name on which you did crop cut",,,,,,,,,,
+end group,,,,,,,,,,,,
+,,,,,,,,,,,,
+begin group,C,Land holding characteristics,yes,,,"selected(${surveyConsent},'yes')",,,,,,
+select_one llu,q301_LLU,Select the local land unit used by ${q110_fName} referring to the largest plot (single select),yes,,,,,,,,,
+decimal,q302_acreConv,One acre equals how many ${q301_LLU} ?,yes,,,,,,,,,
+decimal,q303_cultLand,Total area of operational land during this survey season (owned and leased) in ${q301_LLU},yes,,,,,,,,,
+decimal,q304_cropCultLand,Total area of ${q116_crop} cultivated in this season in ${q301_LLU},yes,,,,,.<=${q303_cultLand},Should be less than equal to total operational land !,,,
+decimal,q305_cropLargestArea,Largest plot area of ${q116_crop} in this season in ${q301_LLU},yes,,,,,.<=${q304_cropCultLand},Should be less than equal to total crop cultivated land !,,,
+calculate,q306_cropLarestAreaAcre,,,,"round(${q305_cropLargestArea} div ${q302_acreConv},3)",,,,,,,
+select_one plotType,q307_largestPlotType,Is the largest plot [${q305_cropLargestArea}__${q301_LLU} ] for ${q116_crop} leased or owned?,yes,,,,,,,,,
+end group,,,,,,,,,,,,
+,,,,,,,,,,,,
+begin group,D,Site characteristics and crop establishment in ${q305_cropLargestArea}__${q301_LLU}  for ${q116_crop},yes,,,"selected(${surveyConsent},'yes')",,,,,,
+select_one soil,q401_soilTexture,Soil texture of ${q305_cropLargestArea}__${q301_LLU}  for ${q116_crop} plot,yes,,,,,,,,,
+select_one drain,q402_drainClass,Drainage class of ${q305_cropLargestArea}__${q301_LLU}  for for ${q116_crop} plot,yes,,,,,,,,,
+select_one perception,q403_soilPerception,Farmer’s perception of soil quality on the plot of ${q305_cropLargestArea}__${q301_LLU} ,yes,,,,,,,,,
+select_one pCrop,prevCrop,Previous major crop cultivated just before ${q116_crop} in ${q305_cropLargestArea}__${q301_LLU} ,yes,,,,,,,,,minimal
+text,otherPrevCrop,Enter other previous crop just before ${q116_crop} in ${q305_cropLargestArea}__${q301_LLU} ,yes,,,"selected(${prevCrop},'Other')",,,,,,
+calculate,q404_prevCrop,,,,"concat(${prevCrop},${otherPrevCrop})",,,,,,,
+select_multiple pTill,prevCropTillage,What was the tillage type for previous crop ${q404_prevCrop} in ${q305_cropLargestArea}__${q301_LLU} ? (multiple select),yes,,,"(not(selected(${q404_prevCrop}, 'Fallow')))",,"(selected(${prevCropTillage}, 'NoTillage') and count-selected(.) = 1) or (not(selected(${prevCropTillage}, 'NoTillage')))","You cannot select ""No Tillage"" and other response at the same time !",,,
+text,otherPrevCropTillage,Enter other previous crop ${q404_prevCrop} tillage type in ${q305_cropLargestArea}__${q301_LLU},yes,,,"(not(selected(${q404_prevCrop}, 'Fallow'))) and selected(${prevCropTillage},'Other')",,,,,,
+calculate,q405_prevCropTillage,,,,"concat(${prevCropTillage},${otherPrevCropTillage})",,,,,,,
+date,pCHarv,Enter date of previous crop ${q404_prevCrop} HARVEST in ${q305_cropLargestArea}__${q301_LLU},yes,,,"not(selected(${q404_prevCrop}, 'Fallow'))",,".<=(format-date(now(),'%Y%m%d'))",Future date NOT allowed to select !,,,
+calculate,q406_prevCropHarvest,,yes,,"format-date-time(${pCHarv},'%Y-%m-%d')","not(selected(${q404_prevCrop}, 'Fallow'))",,,,,,
+select_one percent,q407_cropResiduePcnt,What percentage of residue was retained from previous crop ${q404_prevCrop}  in ${q305_cropLargestArea}__${q301_LLU}?,yes,,,"not(selected(${q404_prevCrop}, 'Fallow'))",,,,,,minimal
+select_one yesno,q408_residueBurnt,Were previous crop ${q404_prevCrop} residue burnt in ${q305_cropLargestArea}__${q301_LLU}?,yes,,,"not(selected(${q404_prevCrop}, 'Fallow'))",,,,,,
+select_one varType,q409_varType,What is the variety type of ${q116_crop}?,yes,crop=${q116_crop},,"not(selected(${q116_crop},'Fallow'))",,,,,,
+select_one variety,varName,Variety name of ${q116_crop},yes,crop=${q116_crop},,"not(selected(${q116_crop},'Fallow'))",,,,,,autocomplete
+text,othervarName,Enter name of other variety for ${q116_crop},yes,,,"selected(${varName},'Other')",,,,,,
+calculate,q410_varName,,,,"concat(${varName},${othervarName})",,,,,,,
+,,,,,,,,,,,,
+select_multiple LandPrep,q411_LandPrep,"Land preparation method in ${q305_cropLargestArea}__${q301_LLU} __${q116_crop} plot (multiple select)
+Note: You have selected ${q410_varName} variety",yes,,,"not(selected(${q116_crop},'Fallow'))",,"(selected(${q411_LandPrep}, 'NoTillage') and count-selected(.) = 1) or (not(selected(${q411_LandPrep}, 'NoTillage')))","You cannot select ""No Tillage"" and other response at the same time !",,,minimal
+select_one rotYear,q412_RotUseYear,"If tillage by rotavator, number of years of continuous use in ${q305_cropLargestArea}__${q301_LLU} plot",yes,,,"selected(${q411_LandPrep},'FourWhTractRotavator') or selected(${q411_LandPrep},'TwoWhTractRotavator')",,,,,,minimal
+select_one cropEst,cropEst,${q116_crop} establishment method in ${q305_cropLargestArea}__${q301_LLU} (single select),yes,crop=${q116_crop},,"not(selected(${q116_crop},'Fallow'))",,,,,,
+text,otherEst,Enter other establishment method for $(q116_crop} in ${q305_cropLargestArea}__${q301_LLU},yes,crop=${q116_crop},,"selected(${cropEst},'Other')",,,,,,
+calculate,q413_CropEst,,,,"concat(${cropEst},${otherEst})",,,,,,,
+date,riceNursery,"If rice transplanted, date of nursery establishment for ${q305_cropLargestArea}__${q301_LLU} plot",yes,,,"selected(${q116_crop},'Rice') and selected(${cropEst},'ManualPuddled_Random') or selected(${cropEst},'ManualPuddled_Line') or selected(${cropEst},'MachineTransplanted_Puddled') or selected(${cropEst},'MachineTransplanted_NonPuddled')",,".<=(format-date(now(),'%Y%m%d'))",Future date NOT allowed to select !,,,
+calculate,q414_rcNursEstDate,,yes,,"format-date-time(${riceNursery},'%Y-%m-%d')","selected(${q116_crop},'Rice') and selected(${cropEst},'ManualPuddled_Random') or selected(${cropEst},'ManualPuddled_Line') or selected(${cropEst},'MachineTransplanted_Puddled') or selected(${cropEst},'MachineTransplanted_NonPuddled')",,,,,,
+date,seedingSowingTransplanting,"Previous major crop ${q404_prevCrop} harvesting date from this plot: ${q406_prevCropHarvest}
+Date of seeding / transplanting / direct sowing (if DSR rice) / sowing (wheat) in ${q305_cropLargestArea}__${q301_LLU} plot for ${q116_crop}",yes,,,"not(selected(${q116_crop},'Fallow'))",,".<=(format-date(now(),'%Y%m%d'))",Future date NOT allowed to select !,,,
+calculate,q415_seedingSowingTransDate,,yes,,"format-date-time(${seedingSowingTransplanting},'%Y-%m-%d')",,,,,,,
+select_multiple whDelay,whSDelayReason,"If wheat planting was delayed past November 30 in this season, why? Sowing date : ${q415_seedingSowingTransDate} (multiple select)",yes,,,"selected(${q116_crop},'Wheat') and date(${q415_seedingSowingTransDate}) > date('2018-11-30')",,,,,,minimal
+text,whOtherSDelay,Enter other reason in delay of sowing this season,yes,,,"selected(${whSDelayReason},'Other')",,,,,,
+calculate,q416_whSDelayReason,,,,"concat(${whSDelayReason},${whOtherSDelay})",,,,,,,
+select_multiple whComDelay,whComDelayReason,"If wheat planting is commonly delayed past November 30th in most years, why? (multiple select)",yes,,,"selected(${q116_crop},'Wheat') and date(${q415_seedingSowingTransDate}) > date('2018-11-30')",,"(selected(${whComDelayReason}, 'NoDelay') and count-selected(.) = 1) or (not(selected(${whComDelayReason}, 'NoDelay')))","You cannot select ""No Delay"" and other response at the same time !",,,minimal
+text,whOtherComDelay,Enter other reason if wheat planting is commonly delayed past Nov 30th in most year.,yes,,,"selected(${whComDelayReason},'Other')",,,,,,
+calculate,q417_whComDelayReason,,,,"concat(${whComDelayReason},${whOtherComDelay})",,,,,,,
+select_multiple nursFactor,nursDetFactor,What mostly determines the timing of rice nursery establishment? (multiple select),yes,,,"selected(${q116_crop},'Rice') and selected(${cropEst},'ManualPuddled_Random') or selected(${cropEst},'ManualPuddled_Line') or selected(${cropEst},'MachineTransplanted_Puddled') or selected(${cropEst},'MachineTransplanted_NonPuddled')",,,,,,minimal
+text,otherNursDetFactor,Enter other factor for timing of rice nursery establishment,yes,,,"selected(${nursDetFactor},'Other')",,,,,,
+calculate,q418_nursDetFactor,,,,"concat(${nursDetFactor},${otherNursDetFactor})",,,,,,,
+select_multiple transFactor,q419_transDetFactor,What mostly determines the timing of rice planting in the${q305_cropLargestArea}__${q301_LLU}? (multiple select),yes,,,"selected(${q116_crop},'Rice') and selected(${cropEst},'ManualPuddled_Random') or selected(${cropEst},'ManualPuddled_Line') or selected(${cropEst},'MachineTransplanted_Puddled') or selected(${cropEst},'MachineTransplanted_NonPuddled')",,,,,,minimal
+decimal,q420_cropSeedAmt,${q116_crop} seed amount used for ${q305_cropLargestArea}__${q301_LLU} plot in kg,yes,,,"not(selected(${q116_crop},'Fallow'))",,,,,,
+select_one seedSrc,q421_seedSource,What is the source of seed for ${q116_crop} used for ${q305_cropLargestArea}__${q301_LLU} plot?,yes,,,"not(selected(${q116_crop},'Fallow'))",,,,,,
+text,q422_otherSeedSource,Enter other source of seed for ${q116_crop} used for ${q305_cropLargestArea}__${q301_LLU} plot,yes,,,"selected(${q421_seedSource},'Other')",,,,,,
+end group,,,,,,,,,,,,
+,,,,,,,,,,,,
+begin group,E,Fertility management in ${q305_cropLargestArea}__${q301_LLU}  for ${q116_crop},yes,,,"selected(${surveyConsent},'yes') and not(selected(${q116_crop},'Fallow'))",,,,,,
+select_one SHC,q5105_statSHC,Soil health card status of ${q305_cropLargestArea}__${q301_LLU} ${q116_crop} plot,yes,,,"selected(${q101_country},'India')",,,,,,
+select_one yesno,q5101_FYM,Was organic compost (‘FYM’) applied in ${q305_cropLargestArea}__${q301_LLU} plot for ${q116_crop}?,yes,,,,,,,,,
+select_one FYM,q5102_typeFYM,"If yes, type of FYM applied in ${q305_cropLargestArea}__${q301_LLU} plot",yes,,,"selected(${q5101_FYM},'yes')",,,,,,
+decimal,q5103_amtFYM,"If yes, total compost applied in ${q305_cropLargestArea}__${q301_LLU} plot in KG",yes,,,"selected(${q5101_FYM},'yes')",,,,,,
+select_one yesno,q5104_applyMineralFert,Did you apply mineral fertilizer in ${q305_cropLargestArea}__${q301_LLU} ${q116_crop} plot?,yes,,,,,,,,,
+end group,,,,,,,,,,,,
+,,,,,,,,,,,,
+begin group,F,Detailed fertility management in ${q305_cropLargestArea}__${q301_LLU}  for ${q116_crop},yes,,,"selected(${surveyConsent},'yes') and selected(${q5104_applyMineralFert},'yes')",,,,,,
+,,,,,,,,,,,,
+select_multiple allFerts,basalFerts,Select the fertilizer(s) applied at planting (basal) for ${q116_crop} (multiple select),yes,,,"selected(${q5104_applyMineralFert},'yes')",,"(selected(${basalFerts}, 'None') and count-selected(.) = 1) or (not(selected(${basalFerts}, 'None')))","You cannot select ""None"" and other response at the same time !",,,minimal
+decimal,q5202_basalDAP,DAP at planting (basal)  in ${q305_cropLargestArea}__${q301_LLU}__${q116_crop} plot in KG,yes,,,"selected(${basalFerts},'DAP') and not(selected(${basalFerts},'None'))",,,,,0,
+decimal,q5203_basalNPK,NPK product (mixture fertilizer)at planting (basal) in ${q305_cropLargestArea}__${q301_LLU}__${q116_crop} plot in KG,yes,,,"selected(${basalFerts},'NPK') and not(selected(${basalFerts},'None'))",,,,,0,
+decimal,q5204_basalUrea,Urea at planting (basal) in ${q305_cropLargestArea}__${q301_LLU}__${q116_crop} plot in KG,yes,,,"selected(${basalFerts},'Urea') and not(selected(${basalFerts},'None'))",,,,,0,
+decimal,q5205_basalNPKS,NPKS at planting (basal) in ${q305_cropLargestArea}__${q301_LLU}__${q116_crop} plot in KG,yes,,,"selected(${basalFerts},'NPKS') and not(selected(${basalFerts},'None'))",,,,,0,
+decimal,q5206_basalMoP,MoP at planting (basal) in ${q305_cropLargestArea}__${q301_LLU}__${q116_crop} plot in KG,yes,,,"selected(${basalFerts},'MoP') and not(selected(${basalFerts},'None'))",,,,,0,
+decimal,q5207_basalSSP,SSP at planting (basal) in ${q305_cropLargestArea}__${q301_LLU}__${q116_crop} plot in KG,yes,,,"selected(${basalFerts},'SSP') and not(selected(${basalFerts},'None'))",,,,,0,
+decimal,q5208_basalTSP,TSP at planting (basal) in ${q305_cropLargestArea}__${q301_LLU}__${q116_crop} plot in KG,yes,,,"selected(${basalFerts},'TSP') and not(selected(${basalFerts},'None'))",,,,,0,
+decimal,q5209_basalZnSO4,Zinc Sulfate at planting (basal) in ${q305_cropLargestArea}__${q301_LLU}__${q116_crop} plot in KG,yes,,,"selected(${basalFerts},'ZnSO4') and not(selected(${basalFerts},'None'))",,,,,0,
+decimal,q5210_basalGypsum,Gypsum at planting (basal) in ${q305_cropLargestArea}__${q301_LLU}__${q116_crop} plot in KG,yes,,,"selected(${basalFerts},'Gypsum') and not(selected(${basalFerts},'None'))",,,,,0,
+decimal,q5211_basalBoron,Boron at planting (basal) in ${q305_cropLargestArea}__${q301_LLU}__${q116_crop} plot in KG,yes,,,"selected(${basalFerts},'Boron') and not(selected(${basalFerts},'None'))",,,,,0,
+text,q52111_otherBasalFert,Enter name of other basal fertilizer applied,yes,,,"selected(${basalFerts},'Other') and not(selected(${basalFerts},'None'))",,,,,,
+decimal,q52112_otherBasalFertAmt,Total ${q52111_otherBasalFert} applied in KG,yes,,,"selected(${basalFerts},'Other') and not(selected(${basalFerts},'None'))",,,,,,
+,,,,,,,,,,,,
+,,,,,,,,,,,,
+select_multiple allFerts,firstTopDressFert,Select the fertilizer(s) applied for first top dressing in ${q305_cropLargestArea}__${q301_LLU}__${q116_crop} plot in KG (multiple select),yes,,,"selected(${q5104_applyMineralFert},'yes')",,"(selected(${firstTopDressFert}, 'None') and count-selected(.) = 1) or (not(selected(${firstTopDressFert}, 'None')))","You cannot select ""None"" and other response at the same time !",,,minimal
+decimal,q5212_1tdDAP,"Basal DAP applied: ${q5202_basalDAP} kg
+Enter DAP amount applied at first top dressing in ${q305_cropLargestArea}__${q301_LLU} plot in KG
+",yes,,,"selected(${firstTopDressFert},'DAP') and not(selected(${firstTopDressFert},'None'))",,,,,0,
+integer,q5213_1appDaysDAP,Days of application of first top dressing DAP after sowing / transplanting in ${q305_cropLargestArea}__${q301_LLU} plot,yes,,,"selected(${firstTopDressFert},'DAP') and not(selected(${firstTopDressFert},'None'))",,,,,,
+decimal,q5214_1tdNPK,"Basal NPK applied: ${q5203_basalNPK} kg
+Enter NPK amount applied at first top dressing in ${q305_cropLargestArea}__${q301_LLU} plot in KG",yes,,,"selected(${firstTopDressFert},'NPK') and not(selected(${firstTopDressFert},'None'))",,,,,0,
+integer,q5215_1appDaysNPK,Days of application of first top dressing NPK after sowing / transplanting in ${q305_cropLargestArea}__${q301_LLU} plot,yes,,,"selected(${firstTopDressFert},'NPK') and not(selected(${firstTopDressFert},'None'))",,,,,,
+decimal,q5216_1tdUrea,"Basal Urea applied: ${q5204_basalUrea} kg
+Enter Urea amount applied at first top dressing in ${q305_cropLargestArea}__${q301_LLU} plot
+",yes,,,"selected(${firstTopDressFert},'Urea') and not(selected(${firstTopDressFert},'None'))",,,,,0,
+integer,q5217_1appDaysUrea,Days of application of first top dressing Urea after sowing / transplanting in ${q305_cropLargestArea}__${q301_LLU} plot,yes,,,"selected(${firstTopDressFert},'Urea') and not(selected(${firstTopDressFert},'None'))",,,,,,
+decimal,q5218_1tdNPKS,"Basal NPKS applied: ${q5205_basalNPKS} kg
+Enter NPKS amount applied at first top dressing in ${q305_cropLargestArea}__${q301_LLU} plot in KG",yes,,,"selected(${firstTopDressFert},'NPKS') and not(selected(${firstTopDressFert},'None'))",,,,,0,
+integer,q5219_1appDaysNPKS,Days of application of first top dressing NPKS after sowing / transplanting in ${q305_cropLargestArea}__${q301_LLU} plot,yes,,,"selected(${firstTopDressFert},'NPKS') and not(selected(${firstTopDressFert},'None'))",,,,,,
+decimal,q5220_1tdMoP,"Basal MoP applied: ${q5206_basalMoP} kg
+Enter MoP amount applied at first top dressing in ${q305_cropLargestArea}__${q301_LLU} plot in KG",yes,,,"selected(${firstTopDressFert},'MoP') and not(selected(${firstTopDressFert},'None'))",,,,,0,
+integer,q5221_1appDaysMoP,Days of application of first top dressing MoP after sowing / transplanting in ${q305_cropLargestArea}__${q301_LLU} plot,yes,,,"selected(${firstTopDressFert},'MoP') and not(selected(${firstTopDressFert},'None'))",,,,,,
+decimal,q5223_1tdSSP,"Basal SSP applied: ${q5207_basalSSP} kg
+Enter SSP amount applied at first top dressing in ${q305_cropLargestArea}__${q301_LLU} plot in KG",yes,,,"selected(${firstTopDressFert},'SSP') and not(selected(${firstTopDressFert},'None'))",,,,,0,
+integer,q5224_1appDaysSSP,Days of application of first top dressing SSP after sowing / transplanting in ${q305_cropLargestArea}__${q301_LLU} plot,yes,,,"selected(${firstTopDressFert},'SSP') and not(selected(${firstTopDressFert},'None'))",,,,,,
+decimal,q5225_1tdTSP,"Basal TSP applied: ${q5208_basalTSP} kg
+Enter TSP amount applied at first top dressing in ${q305_cropLargestArea}__${q301_LLU} plot in KG
+",yes,,,"selected(${firstTopDressFert},'TSP') and not(selected(${firstTopDressFert},'None'))",,,,,0,
+integer,q5226_1appDaysTSP,Days of application of first top dressing TSP after sowing / transplanting in ${q305_cropLargestArea}__${q301_LLU} plot,yes,,,"selected(${firstTopDressFert},'TSP') and not(selected(${firstTopDressFert},'None'))",,,,,,
+decimal,q5227_1tdZnSO4,"Basal Zinc Sulfate applied: ${q5209_basalZnSO4}
+Enter Zinc Sulfate amount applied at first top dressing in ${q305_cropLargestArea}__${q301_LLU} plot in KG",yes,,,"selected(${firstTopDressFert},'ZnSO4') and not(selected(${firstTopDressFert},'None'))",,,,,0,
+integer,q5228_1appDaysZnSO4,Days of application of first top dressing Zinc Sulfate after sowing / transplanting in ${q305_cropLargestArea}__${q301_LLU} plot,yes,,,"selected(${firstTopDressFert},'ZnSO4') and not(selected(${firstTopDressFert},'None'))",,,,,,
+decimal,q5229_1tdGypsum,"Basal Gypsum applied: ${q5210_basalGypsum}
+Total Gypsum amount applied at first top dressing in ${q305_cropLargestArea}__${q301_LLU} plot in KG",yes,,,"selected(${firstTopDressFert},'Gypsum') and not(selected(${firstTopDressFert},'None'))",,,,,0,
+integer,q5230_1appDaysGypsum,Days of application of first top dressing Gypsum after sowing / transplanting in ${q305_cropLargestArea}__${q301_LLU} plot,yes,,,"selected(${firstTopDressFert},'Gypsum') and not(selected(${firstTopDressFert},'None'))",,,,,,
+decimal,q5231_1tdBoron,"Basal Boron applied: ${q5211_basalBoron}
+Enter Boron amount applied at first top dressing in ${q305_cropLargestArea}__${q301_LLU} plot in KG",yes,,,"selected(${firstTopDressFert},'Boron') and not(selected(${firstTopDressFert},'None'))",,,,,0,
+integer,q5232_1appDaysBoron,Days of application of first top dressing Boron after sowing / transplanting in ${q305_cropLargestArea}__${q301_LLU} plot,yes,,,"selected(${firstTopDressFert},'Boron') and not(selected(${firstTopDressFert},'None'))",,,,,,
+text,q52321_1tdOtherFert,Enter other fertilizer name applied in ${q305_cropLargestArea}__${q301_LLU} plot in KG,yes,,,"selected(${firstTopDressFert},'Other') and not(selected(${firstTopDressFert},'None'))",,,,,,
+integer,q52322_1tdOtherFertAmt,${q52321_1tdOtherFert} amount applied in ${q305_cropLargestArea}__${q301_LLU} plot in KG,yes,,,"selected(${firstTopDressFert},'Other') and not(selected(${firstTopDressFert},'None'))",,,,,,
+decimal,q52323_1appDaysOtherFert,Days of application of first top dressing ${q52321_1tdOtherFert} in ${q305_cropLargestArea}__${q301_LLU} plot,yes,,,"selected(${firstTopDressFert},'Other') and not(selected(${firstTopDressFert},'None'))",,,,,,
+,,,,,,,,,,,,
+select_multiple allFerts,secondTopDressFert,Select the fertilizer(s) applied for second top dressing in ${q305_cropLargestArea}__${q301_LLU} plot in KG (multiple select),yes,,,"selected(${q5104_applyMineralFert},'yes') and not(selected(${firstTopDressFert},'None'))",,"(selected(${secondTopDressFert}, 'None') and count-selected(.) = 1) or (not(selected(${secondTopDressFert}, 'None')))","You cannot select ""None"" and other response at the same time !",,,minimal
+decimal,q5233_2tdDAP,"Basal DAP applied: ${q5202_basalDAP} kg
+DAP applied at First top dressing: ${q5212_1tdDAP} kg
+Enter DAP amount applied at second top dressing in ${q305_cropLargestArea}__${q301_LLU} plot in KG (multiple select)",yes,,,"selected(${secondTopDressFert},'DAP') and not(selected(${secondTopDressFert},'None'))",,,,,0,
+integer,q5234_2appDaysDAP,Days of application of second top dressing DAP after sowing / transplanting in ${q305_cropLargestArea}__${q301_LLU} plot,yes,,,"selected(${secondTopDressFert},'DAP') and not(selected(${secondTopDressFert},'None'))",,,,,,
+decimal,q5235_2tdNPK,"Basal NPK applied: ${q5203_basalNPK} kg
+NPK applied at First top dress: ${q5214_1tdNPK} kg
+Enter NPK product amount applied at second top dressing in ${q305_cropLargestArea}__${q301_LLU} plot in KG",yes,,,"selected(${secondTopDressFert},'NPK')",,,,,0,
+integer,q5236_2appDaysNPK,Days of application of second top dressing NPK after sowing / transplanting in ${q305_cropLargestArea}__${q301_LLU} plot,yes,,,"selected(${secondTopDressFert},'NPK')",,,,,,
+decimal,q5237_2tdUrea,"Basal Urea applied: ${q5204_basalUrea} kg
+Urea applied at First top dress : ${q5216_1tdUrea} kg
+Enter Urea amount applied at second top dressing in ${q305_cropLargestArea}__${q301_LLU} plot in KG
+",yes,,,"selected(${secondTopDressFert},'Urea')",,,,,0,
+integer,q5238_2appDaysUrea,Days of application of second top dressing Urea after sowing / transplanting in ${q305_cropLargestArea}__${q301_LLU} plot in KG,yes,,,"selected(${secondTopDressFert},'Urea')",,,,,,
+decimal,q5239_2tdNPKS,"Basal NPKS applied: ${q5205_basalNPKS} kg
+NPKS applied at First top dress : ${q5218_1tdNPKS} kg
+Enter NPKS amount applied at second top dressing in ${q305_cropLargestArea}__${q301_LLU} plot in KG",yes,,,"selected(${secondTopDressFert},'NPKS')",,,,,0,
+integer,q5240_2appDaysNPKS,Days of application of second top dressing NPKS after sowing / transplanting in ${q305_cropLargestArea}__${q301_LLU} plot,yes,,,"selected(${secondTopDressFert},'NPKS')",,,,,,
+decimal,q5241_2tdMoP,"Basal MoP applied: ${q5206_basalMoP} kg
+MoP applied at First top dress: ${q5220_1tdMoP} kg
+Enter MoP amount applied at second top dressing in ${q305_cropLargestArea}__${q301_LLU} plot in KG",yes,,,"selected(${secondTopDressFert},'MoP')",,,,,0,
+integer,q5242_2appDaysMoP,Days of application of second top dressing MoP after sowing / transplanting in ${q305_cropLargestArea}__${q301_LLU} plot,yes,,,"selected(${secondTopDressFert},'MoP')",,,,,,
+decimal,q5243_2tdSSP,"Basal SSP applied: ${q5207_basalSSP} kg
+SSP applied at First top dress: ${q5223_1tdSSP}   kg
+Enter SSP amount applied at second top dressing in ${q305_cropLargestArea}__${q301_LLU} plot in KG",yes,,,"selected(${secondTopDressFert},'SSP')",,,,,0,
+integer,q5244_2appDaysSSP,Days of application of second top dressing SSP after sowing / transplanting in ${q305_cropLargestArea}__${q301_LLU} plot,yes,,,"selected(${secondTopDressFert},'SSP')",,,,,,
+decimal,q5245_2tdTSP,"Basal TSP applied: ${q5208_basalTSP} kg
+TSP applied at First top dress: ${q5225_1tdTSP} kg
+Enter TSP amount applied at second top dressing in ${q305_cropLargestArea}__${q301_LLU} plot in KG
+",yes,,,"selected(${secondTopDressFert},'TSP')",,,,,0,
+integer,q5246_2appDaysTSP,Days of application of second top dressing TSP after sowing / transplanting in ${q305_cropLargestArea}__${q301_LLU} plot,yes,,,"selected(${secondTopDressFert},'TSP')",,,,,,
+decimal,q5247_2tdZnSO4,"Basal Zinc Sulfate applied: ${q5209_basalZnSO4}
+Zinc Sulfate applied at First top dress: ${q5227_1tdZnSO4} kg
+Enter Zinc Sulfate amount applied at second top dressing in ${q305_cropLargestArea}__${q301_LLU} plot in KG",yes,,,"selected(${secondTopDressFert},'ZnSO4')",,,,,0,
+integer,q5248_2appDaysZnSO4,Days of application of second top dressing Zinc Sulfate after sowing / transplanting in ${q305_cropLargestArea}__${q301_LLU} plot,yes,,,"selected(${secondTopDressFert},'ZnSO4')",,,,,,
+decimal,q5249_2tdGypsum,"Basal Gypsum applied: ${q5210_basalGypsum}
+Gypsum applied at First top dress: ${q5229_1tdGypsum}
+Enter Gypsum amount applied at second top dressing in ${q305_cropLargestArea}__${q301_LLU} plot in KG",yes,,,"selected(${secondTopDressFert},'Gypsum')",,,,,0,
+integer,q5250_2appDaysGypsum,Days of application of second top dressing Gypsum after sowing / transplanting in ${q305_cropLargestArea}__${q301_LLU} plot,yes,,,"selected(${secondTopDressFert},'Gypsum')",,,,,,
+decimal,q5251_2tdBoron,"Basal Boron applied: ${q5211_basalBoron}
+Boron applied at First top dress: ${q5231_1tdBoron} kg
+Enter Boron amount applied at second top dressing in ${q305_cropLargestArea}__${q301_LLU} plot in KG",yes,,,"selected(${secondTopDressFert},'Boron')",,,,,0,
+integer,q5252_2appDaysBoron,Days of application of second top dressing Boron after sowing / transplanting in ${q305_cropLargestArea}__${q301_LLU} plot,yes,,,"selected(${secondTopDressFert},'Boron')",,,,,,
+text,q52521_2tdOtherFert,Enter other fertilizer name applied in ${q305_cropLargestArea}__${q301_LLU} plot in KG,yes,,,"selected(${secondTopDressFert},'Other') and not(selected(${secondTopDressFert},'None'))",,,,,,
+integer,q52522_2tdOtherFertAmt,${q52521_2tdOtherFert} amount applied in ${q305_cropLargestArea}__${q301_LLU} plot in KG,yes,,,"selected(${secondTopDressFert},'Other') and not(selected(${secondTopDressFert},'None'))",,,,,,
+decimal,q52523_2appDaysOtherFert,Days of application of second top dressing ${q52521_2tdOtherFert} in ${q305_cropLargestArea}__${q301_LLU} plot,yes,,,"selected(${secondTopDressFert},'Other') and not(selected(${secondTopDressFert},'None'))",,,,,,
+,,,,,,,,,,,,
+,,,,,,,,,,,,
+select_multiple allFerts,thirdTopDressFert,Select the fertilizer(s) applied for third top dressing (multiple select),yes,,,"selected(${q5104_applyMineralFert},'yes')  and not(selected(${secondTopDressFert},'None'))",,"(selected(${thirdTopDressFert}, 'None') and count-selected(.) = 1) or (not(selected(${thirdTopDressFert}, 'None')))",,,,minimal
+decimal,q5253_3tdDAP,"Basal DAP applied: ${q5202_basalDAP} kg
+DAP applied at First top dressing: ${q5212_1tdDAP} kg
+DAP applied at Second top dressing: ${q5233_2tdDAP} kg
+Enter DAP amount applied at third top dressing in ${q305_cropLargestArea}__${q301_LLU} plot in KG
+",yes,,,"selected(${thirdTopDressFert},'DAP')",,,,,0,
+integer,q5254_3appDaysDAP,Days of application of third top dressing DAP after sowing / transplanting in ${q305_cropLargestArea}__${q301_LLU} plot,yes,,,"selected(${thirdTopDressFert},'DAP')",,,,,,
+decimal,q5255_3tdNPK,"Basal NPK applied: ${q5203_basalNPK} kg
+NPK applied at First top dress: ${q5214_1tdNPK} kg
+NPK applied at Second top dress: ${q5235_2tdNPK} kg
+Enter NPK product amount applied at third top dressing in ${q305_cropLargestArea}__${q301_LLU} plot in KG
+",yes,,,"selected(${thirdTopDressFert},'NPK')",,,,,0,
+integer,q5256_3appDaysNPK,Days of application of third top dressing NPK after sowing / transplanting in ${q305_cropLargestArea}__${q301_LLU} plot,yes,,,"selected(${thirdTopDressFert},'NPK')",,,,,,
+decimal,q5257_3tdUrea,"Basal Urea applied: ${q5204_basalUrea} kg
+Urea applied at First top dress : ${q5216_1tdUrea} kg
+Urea applied at Second top dress: ${q5237_2tdUrea} kg
+Enter Urea amount applied at third top dressing in ${q305_cropLargestArea}__${q301_LLU} plot in KG
+",yes,,,"selected(${thirdTopDressFert},'Urea')",,,,,0,
+integer,q5258_3appDaysUrea,Days of application of third top dressing Urea after sowing / transplanting in ${q305_cropLargestArea}__${q301_LLU} plot,yes,,,"selected(${thirdTopDressFert},'Urea')",,,,,,
+decimal,q5259_3tdNPKS,"Basal NPKS applied: ${q5205_basalNPKS} kg
+NPKS applied at First top dress : ${q5218_1tdNPKS} kg
+NPKS applied at Second top dress: ${q5239_2tdNPKS} kg
+Enter NPKS amount applied at third top dressing in ${q305_cropLargestArea}__${q301_LLU} plot in KG",yes,,,"selected(${thirdTopDressFert},'NPKS')",,,,,0,
+integer,q5260_3appDaysNPKS,Days of application of third top dressing NPKS after sowing / transplanting in ${q305_cropLargestArea}__${q301_LLU} plot,yes,,,"selected(${thirdTopDressFert},'NPKS')",,,,,,
+decimal,q5261_3tdMoP,"Basal MoP applied: ${q5206_basalMoP} kg
+MoP applied at First top dress: ${q5220_1tdMoP} kg
+MoP applied at Second top dress: ${q5241_2tdMoP} kg
+Enter MoP amount applied at third top dressing in ${q305_cropLargestArea}__${q301_LLU} plot in KG",yes,,,"selected(${thirdTopDressFert},'MoP')",,,,,0,
+integer,q5262_3appDaysMoP,Days of application of third top dressing MoP after sowing / transplanting in ${q305_cropLargestArea}__${q301_LLU} plot,yes,,,"selected(${thirdTopDressFert},'MoP')",,,,,,
+decimal,q5263_3tdSSP,"Basal SSP applied: ${q5207_basalSSP} kg
+SSP applied at First top dress: ${q5223_1tdSSP}   kg
+SSP applied at Second top dress: ${q5243_2tdSSP} kg
+Enter SSP amount applied at third top dressing in ${q305_cropLargestArea}__${q301_LLU} plot in KG",yes,,,"selected(${thirdTopDressFert},'SSP')",,,,,0,
+integer,q5264_3appDaysSSP,Days of application of third top dressing SSP after sowing / transplanting in ${q305_cropLargestArea}__${q301_LLU} plot,yes,,,"selected(${thirdTopDressFert},'SSP')",,,,,,
+decimal,q5265_3tdTSP,"Basal TSP applied: ${q5208_basalTSP} kg
+TSP applied at First top dress: ${q5225_1tdTSP} kg
+TSP applied at Second top dress: ${q5245_2tdTSP} kg
+Enter TSP amount applied at third top dressing in ${q305_cropLargestArea}__${q301_LLU} plot in KG",yes,,,"selected(${thirdTopDressFert},'TSP')",,,,,0,
+integer,q5266_3appDaysTSP,Days of application of third top dressing TSP after sowing / transplanting in ${q305_cropLargestArea}__${q301_LLU} plot,yes,,,"selected(${thirdTopDressFert},'TSP')",,,,,,
+decimal,q5267_3tdZnSO4,"Basal Zinc Sulfate applied: ${q5209_basalZnSO4} kg
+Zinc Sulfate applied at First top dress: ${q5227_1tdZnSO4} kg
+Zinc Sulfate applied at Second top dress: ${q5247_2tdZnSO4} kg
+Enter Zinc Sulfate amount applied at third top dressing in ${q305_cropLargestArea}__${q301_LLU} plot in KG
+",yes,,,"selected(${thirdTopDressFert},'ZnSO4')",,,,,0,
+integer,q5268_3appDaysZnSO4,Days of application of third top dressing Zinc Sulfate after sowing / transplanting in ${q305_cropLargestArea}__${q301_LLU} plot,yes,,,"selected(${thirdTopDressFert},'ZnSO4')",,,,,,
+decimal,q5269_3tdGypsum,"Basal Gypsum applied: ${q5210_basalGypsum} kg
+Gypsum applied at First top dress: ${q5229_1tdGypsum} kg
+Gypsum applied at Second top dress: ${q5249_2tdGypsum} kg
+Enter Gypsum amount applied at third top dressing in ${q305_cropLargestArea}__${q301_LLU} plot in KG",yes,,,"selected(${thirdTopDressFert},'Gypsum')",,,,,0,
+integer,q5270_3appDaysGypsum,Days of application of third top dressing Gypsum after sowing / transplanting in ${q305_cropLargestArea}__${q301_LLU} plot,yes,,,"selected(${thirdTopDressFert},'Gypsum')",,,,,,
+decimal,q5271_3tdBoron,"Basal Boron applied: ${q5211_basalBoron}
+Boron applied at First top dress: ${q5231_1tdBoron} kg
+Boron applied at Second top dress: ${q5251_2tdBoron} kg
+Enter Boron amount applied at third top dressing in ${q305_cropLargestArea}__${q301_LLU} plot in KG",yes,,,"selected(${thirdTopDressFert},'Boron')",,,,,0,
+integer,q5272_3appDaysBoron,Days of application of third top dressing Boron after sowing / transplanting in ${q305_cropLargestArea}__${q301_LLU} plot,yes,,,"selected(${thirdTopDressFert},'Boron')",,,,,,
+text,q52721_3tdOtherFert,Enter other fertilizer name applied in ${q305_cropLargestArea}__${q301_LLU} plot in KG,yes,,,"selected(${thirdTopDressFert},'Other') and not(selected(${thirdTopDressFert},'None'))",,,,,,
+integer,q52722_3tdOtherFertAmt,${q52721_3tdOtherFert} amount applied in ${q305_cropLargestArea}__${q301_LLU} plot in KG,yes,,,"selected(${thirdTopDressFert},'Other') and not(selected(${thirdTopDressFert},'None'))",,,,,,
+decimal,q52723_3appDaysOtherFert,Days of application of third top dressing ${q52721_3tdOtherFert} in ${q305_cropLargestArea}__${q301_LLU} plot,yes,,,"selected(${thirdTopDressFert},'Other') and not(selected(${thirdTopDressFert},'None'))",,,,,,
+,,,,,,,,,,,,
+,,,,,,,,,,,,
+calculate,totAmtDAP,,,,"coalesce(${q5202_basalDAP},0)+coalesce(${q5212_1tdDAP},0)+coalesce(${q5233_2tdDAP},0)+coalesce(${q5253_3tdDAP},0)",,,,,,,
+calculate,totAmtNPK,,,,"coalesce(${q5203_basalNPK},0)+coalesce(${q5214_1tdNPK},0)+coalesce(${q5235_2tdNPK},0)+coalesce(${q5255_3tdNPK},0)",,,,,,,
+select_one NPKgrade,gradeNPK,Select the grade of NPK,yes,,,"selected(${basalFerts},'NPK') or selected(${firstTopDressFert},'NPK') or selected(${secondTopDressFert},'NPK') or selected(${thirdTopDressFert},'NPK')",,,,,,
+text,otherGradeNPK,Enter other NPK grade (in N - P - K format) e.g. 14 - 35 - 14,yes,,,"selected(${gradeNPK},'Other')",,,,,,
+calculate,q51071_gradeNPK,,,,"concat(${gradeNPK},${otherGradeNPK})",,,,,,,
+calculate,totAmtUrea,,,,"coalesce(${q5204_basalUrea},0)+coalesce(${q5216_1tdUrea},0)+coalesce(${q5237_2tdUrea},0)+coalesce(${q5257_3tdUrea},0)",,,,,,,
+calculate,totAmtNPKS,,,,"coalesce(${q5205_basalNPKS},0)+coalesce(${q5218_1tdNPKS},0)+coalesce(${q5239_2tdNPKS},0)+coalesce(${q5259_3tdNPKS},0)",,,,,,,
+select_one NPKSgrade,gradeNPKS,Select NPKS grade used,yes,,,"selected(${basalFerts},'NPKS') or selected(${firstTopDressFert},'NPKS') or selected(${secondTopDressFert},'NPKS') or selected(${thirdTopDressFert},'NPKS')",,,,,,
+text,otherGradeNPKS,Enter other NPKS grade (in N - P - K - S format) e.g. 20 - 20 - 0 - 13,yes,,,"selected(${gradeNPKS},'Other')",,,,,,
+calculate,q51211_gradeNPKS,,,,"concat(${gradeNPKS},${otherGradeNPKS})",,,,,,,
+calculate,totAmtMoP,,,,"coalesce(${q5206_basalMoP},0)+coalesce(${q5220_1tdMoP},0)+coalesce(${q5241_2tdMoP},0)+coalesce(${q5261_3tdMoP},0)",,,,,,,
+calculate,totAmtSSP,,,,"coalesce(${q5207_basalSSP},0)+coalesce(${q5223_1tdSSP},0)+coalesce(${q5243_2tdSSP},0)+coalesce(${q5263_3tdSSP},0)",,,,,,,
+calculate,totAmtTSP,,,,"coalesce(${q5208_basalTSP},0)+coalesce(${q5225_1tdTSP},0)+coalesce(${q5245_2tdTSP},0)+coalesce(${q5265_3tdTSP},0)",,,,,,,
+calculate,totAmtZnSO4,,,,"coalesce(${q5209_basalZnSO4},0)+coalesce(${q5227_1tdZnSO4},0)+coalesce(${q5247_2tdZnSO4},0)+coalesce(${q5267_3tdZnSO4},0)",,,,,,,
+calculate,totAmtGypsum,,,,"coalesce(${q5210_basalGypsum},0)+coalesce(${q5229_1tdGypsum},0)+coalesce(${q5249_2tdGypsum},0)+coalesce(${q5269_3tdGypsum},0)",,,,,,,
+calculate,totAmtBoron,,,,"coalesce(${q5211_basalBoron},0)+coalesce(${q5231_1tdBoron},0)+coalesce(${q5251_2tdBoron},0)+coalesce(${q5271_3tdBoron},0)",,,,,,,
+note,checkDAP,"Basal DAP applied: ${q5202_basalDAP} kg
+DAP applied at First top dressing: ${q5212_1tdDAP} kg
+DAP applied at Second top dressing: ${q5233_2tdDAP} kg
+DAP applied at Third top dressing: ${q5253_3tdDAP} kg
+
+Total amount of DAP applied: ${totAmtDAP}__kg
+If all the data entered are TRUE then proceed ahead or else go back and check.",q5253_3tdDAP,,,"selected(${basalFerts},'DAP') or selected(${firstTopDressFert},'DAP') or selected(${secondTopDressFert},'DAP') or selected(${thirdTopDressFert},'DAP')",,,,,,
+note,checkNPK,"Basal NPK applied: ${q5203_basalNPK} kg
+NPK applied at First top dress: ${q5214_1tdNPK} kg
+NPK applied at Second top dress: ${q5235_2tdNPK} kg
+NPK applied at Third top dress: ${q5255_3tdNPK} kg
+
+Total amount of NPK applied: ${totAmtNPK}__kg
+If all the data entered are TRUE then proceed ahead or else go back and check.",,,,"selected(${basalFerts},'NPK') or selected(${firstTopDressFert},'NPK') or selected(${secondTopDressFert},'NPK') or selected(${thirdTopDressFert},'NPK')",,,,,,
+note,checkUrea,"Basal Urea applied: ${q5204_basalUrea} kg
+Urea applied at First top dress : ${q5216_1tdUrea} kg
+Urea applied at Second top dress: ${q5237_2tdUrea} kg
+Urea applied at Third top dress: ${q5257_3tdUrea} kg
+
+Total amount of Urea applied: ${totAmtUrea}__kg
+If all the data entered are TRUE then proceed ahead or else go back and check.",,,,"selected(${basalFerts},'Urea') or selected(${firstTopDressFert},'Urea') or selected(${secondTopDressFert},'Urea') or selected(${thirdTopDressFert},'Urea')",,,,,,
+note,checkNPKS,"Basal NPKS applied: ${q5205_basalNPKS} kg
+NPKS applied at First top dress : ${q5218_1tdNPKS} kg
+NPKS applied at Second top dress: ${q5239_2tdNPKS} kg
+NPKS applied at Third top dress: ${q5259_3tdNPKS} kg
+
+Total amount of NPKS applied: ${totAmtNPKS}__kg
+If all the data entered are TRUE then proceed ahead or else go back and check.",,,,"selected(${basalFerts},'NPKS') or selected(${firstTopDressFert},'NPKS') or selected(${secondTopDressFert},'NPKS') or selected(${thirdTopDressFert},'NPKS')",,,,,,
+note,checkMoP,"Basal MoP applied: ${q5206_basalMoP} kg
+MoP applied at First top dress: ${q5220_1tdMoP} kg
+MoP applied at Second top dress: ${q5241_2tdMoP} kg
+MoP applied at Third top dress: ${q5261_3tdMoP} kg
+
+Total amount of MoP applied: ${totAmtMoP}__kg
+If all the data entered are TRUE then proceed ahead or else go back and check.",,,,"selected(${basalFerts},'MoP') or selected(${firstTopDressFert},'MoP') or selected(${secondTopDressFert},'MoP') or selected(${thirdTopDressFert},'MoP')",,,,,,
+note,checkSSP,"Basal SSP applied: ${q5207_basalSSP} kg
+SSP applied at First top dress: ${q5223_1tdSSP}   kg
+SSP applied at Second top dress: ${q5243_2tdSSP} kg
+SSP applied at Third top dress: ${q5263_3tdSSP} kg
+
+Total amount of SSP applied: ${totAmtSSP}__kg
+If all the data entered are TRUE then proceed ahead or else go back and check.",,,,"selected(${basalFerts},'SSP') or selected(${firstTopDressFert},'SSP') or selected(${secondTopDressFert},'SSP') or selected(${thirdTopDressFert},'SSP')",,,,,,
+note,checkTSP,"Basal TSP applied: ${q5208_basalTSP} kg
+TSP applied at First top dress: ${q5225_1tdTSP} kg
+TSP applied at Second top dress: ${q5245_2tdTSP} kg
+TSP applied at Third top dress: ${q5265_3tdTSP} kg
+
+Total amount of TSP applied: ${totAmtTSP}__kg
+If all the data entered are TRUE then proceed ahead or else go back and check.",,,,"selected(${basalFerts},'TSP') or selected(${firstTopDressFert},'TSP') or selected(${secondTopDressFert},'TSP') or selected(${thirdTopDressFert},'TSP')",,,,,,
+note,checkZnSO4,"Basal Zinc Sulfate applied: ${q5209_basalZnSO4} kg
+Zinc Sulfate applied at First top dress: ${q5227_1tdZnSO4} kg
+Zinc Sulfate applied at Second top dress: ${q5247_2tdZnSO4} kg
+Zinc Sulfate applied at Third top dress: ${q5267_3tdZnSO4} kg
+
+Total amount of Zinc Sulfate applied: ${totAmtZnSO4}__kg
+If all the data entered are TRUE then proceed ahead or else go back and check.",,,,"selected(${basalFerts},'ZnSO4') or selected(${firstTopDressFert},'ZnSO4') or selected(${secondTopDressFert},'ZnSO4') or selected(${thirdTopDressFert},'ZnSO4')",,,,,,
+note,checkGypsum,"Basal Gypsum applied: ${q5210_basalGypsum} kg
+Gypsum applied at First top dress: ${q5229_1tdGypsum} kg
+Gypsum applied at Second top dress: ${q5249_2tdGypsum} kg
+Gypsum applied at Third top dress: ${q5269_3tdGypsum} kg
+
+Total amount of Gypsum applied: ${totAmtGypsum}__kg
+If all the data entered are TRUE then proceed ahead or else go back and check.",,,,"selected(${basalFerts},'Gypsum') or selected(${firstTopDressFert},'Gypsum') or selected(${secondTopDressFert},'Gypsum') or selected(${thirdTopDressFert},'Gypsum')",,,,,,
+note,checkBoron,"Basal Boron applied: ${q5211_basalBoron}
+Boron applied at First top dress: ${q5231_1tdBoron} kg
+Boron applied at Second top dress: ${q5251_2tdBoron} kg
+Boron applied at Third top dress: ${q5271_3tdBoron} kg
+
+Total amount of Boron applied: ${totAmtBoron}__kg
+If all the data entered are TRUE then proceed ahead or else go back and check.",,,,"selected(${basalFerts},'Boron') or selected(${firstTopDressFert},'Boron') or selected(${secondTopDressFert},'Boron') or selected(${thirdTopDressFert},'Boron')",,,,,,
+,,,,,,,,,,,,
+decimal,q5112_priceDAP,DAP price per kg ,yes,,,"selected(${q101_country},'Nepal') and (selected(${basalFerts},'DAP') or selected(${firstTopDressFert},'DAP') or selected(${secondTopDressFert},'DAP') or selected(${thirdTopDressFert},'DAP'))",,,,,,
+decimal,q5113_priceNPK,NPK price per kg ,yes,,,"selected(${q101_country},'Nepal') and (selected(${basalFerts},'NPK') or selected(${firstTopDressFert},'NPK') or selected(${secondTopDressFert},'NPK') or selected(${thirdTopDressFert},'NPK'))",,,,,,
+decimal,q5114_priceUrea,Urea price per kg ,yes,,,"selected(${q101_country},'Nepal') and (selected(${basalFerts},'Urea') or selected(${firstTopDressFert},'Urea') or selected(${secondTopDressFert},'Urea') or selected(${thirdTopDressFert},'Urea'))",,,,,,
+decimal,q5127_priceMoP,Price of MoP per kg ,yes,,,"selected(${q101_country},'Nepal') and (selected(${basalFerts},'MoP') or selected(${firstTopDressFert},'MoP') or selected(${secondTopDressFert},'MoP') or selected(${thirdTopDressFert},'MoP'))",,,,,,
+decimal,q5115_priceZnSO4,Zinc sulfate price per kg ,yes,,,"selected(${q101_country},'Nepal') and (selected(${basalFerts},'ZnSO4') or selected(${firstTopDressFert},'ZnSO4') or selected(${secondTopDressFert},'ZnSO4') or selected(${thirdTopDressFert},'ZnSO4'))",,,,,,
+decimal,q5116_priceGypsum,Gypsum price per kg ,yes,,,"selected(${q101_country},'Nepal') and (selected(${basalFerts},'Gypsum') or selected(${firstTopDressFert},'Gypsum') or selected(${secondTopDressFert},'Gypsum') or selected(${thirdTopDressFert},'Gypsum'))",,,,,,
+decimal,q5117_priceBoron,Boron price per kg ,yes,,,"selected(${q101_country},'Nepal') and (selected(${basalFerts},'Boron') or selected(${firstTopDressFert},'Boron') or selected(${secondTopDressFert},'Boron') or selected(${thirdTopDressFert},'Boron'))",,,,,,
+decimal,q5126_priceNPKS,Price of NPKS per kg ,yes,,,"selected(${q101_country},'Nepal') and (selected(${basalFerts},'NPKS') or selected(${firstTopDressFert},'NPKS') or selected(${secondTopDressFert},'NPKS') or selected(${thirdTopDressFert},'NPKS'))",,,,,,
+decimal,q5128_priceSSP,Price of SSP per kg ,yes,,,"selected(${q101_country},'Nepal') and (selected(${basalFerts},'SSP') or selected(${firstTopDressFert},'SSP') or selected(${secondTopDressFert},'SSP') or selected(${thirdTopDressFert},'SSP'))",,,,,,
+decimal,q5129_priceTSP,Price of TSP per kg ,yes,,,"selected(${q101_country},'Nepal') and (selected(${basalFerts},'TSP') or selected(${firstTopDressFert},'TSP') or selected(${secondTopDressFert},'TSP') or selected(${thirdTopDressFert},'TSP'))",,,,,,
+,,,,,,,,,,,,
+,,,,,,,,,,,,
+select_multiple fertInfo,q5273_fertInfoSource,What is your source of information on fertilizer/micronutrient use? (multiple select),yes,,,"selected(${q5104_applyMineralFert},'yes')",,,,,,minimal
+text,q5274_fertInfoOther,Enter other source of information on fertilizer/micronutrient use,yes,,,"selected(${q5273_fertInfoSource},'Other')",,,,,,
+select_one fertSource,q5275_sourceDAP,Source of purchase of DAP,yes,,,"selected(${basalFerts},'DAP') or selected(${firstTopDressFert},'DAP') or selected(${secondTopDressFert},'DAP') or selected(${thirdTopDressFert},'DAP')",,,,,,minimal
+text,q5276_otherSourceDAP,Other source of purchase of DAP,yes,,,"selected(${q5275_sourceDAP},'Other')",,,,,,
+select_one fertSource,q5277_sourceNPK,Source of purchase of NPK product,yes,,,"selected(${basalFerts},'NPK') or selected(${firstTopDressFert},'NPK') or selected(${secondTopDressFert},'NPK') or selected(${thirdTopDressFert},'NPK')",,,,,,minimal
+text,q5278_otherSourceNPK,Other source of purchase of NPK product,yes,,,"selected(${q5277_sourceNPK},'Other')",,,,,,
+select_one fertSource,q5279_sourceUrea,Source of purchase of Urea,yes,,,"selected(${basalFerts},'Urea') or selected(${firstTopDressFert},'Urea') or selected(${secondTopDressFert},'Urea') or selected(${thirdTopDressFert},'Urea')",,,,,,minimal
+text,q5280_otherSourceUrea,Other source of purchase of Urea,yes,,,"selected(${q5279_sourceUrea},'Other')",,,,,,
+select_one fertSource,q5281_sourceZnSO4,Source of purchase of ZnSO4,yes,,,"selected(${basalFerts},'ZnSO4') or selected(${firstTopDressFert},'ZnSO4') or selected(${secondTopDressFert},'ZnSO4') or selected(${thirdTopDressFert},'ZnSO4') and (not(selected(${q101_country},'India')))",,,,,,minimal
+text,q5282_otherSourceZnSO4,Other source of purchase of ZnSO4,yes,,,"selected(${q5281_sourceZnSO4},'Other')",,,,,,
+select_one fertSource,q5283_sourceGypsum,Source of purchase of Gypsum,yes,,,"selected(${basalFerts},'Gypsum') or selected(${firstTopDressFert},'Gypsum') or selected(${secondTopDressFert},'Gypsum') or selected(${thirdTopDressFert},'Gypsum') and (not(selected(${q101_country},'India')))",,,,,,minimal
+text,q5284_otherSourceGypsum,Other source of purchase of Gypsum,yes,,,"selected(${q5283_sourceGypsum},'Other')",,,,,,
+select_one fertSource,q5285_sourceBoron,Source of purchase of Boron,yes,,,"selected(${basalFerts},'Boron') or selected(${firstTopDressFert},'Boron') or selected(${secondTopDressFert},'Boron') or selected(${thirdTopDressFert},'Boron') and (not(selected(${q101_country},'India')))",,,,,,minimal
+text,q5286_otherSourceBoron,Other source of purchase of Boron,yes,,,"selected(${q5285_sourceBoron},'Other')",,,,,,
+,,,,,,,,,,,,
+select_one yesno,q5287_fertOnTime,Is fertilizer / micronutrients generally available on time?,yes,,,"selected(${q5104_applyMineralFert},'yes')",,,,,,quick
+select_one weeks,q5288_avgDelayWeeks,"If ‘no’, average delay in fertilizer availability in weeks (single select)",yes,,,"selected(${q5287_fertOnTime},'no')",,,,,,minimal
+end group,,,,,,,,,,,,
+,,,,,,,,,,,,
+begin group,G,Irrigation management in ${q305_cropLargestArea}__${q301_LLU}  for ${q116_crop},yes,,,"selected(${surveyConsent},'yes') and not(selected(${q116_crop},'Fallow'))",,,,,,
+select_one yesno,q5301_irrigAvail,Is irrigation available for ${q305_cropLargestArea}__${q301_LLU} plot for ${q116_crop}?,yes,,,,,,,,,quick
+select_multiple irrigSource,q5302_irrigSource,Source of irrigation for ${q305_cropLargestArea}__${q301_LLU} plot for ${q116_crop} (multiple select),yes,,,"selected(${q5301_irrigAvail},'yes')",,,,,,minimal
+text,q5303_irrigOtherSource,Other source of irrigation for ${q305_cropLargestArea}__${q301_LLU} plot for ${q116_crop},yes,,,"selected(${q5302_irrigSource},'Other')",,,,,,
+select_multiple growth,q5304_irrigGrthStage,At what stage was irrigation applied in ${q305_cropLargestArea}__${q301_LLU} plot for ${q116_crop}? (multiple select),yes,crop = ${q116_crop},,"selected(${q5301_irrigAvail},'yes')",,"(selected(${q5304_irrigGrthStage}, 'None') and count-selected(.) = 1) or (not(selected(${q5304_irrigGrthStage}, 'None')))","You cannot select ""None"" and other response at the same time !",,,minimal
+select_one irrigTimes,q5305_irrigTimes,Number of times of irrigation applied after crop establishment in ${q305_cropLargestArea}__${q301_LLU} plot for ${q116_crop} (single select),yes,,,"selected(${q5301_irrigAvail},'yes') and (not(selected(${q5304_irrigGrthStage}, 'None')))",,,,,,minimal
+select_multiple drySpell,q5306_drySpellReason,"If irrigation was not applied during all specified stages (for wheat and other relevant crops) and dry spell (for rice under rainfed condition) periods, why? (multiple select)",yes,,,"selected(${q5301_irrigAvail},'yes') and selected(${q5305_irrigTimes},'0')",,"(selected(${q5306_drySpellReason}, 'NotApplicable') and count-selected(.) = 1) or (not(selected(${q5306_drySpellReason}, 'NotApplicable')))","You cannot select ""Not applicable"" and other response at the same time !",,,minimal
+text,q5307_drySpellOther,Enter other dry spell reason,yes,,,"selected(${q5306_drySpellReason},'Other')",,,,,,
+end group,,,,,,,,,,,,
+,,,,,,,,,,,,
+begin group,H,Detailed irrigation management in ${q305_cropLargestArea}__${q301_LLU}  for ${q116_crop},yes,,,"selected(${surveyConsent},'yes') and selected(${q5301_irrigAvail},'yes')",,,,,,
+select_multiple irrigDec,q5401_irrigDecision,How do you decide when to irrigate the ${q305_cropLargestArea}__${q301_LLU}  for ${q116_crop}? (multiple select),yes,,,"selected(${q5305_irrigTimes},'1') or selected(${q5305_irrigTimes},'2') or selected(${q5305_irrigTimes},'3') or selected(${q5305_irrigTimes},'4') or selected(${q5305_irrigTimes},'5') or selected(${q5305_irrigTimes},'6') or selected(${q5305_irrigTimes},'7') or selected(${q5305_irrigTimes},'8') or selected(${q5305_irrigTimes},'9') or selected(${q5305_irrigTimes},'10') or selected(${q5305_irrigTimes},'11') or selected(${q5305_irrigTimes},'12') or selected(${q5305_irrigTimes},'13')",,,,,,minimal
+text,q5402_irrigOtherDecsn,Enter other decision to irrigate the ${q305_cropLargestArea}__${q301_LLU}  plot for ${q116_crop},yes,,,"selected(${q5401_irrigDecision},'Other')",,,,,,
+,,,,,,,,,,,,
+select_multiple notIrrig,q5403_notIrrigReason,"If ${q305_cropLargestArea}__${q301_LLU}  plot was not irrigated when required, why? (multiple select)",yes,,,"selected(${q5305_irrigTimes},'0') ",,,,,,minimal
+text,q5404_notIrrigOther,Enter other reason for not irrigating ${q305_cropLargestArea}__${q301_LLU}  plot when required,yes,,,"selected(${q5403_notIrrigReason},'Other')",,,,,,
+,,,,,,,,,,,,
+decimal,q5405_tubewellDepthFeet,Depth of tubewell in FEET used to irrigate ${q305_cropLargestArea}__${q301_LLU}  plot,yes,,,"selected(${q5302_irrigSource},'ShallowTubeWell') or selected(${q5302_irrigSource},'DeepTubeWell')",,,,,,
+select_one yesno,pumpUse,Did ${q110_fName} use pump to irrigate ${q305_cropLargestArea}__${q301_LLU}  plot?,yes,,,,,,,,,quick
+select_one pumpEnergy,q5406_pumpEnergy,Energy source for the pump,yes,,,"selected(${pumpUse},'yes')",,,,,,quick
+select_one yesno,q5407_layFlatPipe,Did you use lay – flat pipe to irrigate the ${q305_cropLargestArea}__${q301_LLU}  plot?,yes,,,,,,,,,quick
+end group,,,,,,,,,,,,
+,,,,,,,,,,,,
+begin group,I,Production constraints in ${q305_cropLargestArea}__${q301_LLU}  for ${q116_crop},yes,,,"selected(${surveyConsent},'yes') and not(selected(${q116_crop},'Fallow'))",,,,,,
+select_multiple growthStages,q5501_droughtGS,In which growth stage(s) did drought affect the crop? (in in ${q305_cropLargestArea}__${q301_LLU}) (multiple select),yes,crop = ${q116_crop},,,,"(selected(${q5501_droughtGS}, 'None') and count-selected(.) = 1) or (not(selected(${q5501_droughtGS}, 'None')))","You cannot select ""None"" and other response at the same time !",,,minimal
+select_one severity,q5502_droughtSeverity,Severity of overall drought stress in ${q305_cropLargestArea}__${q301_LLU},yes,,,,,,,,,
+select_one growthStages,q5503_floodGS,In which growth stage(s) did flood affect the crop? (in ${q305_cropLargestArea}__${q301_LLU}) (multiple select),yes,crop = ${q116_crop},,"selected(${q116_crop},'Rice')",,"(selected(${q5503_floodGS}, 'None') and count-selected(.) = 1) or (not(selected(${q5503_floodGS}, 'None')))","You cannot select ""None"" and other response at the same time !",,,minimal
+select_one severity,q5504_floodSeverity,Severity of overall flood damage in ${q305_cropLargestArea}__${q301_LLU},yes,,,"selected(${q116_crop},'Rice')",,,,,,
+select_one severity,q5505_weedSeverity,Severity of weed pressure in ${q305_cropLargestArea}__${q301_LLU},yes,,,,,,,,,
+select_one severity,q5506_insectSeverity,Severity of insect pressure in ${q305_cropLargestArea}__${q301_LLU},yes,,,,,,,,,
+select_one yesno,q5507_insecticides,Were insecticides applied in ${q305_cropLargestArea}__${q301_LLU}?,yes,,,,,,,,,
+text,q5508_insecticidesName,"If yes, name of insecticides",yes,,,"selected(${q5507_insecticides},'yes')",,,,,,
+select_one severity,q5509_diseaseSeverity,Severity of disease pressure in ${q305_cropLargestArea}__${q301_LLU},yes,,,,,,,,,
+select_one yesno,q5510_pesticides,Were pesticides applied in ${q305_cropLargestArea}__${q301_LLU}?,yes,,,,,,,,,
+text,q5511_pesticidesName,"If yes, name of pesticides",yes,,,"selected(${q5510_pesticides},'yes')",,,,,,
+select_one lodging,q5512_lodgingPercent,Percentage of crop that lodged (%) in ${q305_cropLargestArea}__${q301_LLU},yes,,,,,,,,,minimal
+end group,,,,,,,,,,,,
+,,,,,,,,,,,,
+begin group,J,Weed control details in ${q305_cropLargestArea}__${q301_LLU}  for ${q116_crop},yes,,,"selected(${surveyConsent},'yes') and not(selected(${q116_crop},'Fallow'))",,,,,,
+select_one weedTimes,herbAppTimes,How many times did you apply herbicide in ${q305_cropLargestArea}__${q301_LLU}?,yes,,,,,,,,,
+text,q5601_1herbName,Name of herbicide for first application in ${q305_cropLargestArea}__${q301_LLU},yes,,,"selected(${herbAppTimes},'1') or selected(${herbAppTimes},'2') or selected(${herbAppTimes},'3')",,,,,,
+integer,q5602_1herbAppDays,Time of herbicides’ first application (days after crop establishment / sowing in ${q305_cropLargestArea}__${q301_LLU}),yes,,,"selected(${herbAppTimes},'1') or selected(${herbAppTimes},'2') or selected(${herbAppTimes},'3')",,,,,,
+text,q5603_2herbName,Name of herbicide for second application in ${q305_cropLargestArea}__${q301_LLU},yes,,,"selected(${herbAppTimes},'2') or selected(${herbAppTimes},'3')",,,,,,
+integer,q5604_2herbAppDays,Time of herbicides’ second application (days after crop establishment / sowing in in ${q305_cropLargestArea}__${q301_LLU}),yes,,,"selected(${herbAppTimes},'2') or selected(${herbAppTimes},'3')",,.>${q5602_1herbAppDays},Second herbicide application should be greater than first herbicide application days !,,,
+text,q5605_3herbName,Name of herbicide for third application in ${q305_cropLargestArea}__${q301_LLU},yes,,,"selected(${herbAppTimes},'3')",,,,,,
+integer,q5606_3herbAppDays,Time of herbicides’ third application (days after crop establishment / sowing in ${q305_cropLargestArea}__${q301_LLU}),yes,,,"selected(${herbAppTimes},'3')",,.>${q5604_2herbAppDays},Third herbicide application should be greater than second herbicide application days !,,,
+select_one weedTimes,manualWeedTimes,How many times did you do manual weeding in ${q305_cropLargestArea}__${q301_LLU}?,yes,,,,,,,,,
+integer,q5607_1manualWeeding,Time of first manual weeding ( days after crop establishment / sowing in ${q305_cropLargestArea}__${q301_LLU}),yes,,,"selected(${manualWeedTimes},'1') or selected(${manualWeedTimes},'2') or selected(${manualWeedTimes},'3')",,,,,,
+integer,q5608_2manualWeeding,Time of second manual weeding ( days after crop establishment / sowing in ${q305_cropLargestArea}__${q301_LLU}),yes,,,"selected(${manualWeedTimes},'2') or selected(${manualWeedTimes},'3')",,.>${q5607_1manualWeeding},Second manual weeding days should be greater than first manual weeding days !,,,
+integer,q5609_3manualWeeding,Time of third manual weeding ( days after crop establishment / sowing in ${q305_cropLargestArea}__${q301_LLU}),yes,,,"selected(${manualWeedTimes},'3')",,.>${q5608_2manualWeeding},Third manual weeding days should be greater than second manual weeding days !,,,
+end group,,,,,,,,,,,,
+,,,,,,,,,,,,
+begin group,K,Weed identification in ${q305_cropLargestArea}__${q301_LLU}  for ${q116_crop},yes,,,"not(selected(${q116_crop},'Fallow')) and (selected(${q102_state},'Bihar') or selected(${q102_state},'UttarPradesh') or selected(${q102_state},'WestBengal') or selected(${q102_state},'Chattisgarh') or selected(${q102_state},'Odisha') or selected(${q102_state},'AndhraPradesh')) and (selected(${q116_crop},'Rice') or selected(${q116_crop},'Wheat'))",,,,,,
+select_multiple weeds,allWeeds,"Identify top ten weeds for surveyed crop in the largest plot based on severity, occurrence and damage in ${q305_cropLargestArea}__${q301_LLU} (multiple select)",yes,crop = ${q116_crop},,,,count-selected(.)<=10,You can select maximum 10 weeds only !,,,minimal
+text,allOtherWeeds,Enter other weeds known,yes,crop = ${q116_crop},,"selected(${allWeeds},'Rc_Other') or selected(${allWeeds},'Wh_Other')",,,,,,
+calculate,q5701_topTenWeeds,,,,"concat(${allWeeds},${allOtherWeeds})",,,,,,,
+select_one weeds,q5702_top1stWeed,Rank the first weed based on severity of damage in ${q305_cropLargestArea}__${q301_LLU},yes,"selected(${allWeeds},name)",,,,,,,,
+select_one weeds,q5703_top2ndWeed,Rank the second weed based on severity of damage in ${q305_cropLargestArea}__${q301_LLU},yes,"selected(${allWeeds},name) and not(selected(${q5702_top1stWeed},name))",,,,,,,,
+select_one weeds,q5704_top3rdWeed,Rank the third weed based on severity of damage in ${q305_cropLargestArea}__${q301_LLU},,"selected(${allWeeds},name) and not(selected(${q5702_top1stWeed},name)) and not(selected(${q5703_top2ndWeed},name))",,,,,,,,
+select_one weeds,q5705_top4thWeed,Rank the fourth weed based on severity of damage in ${q305_cropLargestArea}__${q301_LLU},,"selected(${allWeeds},name) and not(selected(${q5702_top1stWeed},name)) and not(selected(${q5703_top2ndWeed},name)) and not(selected(${q5704_top3rdWeed},name))",,,,,,,,
+select_one weeds,q5706_top5thWeed,Rank the fifth weed based on severity of damage in ${q305_cropLargestArea}__${q301_LLU},,"selected(${allWeeds},name) and not(selected(${q5702_top1stWeed},name)) and not(selected(${q5703_top2ndWeed},name)) and not(selected(${q5704_top3rdWeed},name)) and not(selected(${q5705_top4thWeed},name))",,,,,,,,
+end group,,,,,,,,,,,,
+,,,,,,,,,,,,
+begin group,L,Harvest from ${q305_cropLargestArea}__${q301_LLU}  for ${q116_crop},yes,,,"selected(${surveyConsent},'yes') and not(selected(${q116_crop},'Fallow'))",,,,,,
+date,harvDate,Harvest date of the crop in ${q305_cropLargestArea}__${q301_LLU},yes,,,,,".<=(format-date(now(),'%Y%m%d'))",Future date NOT allowed to select !,,,
+calculate,q601_harvestDate,,yes,,"format-date-time(${harvDate},'%Y-%m-%d')",,,,,,,
+calculate,cropDurationDays,,,,date(${q601_harvestDate}) - date(${q415_seedingSowingTransDate}),,,,,,,
+select_one harvest,q602_harvestMethod,Harvesting method of the crop in ${q305_cropLargestArea}__${q301_LLU},yes,,,,,,,,,
+select_one yesno,q603_residueBurnt,"If combine harvester, did you burn the residue in ${q305_cropLargestArea}__${q301_LLU}?",yes,,,"selected(${q602_harvestMethod},'Combine')",,,,,,
+select_one threshing,q604_threshing,"If reaper or manual, threshing method in ${q305_cropLargestArea}__${q301_LLU}",yes,,,"selected(${q602_harvestMethod},'Reaper') or selected(${q602_harvestMethod},'Manual')",,,,,,
+decimal,q605_totalGrainYieldQUINTAL,Total ${q116_crop} yield from total cultivated land ${q304_cropCultLand} ${q301_LLU} in QUINTAL (self – reported),yes,,,,,,,,,
+decimal,q606_largestPlotYieldQUNITAL,Total ${q116_crop} yield from ${q305_cropLargestArea}__${q301_LLU} in QUINTAL (self –reported),yes,,,,,.<=${q605_totalGrainYieldQUINTAL},Should be less than or equal to the yield from total cultivated land,,,
+calculate,quintalPerAcre,,,,"round(${q606_largestPlotYieldQUNITAL} div ${q306_cropLarestAreaAcre}, 2)",,,,,,,
+calculate,tonPerHectare,,,,"round((${quintalPerAcre} * 2.5) div 10, 2)",,,,,,,
+note,yldCheck,"The total maturity duration for ${q116_crop} is  __ ${cropDurationDays} __ days. Ensure that it is correct.
+
+The yield from ${q305_cropLargestArea}__${q301_LLU} plot for ${q116_crop} is:
+${quintalPerAcre} quintal per acre
+Or
+${tonPerHectare}  ton per hectare
+Yield for ${q116_crop} should be less than 10 ton per hectare !
+If the yield seems reasonable please proceed ahead , else check the following:
+1. Local land unit conversion rate to Acre
+2. Largest plot size
+3. Crop yield from the largest plot",yes,,,,,,,,,
+decimal,q607_farmGatePrice,What is the farm gate price per quintal for ${q116_crop} at the time of harvest? (Rs / Taka per quintal),yes,,,,,,,,,
+select_one fiveyear,q608_fiveYearGProd,How is the production compared of ${q116_crop} to the last five years?,yes,,,,,,,,,
+,,,,,,,,,,,,
+end group,,,,,,,,,,,,
+,,,,,,,,,,,,
+,,,,,,,,,,,,
+begin group,M,Household economics and market information,yes,,,"selected(${surveyConsent},'yes') and not(selected(${q116_crop},'Fallow'))",,,,,,
+select_one hhMem,q701_hhMember,Number of household members,yes,,,,,,,,,minimal
+select_one hhMem,q702_hhMemAg,Number of household members engaged in agriculture,yes,,,,,.<=${q701_hhMember},Should be less than or equal to total household members,,,minimal
+select_one market,q703_marketSaleShare,Share of total ${q116_crop} crop production sold to market (%),yes,,,,,,,,,minimal
+select_one market,q704_agIncomeShare,Share of total household income derived from agriculture (%) (approximate value over the last five years),yes,,,,,,,,,minimal
+select_one market,q705_cropShareAg,Share of total agricultural income derived from ${q116_crop} crop (%)(approximate value over the last five years),yes,,,,,,,,,minimal
+decimal,q706_cropSP,Current selling price for ${q116_crop} crop sold to market? (Rs/ quintal),yes,,,,,,,,,
+decimal,q707_cropAvgSP,Average selling price for ${q116_crop} crop sold to market (Rs / quintal) (average over the last five years),yes,,,,,,,,,
+decimal,q708_marketDistance,Distance to market (km),yes,,,,,,,,,
+end group,,,,,,,,,,,,
+,,,,,,,,,,,,
+begin group,O,Tracking technology change in ${q116_crop},yes,,,"selected(${surveyConsent},'yes')",,,,,,
+select_multiple newMgmt,newMgmtUse,Did you use new practices for surveyed crop management this season? (multiple select),yes,,,"not(selected(${q116_crop},'Fallow'))",,"(selected(${newMgmtUse}, 'None') and count-selected(.) = 1) or (not(selected(${newMgmtUse}, 'None')))","You cannot select ""None"" and other response at the same time !",,,
+text,otherNewMgmt,Enter other new practice(s) used for surveyed crop management this season?,yes,,,"selected(${newMgmtUse},'Other')",,,,,,
+calculate,q801_newMgmtUse,,,,"concat(${newMgmtUse},${otherNewMgmt})",,,,,,,
+geopoint,largestPlotGPS,"GPS from the center of the ${q305_cropLargestArea}__${q301_LLU}  plot for ${q116_crop}.
+Unique ID : ${uniqueID}",yes,,,,,,,Make sure the accuracy is less than 10 meters,,
+end group,,,,,,,,,,,,
