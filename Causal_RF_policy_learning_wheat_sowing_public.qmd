@@ -1,6 +1,7 @@
 ---
 title: "Spatial Exante Framework for Targeting Sowing Dates using Causal ML and Policy Learning: Eastern India Example"
-format: html
+#format: html
+format: gfm
 self-contained: true
 author: Maxwell Mkondiwa
 editor: visual
