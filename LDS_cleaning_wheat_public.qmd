@@ -1,7 +1,7 @@
 ---
 title: "Data Manipulation for Spatial Exante Analytics"
-#format: html
-format: gfm
+format: html
+#format: gfm
 self-contained: true
 author: Maxwell Mkondiwa
 editor: visual
