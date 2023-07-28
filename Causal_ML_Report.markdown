@@ -1,8 +1,8 @@
 ---
 layout: default
 title: Causal_RF_policy_learning_wheat_sowing_public
-parent: 
-nav_order: 
+parent: causal_RF_targeting
+nav_order: 1
 permalink: Causal_RF_policy_learning_wheat_sowing_public
 ---
 
