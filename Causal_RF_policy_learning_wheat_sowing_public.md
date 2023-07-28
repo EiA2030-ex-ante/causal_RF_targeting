@@ -3,28 +3,28 @@ Policy Learning: Eastern India Example
 ================
 Maxwell Mkondiwa
 
-- <a href="#introduction" id="toc-introduction"><span
-  class="toc-section-number">1</span> Introduction</a>
-- <a href="#preliminaries" id="toc-preliminaries"><span
-  class="toc-section-number">2</span> Preliminaries</a>
-  - <a href="#graphics" id="toc-graphics"><span
-    class="toc-section-number">2.1</span> Graphics</a>
-  - <a href="#descriptives" id="toc-descriptives"><span
-    class="toc-section-number">2.2</span> Descriptives</a>
-- <a href="#causal-random-forest-model"
-  id="toc-causal-random-forest-model"><span
-  class="toc-section-number">3</span> Causal Random Forest Model</a>
-- <a href="#policy-learning-algorithm-for-treatment-assignment"
-  id="toc-policy-learning-algorithm-for-treatment-assignment"><span
-  class="toc-section-number">4</span> Policy learning algorithm for
-  treatment assignment</a>
-- <a href="#distributional-analysis"
-  id="toc-distributional-analysis"><span
-  class="toc-section-number">5</span> Distributional analysis</a>
-- <a href="#transition-matrix-of-the-policy-change"
-  id="toc-transition-matrix-of-the-policy-change"><span
-  class="toc-section-number">6</span> Transition matrix of the policy
-  change</a>
+-   <a href="#introduction" id="toc-introduction"><span
+    class="toc-section-number">1</span> Introduction</a>
+-   <a href="#preliminaries" id="toc-preliminaries"><span
+    class="toc-section-number">2</span> Preliminaries</a>
+    -   <a href="#graphics" id="toc-graphics"><span
+        class="toc-section-number">2.1</span> Graphics</a>
+    -   <a href="#descriptives" id="toc-descriptives"><span
+        class="toc-section-number">2.2</span> Descriptives</a>
+-   <a href="#causal-random-forest-model"
+    id="toc-causal-random-forest-model"><span
+    class="toc-section-number">3</span> Causal Random Forest Model</a>
+-   <a href="#policy-learning-algorithm-for-treatment-assignment"
+    id="toc-policy-learning-algorithm-for-treatment-assignment"><span
+    class="toc-section-number">4</span> Policy learning algorithm for
+    treatment assignment</a>
+-   <a href="#distributional-analysis"
+    id="toc-distributional-analysis"><span
+    class="toc-section-number">5</span> Distributional analysis</a>
+-   <a href="#transition-matrix-of-the-policy-change"
+    id="toc-transition-matrix-of-the-policy-change"><span
+    class="toc-section-number">6</span> Transition matrix of the policy
+    change</a>
 
 # Introduction
 
@@ -66,7 +66,7 @@ sow_plot=bar_chart(LDSestim,Sowing_Date_Schedule)+labs(y="Sowing dates")
 sow_plot
 ```
 
-![](Causal_RF_policy_learning_wheat_sowing_public_files/figure-commonmark/unnamed-chunk-2-1.png)
+![](Causal_RF_policy_learning_wheat_sowing_public_files/figure-gfm/unnamed-chunk-2-1.png)
 
 ``` r
 library(ggpubr) 
@@ -101,7 +101,7 @@ SowingDate_Options_Errorplot=   LDSestim%>%
 SowingDate_Options_Errorplot 
 ```
 
-![](Causal_RF_policy_learning_wheat_sowing_public_files/figure-commonmark/unnamed-chunk-2-2.png)
+![](Causal_RF_policy_learning_wheat_sowing_public_files/figure-gfm/unnamed-chunk-2-2.png)
 
 ## Descriptives
 
@@ -233,7 +233,7 @@ varimpplotRF_sowing=ggplot(varimpvars_sowing,aes(x=reorder(vars_sowing,Variablei
  varimpplotRF_sowing
 ```
 
-![](Causal_RF_policy_learning_wheat_sowing_public_files/figure-commonmark/unnamed-chunk-4-1.png)
+![](Causal_RF_policy_learning_wheat_sowing_public_files/figure-gfm/unnamed-chunk-4-1.png)
 
 ``` r
 # Policy tree --------------------------------------
@@ -243,7 +243,7 @@ tr_sowing <- policy_tree(X_cf_sowing, DR.scores_sowing, depth = 2)
 plot(tr_sowing)
 ```
 
-![](Causal_RF_policy_learning_wheat_sowing_public_files/figure-commonmark/unnamed-chunk-4-2.png)
+![](Causal_RF_policy_learning_wheat_sowing_public_files/figure-gfm/unnamed-chunk-4-2.png)
 
 ``` r
 tr_sowing3 <- hybrid_policy_tree(X_cf_sowing, DR.scores_sowing, depth = 3) 
@@ -274,7 +274,7 @@ tr_sowing3
 plot(tr_sowing3)
 ```
 
-![](Causal_RF_policy_learning_wheat_sowing_public_files/figure-commonmark/unnamed-chunk-4-3.png)
+![](Causal_RF_policy_learning_wheat_sowing_public_files/figure-gfm/unnamed-chunk-4-3.png)
 
 ``` r
 tr_sowing4 <- hybrid_policy_tree(X_cf_sowing, DR.scores_sowing, depth = 4) 
@@ -321,7 +321,7 @@ tr_sowing4
 plot(tr_sowing4)
 ```
 
-![](Causal_RF_policy_learning_wheat_sowing_public_files/figure-commonmark/unnamed-chunk-4-4.png)
+![](Causal_RF_policy_learning_wheat_sowing_public_files/figure-gfm/unnamed-chunk-4-4.png)
 
 ``` r
 tr_assignment_sowing=LDSestim_sow
@@ -371,7 +371,7 @@ tr_assignment_sowingspmapview=mapview(tr_assignment_sowingsp,zcol="depth2_cat",l
 tr_assignment_sowingspmapview
 ```
 
-![](Causal_RF_policy_learning_wheat_sowing_public_files/figure-commonmark/unnamed-chunk-5-1.png)
+![](Causal_RF_policy_learning_wheat_sowing_public_files/figure-gfm/unnamed-chunk-5-1.png)
 
 # Distributional analysis
 
@@ -417,7 +417,7 @@ ggplot(tau.multi_sowing.forest_pred_long, aes(x=value, y=variable, fill = factor
     Warning: Using the `size` aesthetic with geom_segment was deprecated in ggplot2 3.4.0.
     i Please use the `linewidth` aesthetic instead.
 
-![](Causal_RF_policy_learning_wheat_sowing_public_files/figure-commonmark/unnamed-chunk-6-1.png)
+![](Causal_RF_policy_learning_wheat_sowing_public_files/figure-gfm/unnamed-chunk-6-1.png)
 
 # Transition matrix of the policy change
 
@@ -468,4 +468,4 @@ transitionmatrixplot_sowing
     Warning: Using the `size` aesthetic in this geom was deprecated in ggplot2 3.4.0.
     i Please use `linewidth` in the `default_aes` field and elsewhere instead.
 
-![](Causal_RF_policy_learning_wheat_sowing_public_files/figure-commonmark/unnamed-chunk-7-1.png)
+![](Causal_RF_policy_learning_wheat_sowing_public_files/figure-gfm/unnamed-chunk-7-1.png)

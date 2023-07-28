@@ -1,0 +1,272 @@
+---
+title: "Sowing dates prioritization using Causal Random Forest and Policy Trees: Evidence from Agronomic Trials in Eastern India"
+format: html
+#format: gfm
+self-contained: true
+author: Maxwell Mkondiwa
+editor: visual
+toc: true
+toc-location: left
+number-sections: true
+---
+
+# Introduction
+
+In this notebook, I use a causal machine learning estimator, i.e., multi-armed causal random forest with augmented inverse propensity score weights (Athey et al 2019), to estimate conditional average treatment effects (CATES) for agronomic practices. These CATEs are estimated for each individual farm thereby providing personalized estimates of the potential effectiveness of the practices. I then use a debiased robust estimator in a policy tree optimization (Athey and Wager 2021) to generate optimal recommendations in the form of agronomic practices that maximize potential yield gains.
+
+# Preliminaries
+
+```{r, message = FALSE}
+load("CSISA_KVK_Public_Workspace.RData")
+
+CSISA_KVKestim=CSISA_KVK
+table(CSISA_KVKestim$SowingSchedule) 
+
+CSISA_KVKestim$SowingSchedule=ordered(CSISA_KVKestim$SowingSchedule,levels=c("T5","T4","T3","T2","T1"))
+
+#Create dummies for some categorical variables
+library(fastDummies)
+CSISA_KVKestim <- fastDummies::dummy_cols(CSISA_KVKestim, select_columns =c("VarietyClass","SoilType","CropEstablishment","Year","District"))
+
+```
+
+
+## Graphics
+
+```{r,message = FALSE}
+# Bar graphs showing percentage of farmers adopting these practices  
+
+library(tidyverse) 
+library(ggplot2)  
+
+bar_chart=function(dat,var){   dat|>     drop_na({{var}})|>     mutate({{var}}:=factor({{var}})|>fct_infreq())|>     ggplot()+     geom_bar(aes(y={{var}}),fill="dodgerblue4")+     theme_minimal(base_size = 16) }   
+
+sow_plot=bar_chart(CSISA_KVKestim,SowingSchedule)+labs(y="Sowing dates") 
+ 
+sow_plot
+
+library(ggpubr) 
+library(tidyverse) 
+
+#Sowing dates 
+
+SowingDate_Options_Errorplot=   CSISA_KVKestim%>%   
+  drop_na(SowingSchedule) %>%   
+  ggerrorplot(x = "SowingSchedule", y = "GrainYield",add = "mean", error.plot = "errorbar", color="steelblue", ggtheme=theme_bw())+   
+  labs(x="Sowing date options",y="Wheat yield (t/ha)")+   
+  theme_minimal(base_size = 16)+
+  coord_flip()  
+SowingDate_Options_Errorplot 
+
+
+
+
+```
+
+## Descriptives
+
+```{r,message = FALSE}
+
+library(fBasics)
+
+summ_stats <- fBasics::basicStats(CSISA_KVKestim[,c("GrainYield","VarietyClass_LDV","SoilType_Heavy","SoilType_Medium","SoilType_Low","CropEstablishment_CT","CropEstablishment_CT-line","CropEstablishment_ZT")]) 
+
+summ_stats <- as.data.frame(t(summ_stats)) 
+
+# Rename some of the columns for convenience 
+
+summ_stats <- summ_stats[c("Mean", "Stdev", "Minimum", "1. Quartile", "Median",  "3. Quartile", "Maximum")] %>%   
+rename("Lower quartile" = '1. Quartile', "Upper quartile"= "3. Quartile")  
+
+summ_stats 
+
+```
+
+# Causal Random Forest Model
+
+```{r,message = FALSE}
+library(grf)
+library(policytree)
+
+CSISA_KVKestim_sow=subset(CSISA_KVKestim, select=c("SowingSchedule","GrainYield","VarietyClass_LDV","SoilType_Heavy","SoilType_Medium","SoilType_Low","CropEstablishment_CT","CropEstablishment_CT-line","CropEstablishment_ZT","wc2.1_30s_elev","nitrogen_0.5cm","sand_0.5cm", "soc_5.15cm","Latitude","Longitude"))
+
+library(tidyr)
+CSISA_KVKestim_sow=CSISA_KVKestim_sow %>% drop_na()
+
+
+Y_cf_sowing=as.vector(CSISA_KVKestim_sow$GrainYield)
+## Causal random forest -----------------
+
+X_cf_sowing=subset(CSISA_KVKestim_sow, select=c("VarietyClass_LDV","SoilType_Heavy","SoilType_Medium","SoilType_Low","CropEstablishment_CT","CropEstablishment_CT-line","CropEstablishment_ZT","wc2.1_30s_elev","nitrogen_0.5cm","sand_0.5cm", "soc_5.15cm","Latitude","Longitude"))
+
+
+W_cf_sowing <- as.factor(CSISA_KVKestim_sow$SowingSchedule)
+
+W.multi_sowing.forest <- probability_forest(X_cf_sowing, W_cf_sowing,
+  equalize.cluster.weights = FALSE,
+  seed = 2
+)
+W.hat.multi.all_sowing <- predict(W.multi_sowing.forest, estimate.variance = TRUE)$predictions
+
+
+
+Y.multi_sowing.forest <- regression_forest(X_cf_sowing, Y_cf_sowing,
+  equalize.cluster.weights = FALSE,
+  seed = 2
+)
+
+print(Y.multi_sowing.forest)
+varimp.multi_sowing <- variable_importance(Y.multi_sowing.forest)
+Y.hat.multi.all_sowing <- predict(Y.multi_sowing.forest, estimate.variance = TRUE)$predictions
+
+
+
+multi_sowing.forest <- multi_arm_causal_forest(X = X_cf_sowing, Y = Y_cf_sowing, W = W_cf_sowing ,W.hat=W.hat.multi.all_sowing,Y.hat=Y.hat.multi.all_sowing,seed=2) 
+
+varimp.multi_sowing_cf <- variable_importance(multi_sowing.forest)
+
+multi_sowing_ate=average_treatment_effect(multi_sowing.forest, method="AIPW")
+multi_sowing_ate
+
+
+varimp.multi_sowing_cf <- variable_importance(multi_sowing.forest)
+vars_sowing=c("VarietyClass_LDV","SoilType_Heavy","SoilType_Medium","SoilType_Low","CropEstablishment_CT","CropEstablishment_CT-line","CropEstablishment_ZT","wc2.1_30s_elev","nitrogen_0.5cm","sand_0.5cm", "soc_5.15cm","Latitude","Longitude")
+
+## variable importance plot ----------------------------------------------------
+varimpvars_sowing=as.data.frame(cbind(varimp.multi_sowing_cf,vars_sowing))
+names(varimpvars_sowing)[1]="Variableimportance_sowing"
+varimpvars_sowing$Variableimportance_sowing=formatC(varimpvars_sowing$Variableimportance_sowing, digits = 2, format = "f")
+varimpvars_sowing$Variableimportance_sowing=as.numeric(varimpvars_sowing$Variableimportance_sowing)
+varimpplotRF_sowing=ggplot(varimpvars_sowing,aes(x=reorder(vars_sowing,Variableimportance_sowing),y=Variableimportance_sowing))+
+   geom_jitter(color="steelblue")+
+   coord_flip()+
+   labs(x="Variables",y="Variable importance")
+ previous_theme <- theme_set(theme_bw(base_size = 16))
+ varimpplotRF_sowing
+
+
+# Policy tree --------------------------------------
+DR.scores_sowing <- double_robust_scores(multi_sowing.forest)
+
+tr_sowing <- policy_tree(X_cf_sowing, DR.scores_sowing, depth = 2) 
+plot(tr_sowing)
+
+
+tr_sowing3 <- hybrid_policy_tree(X_cf_sowing, DR.scores_sowing, depth = 3) 
+tr_sowing3
+plot(tr_sowing3)
+
+tr_sowing4 <- hybrid_policy_tree(X_cf_sowing, DR.scores_sowing, depth = 4) 
+tr_sowing4
+plot(tr_sowing4)
+
+tr_assignment_sowing=CSISA_KVKestim_sow
+
+tr_assignment_sowing$depth2 <- predict(tr_sowing, X_cf_sowing)
+table(tr_assignment_sowing$depth2)
+tr_assignment_sowing$depth3 <- predict(tr_sowing3, X_cf_sowing)
+table(tr_assignment_sowing$depth3)
+tr_assignment_sowing$depth4 <- predict(tr_sowing4, X_cf_sowing)
+table(tr_assignment_sowing$depth4)
+
+```
+
+# Policy learning algorithm for treatment assignment
+
+```{r,message = FALSE}
+
+library(rgdal)
+
+tr_assignment_sowing$depth2_cat[tr_assignment_sowing$depth2==1]="T5_16Dec"
+tr_assignment_sowing$depth2_cat[tr_assignment_sowing$depth2==2]="T4_15Dec"
+tr_assignment_sowing$depth2_cat[tr_assignment_sowing$depth2==3]="T3_30Nov"
+tr_assignment_sowing$depth2_cat[tr_assignment_sowing$depth2==4]="T2_20Nov"
+tr_assignment_sowing$depth2_cat[tr_assignment_sowing$depth2==5]="T1_10Nov"
+
+tr_assignment_sowingsp= SpatialPointsDataFrame(cbind(tr_assignment_sowing$Longitude,tr_assignment_sowing$Latitude),data=tr_assignment_sowing,proj4string=CRS("+proj=longlat +datum=WGS84"))
+
+library(mapview)
+mapviewOptions(fgb = FALSE)
+tr_assignment_sowingspmapview=mapview(tr_assignment_sowingsp,zcol="depth2_cat",layer.name="Recommended sowing dates")
+tr_assignment_sowingspmapview
+
+```
+
+# Distributional analysis
+
+```{r,message = FALSE}
+library(ggridges)
+library(dplyr)
+tau.multi_sowing.forest=predict(multi_sowing.forest, target.sample = "all",estimate.variance=TRUE)
+
+tau.multi_sowing.forest=as.data.frame(tau.multi_sowing.forest)
+
+
+tau.multi_sowing.forest_X=data.frame(CSISA_KVKestim_sow,tau.multi_sowing.forest)
+
+
+# Ridges -------------------
+tau.multi_sowing.forest_pred=tau.multi_sowing.forest[,1:4]
+
+library(dplyr)
+library(reshape2)
+tau.multi_sowing.forest_pred=rename(tau.multi_sowing.forest_pred,"T4_15Dec - T5_16Dec"="predictions.T4...T5.Y.1")
+
+tau.multi_sowing.forest_pred=rename(tau.multi_sowing.forest_pred,"T3_30Nov-T5_16Dec"="predictions.T3...T5.Y.1")
+
+tau.multi_sowing.forest_pred=rename(tau.multi_sowing.forest_pred,"T2_20Nov-T5_16Dec"="predictions.T2...T5.Y.1")
+
+tau.multi_sowing.forest_pred=rename(tau.multi_sowing.forest_pred,"T1_10Nov-T5_16Dec"="predictions.T1...T5.Y.1")
+
+
+tau.multi_sowing.forest_pred_long=reshape2::melt(tau.multi_sowing.forest_pred[,1:4])
+
+ggplot(tau.multi_sowing.forest_pred_long, aes(x=value, y=variable, fill = factor(stat(quantile)))) +
+  stat_density_ridges(
+    geom = "density_ridges_gradient", calc_ecdf = TRUE,
+    quantiles = 4, quantile_lines = TRUE
+  ) +
+  scale_fill_viridis_d(name = "Quartiles")+
+  theme_bw(base_size = 16)+labs(x="Wheat yield gain(t/ha)",y="Sowing date options")
+
+```
+
+# Transition matrix of the policy change
+
+```{r,message = FALSE}
+
+tr_assignment_sowing$depth2_cat[tr_assignment_sowing$depth2 == 1] <- "T5_16Dec"
+tr_assignment_sowing$depth2_cat[tr_assignment_sowing$depth2 == 2] <- "T4_15Dec"
+tr_assignment_sowing$depth2_cat[tr_assignment_sowing$depth2 == 3] <- "T3_30Nov"
+tr_assignment_sowing$depth2_cat[tr_assignment_sowing$depth2 == 4] <- "T2_20Nov"
+tr_assignment_sowing$depth2_cat[tr_assignment_sowing$depth2 == 5] <- "T1_10Nov"
+
+
+library(ggalluvial)
+library(data.table)
+tr_assignment_sowingDT = data.table(tr_assignment_sowing)
+TransitionMatrix_sowing <- tr_assignment_sowingDT[, (sum <- .N), by = c("SowingSchedule", "depth2_cat")]
+library(dplyr)
+TransitionMatrix_sowing <- rename(TransitionMatrix_sowing, Freq = V1)
+
+library(scales)
+transitionmatrixplot_sowing <- ggplot(
+    data = TransitionMatrix_sowing,
+    aes(axis1 = SowingSchedule, axis2 = depth2_cat, y = Freq)
+) +
+    geom_alluvium(aes(fill = depth2_cat)) +
+    geom_stratum() +
+    # geom_text(stat="stratum", aes(label=after_stat(stratum),nudge_y =5))+
+    geom_text(stat = "stratum", aes(label = paste(after_stat(stratum), percent(after_stat(prop))))) +
+    scale_x_discrete(
+        limits = c("SowingSchedule", "depth2_cat"),
+        expand = c(0.15, 0.05)
+    ) +
+    scale_fill_viridis_d() +
+    theme_void(base_size = 20) +
+    theme(legend.position = "none")
+
+transitionmatrixplot_sowing
+
+
+```

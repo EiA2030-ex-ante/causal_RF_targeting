@@ -1,0 +1,195 @@
+---
+title: "CSISA_KVK Wheat sowing date and varietal trials data wrangling"
+format: html
+#format: gfm
+self-contained: true
+author: Maxwell Mkondiwa
+editor: visual
+toc: true
+toc-location: left
+number-sections: true
+---
+
+# Introduction
+
+In this notebook, we show how to download CSISA_KVK trials dataset from dataverse and merge to soil variables needed for the causal random forest targeting.
+
+```{r, meassage=FALSE}
+
+# 
+rm(list=ls())         # clear 
+
+library(sp)
+library(dplyr)
+library(rio)
+library(readxl)
+library(tidyr)
+
+## Loading required package: agro
+if (!require(agro))  source("https://install-github.me/reagro/agro")
+
+ff <- agro::get_data_from_uri("hdl:11529/10548817", ".")
+ff
+
+CSISA_KVK <- read.csv("./hdl_11529_10548817/CSISA_KVK_Wheat_DoS_Trial_Data.csv", stringsAsFactors=FALSE)
+
+```
+
+# Geovariables using Geodata R package
+
+The CSISA-KVK trial data contains approximate GPS locations of the plots. We can use these to extract soil and climate variables that are then included in crop response function.
+
+```{r}
+
+# Function to add Geo-variables 
+
+library(sf)
+library(sp)
+library(rgdal)
+library(terra)
+library(raster)
+library(geodata)
+
+CSISA_KVK$Longitude=as.numeric(CSISA_KVK$Longitude)
+CSISA_KVK$Latitude=as.numeric(CSISA_KVK$Latitude)
+CSISA_KVK=subset(CSISA_KVK,!(is.na(CSISA_KVK$Longitude)))
+CSISA_KVK=subset(CSISA_KVK,!(is.na(CSISA_KVK$Latitude)))
+  
+# add_secondary_lcas <- function (df) {
+#   # Remove duplicates and NAs in geo-coordinates
+#   #df=subset(df,!(duplicated(df$Longitude)))
+#   #df=subset(df,!(duplicated(df$Latitude)))
+#   df$Longitude=as.numeric(df$Longitude)
+#   df$Latitude=as.numeric(df$Latitude)
+#   df=subset(df,!(is.na(df$Longitude)))
+#   df=subset(df,!(is.na(df$Latitude)))
+#   df_sp= SpatialPointsDataFrame(cbind(df$Longitude,df$Latitude),data=df,proj4string=CRS("+proj=longlat +datum=WGS84"))
+#   df_sf=st_as_sf(df_sp)
+# 
+#   population=population(2020,05,path=tempdir())
+#   population_geodata=terra::extract(population,vect(df_sf),fun=mean,df=TRUE)
+#   elevationglobal_geodata=elevation_global(0.5,path=tempdir())
+#   elevation_geodata=terra::extract(elevationglobal_geodata,vect(df_sf),fun=mean,df=TRUE)
+#   Soilsand=soil_world("sand",depth=5,path=tempdir())
+#   Soilsand_lds=terra::extract(Soilsand,vect(df_sf),fun=mean,df=TRUE)
+#   Totalnitrogen=soil_world("nitrogen",depth=5,path=tempdir())
+#   Totalnitrogen_lds=terra::extract(Totalnitrogen,vect(df_sf),fun=mean,df=TRUE)
+#   soilsoc=soil_world("soc",depth=15,path=tempdir())
+#   soilsoc_lds=terra::extract(soilsoc,vect(df_sf),fun=mean,df=TRUE)
+# 
+#   # Merge all soils and population
+#   geodata_df <- list(population_geodata,elevation_geodata,Soilsand_lds,Totalnitrogen_lds,soilsoc_lds)
+#   geodata_df=Reduce(function(x, y) merge(x, y, all=TRUE),geodata_df)
+#   #geodata_df=return(data.frame(geodata_df))
+#   write.csv(geodata_df,paste0("CSISA_KVK_geovariables",".csv"))
+#   }
+# add_secondary_lcas(CSISA_KVK)
+library(rio)
+geovariables=import("CSISA_KVK_geovariables.csv")
+CSISA_KVK=cbind(CSISA_KVK,geovariables)
+
+```
+
+# Climate variables
+
+The geodata R package has aggregated rainfall and temperature variables. However, we need climate variables specific to the corresponding growing season.
+
+```{r}
+library(ncdf4)
+library(raster)
+library(terra)
+library(sf)
+library(data.table)
+library(exactextractr)
+
+
+#RUN ONCE
+#  add_temp_precip_lcas <- function (df) {
+#    # Remove duplicates and NAs in geo-coordinates
+#    #df=subset(df,!(duplicated(df$Longitude)))
+#    #df=subset(df,!(duplicated(df$Latitude)))
+#    df=subset(df,!(is.na(df$Longitude)))
+#    df=subset(df,!(is.na(df$Latitude)))
+#    df_sp= SpatialPointsDataFrame(cbind(df$Longitude,df$Latitude),data=df,proj4string=CRS("+proj=longlat +datum=WGS84"))
+# 
+#    df_sf=st_as_sf(df_sp)
+#    version = "501"
+#    start.yr = 1960
+#    num.yrs = ifelse(version=="501", (2017-start.yr+1), (2010-start.yr+1))
+#    udel.temp.filename = paste0("air.mon.mean.v",version,".nc")
+#    udel.precip.filename = paste0("precip.mon.total.v",version,".nc")
+#    # Output location to write results to
+#    out.filename = paste0("CSISA_KVK_UDel.aggregated.public.v",version,".csv")
+#    out.filename2017 = paste0("CSISA_KVK_UDel.aggregated2017.public.v",version,".csv")
+#    yr.offset = start.yr-1900
+#    temps = subset(brick(udel.temp.filename), (yr.offset*12+1):(12*(yr.offset+num.yrs)))
+#    precip = subset(brick(udel.precip.filename), (yr.offset*12+1):(12*(yr.offset+num.yrs)))
+#    # 1. Aggregate across months within a year:  mean for temp, sum for precip
+#    annual.temps = stackApply(temps, indices = rep(1:num.yrs, each=12), fun=mean)
+#    annual.precip = stackApply(precip, indices = rep(1:num.yrs, each=12), fun=sum)
+#    # 2. Aggregate spatially.
+#    annual.temps = rotate(annual.temps)
+#    annual.precip = rotate(annual.precip)
+# 
+#    df_sf$idmatching=1:nrow(df_sf)
+# 
+#    # Aggregate temperatures
+#    ctry.temps = rbindlist(lapply(1:num.yrs, FUN=function(yr) {
+#    ctry.temps = extract(annual.temps[[yr]], df_sf)
+#    # Create data.table of results for this year, including the year
+#    return(data.table(hhid=df_sf$idmatching, temp=ctry.temps, yr=yr-1+start.yr))
+#  }))
+# 
+#    #Aggregate precipitation
+#    # Note here we're going to multiply precip data by 10.
+#    # The UDel data is in cm/year, but Burke et al use mm/year.
+#    ctry.precip = rbindlist(lapply(1:num.yrs, FUN=function(yr) {
+#    cropped.precip = annual.precip[[yr]]*10
+#    ctry.precip = extract(cropped.precip, df_sf)
+#    # Create data.table of results for this year, including the year
+#    return(data.table(hhid=df_sf$idmatching, precip=ctry.precip, yr=yr-1+start.yr))
+#  }))
+# 
+#  # Combine these results and save
+#    all.udel.data = merge(ctry.temps, ctry.precip, by=c("hhid", "yr"))
+#    all.udel.data_2017=subset(all.udel.data,all.udel.data$yr=="2017")
+#    fwrite(all.udel.data, out.filename)
+#    fwrite(all.udel.data_2017, out.filename2017)
+#  }
+# 
+# add_temp_precip_lcas(CSISA_KVK)
+
+## Temperature and Rainfall -------------------
+tempprecip=read.csv("CSISA_KVK_UDel.aggregated2017.public.v501.csv")
+tempprecipall=read.csv("CSISA_KVK_UDel.aggregated.public.v501.csv")
+
+tempprecipallwide=reshape(tempprecipall, direction = "wide", idvar = "hhid", timevar = "yr")
+
+tempprecipallwide_small=subset(tempprecipallwide, select=c("precip.2007","temp.2008","precip.2008",
+"temp.2009","precip.2009","temp.2010","precip.2010","temp.2011","precip.2011","temp.2012","precip.2012",
+"temp.2013","precip.2013","temp.2014","precip.2014","temp.2015","precip.2015","temp.2016","precip.2016","temp.2017","precip.2017"))
+
+CSISA_KVK=cbind(CSISA_KVK,tempprecip,tempprecipallwide_small)
+
+```
+
+# Interactive data
+
+```{r, message=FALSE}
+
+#install.packages("crosstalk")
+library(crosstalk)
+library(reactable)
+
+write.csv(CSISA_KVK,"CSISA_KVK_wheat_public_cleaned.csv")
+save.image("CSISA_KVK_Public_Workspace.RData")
+
+data <- SharedData$new(CSISA_KVK)
+reactable(data)
+
+filter_checkbox("year", "Year", data, ~Year)
+filter_slider("yield", "GrainYield", data, ~GrainYield)
+
+
+
+```
