@@ -2,7 +2,7 @@
 ---
 layout: default
 title: Causal_ML_Report
-parent: causal_RF_targeting
+parent: 
 nav_order: 1
 ---
 
