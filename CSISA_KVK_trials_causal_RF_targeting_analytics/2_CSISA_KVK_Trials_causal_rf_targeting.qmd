@@ -30,7 +30,6 @@ CSISA_KVKestim <- fastDummies::dummy_cols(CSISA_KVKestim, select_columns =c("Var
 
 ```
 
-
 ## Graphics
 
 ```{r,message = FALSE}
