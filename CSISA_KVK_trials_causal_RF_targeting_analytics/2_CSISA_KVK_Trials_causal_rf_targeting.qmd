@@ -1,13 +1,21 @@
 ---
-title: "Sowing dates prioritization using Causal Random Forest and Policy Trees: Evidence from Agronomic Trials in Eastern India"
+title: "2_CSISA_KVK_Trials_causal_rf_targeting"
 format: html
-#format: gfm
+fig-dpi: 300
+fig-width: 8.88
+fig-align: center
+fig-height: 5
+
 self-contained: true
 author: Maxwell Mkondiwa
 editor: visual
 toc: true
 toc-location: left
 number-sections: true
+execute: 
+  message: false
+  warning: false
+  echo: true
 ---
 
 # Introduction
@@ -29,6 +37,7 @@ library(fastDummies)
 CSISA_KVKestim <- fastDummies::dummy_cols(CSISA_KVKestim, select_columns =c("VarietyClass","SoilType","CropEstablishment","Year","District"))
 
 ```
+
 
 ## Graphics
 
@@ -209,13 +218,13 @@ tau.multi_sowing.forest_pred=tau.multi_sowing.forest[,1:4]
 
 library(dplyr)
 library(reshape2)
-tau.multi_sowing.forest_pred=rename(tau.multi_sowing.forest_pred,"T4_15Dec - T5_16Dec"="predictions.T4...T5.Y.1")
+tau.multi_sowing.forest_pred=rename(tau.multi_sowing.forest_pred,"T4_15Dec - T5_16Dec"="predictions.T4_15Dec...T5_16Dec.Y.1")
 
-tau.multi_sowing.forest_pred=rename(tau.multi_sowing.forest_pred,"T3_30Nov-T5_16Dec"="predictions.T3...T5.Y.1")
+tau.multi_sowing.forest_pred=rename(tau.multi_sowing.forest_pred,"T3_30Nov-T5_16Dec"="predictions.T3_30Nov...T5_16Dec.Y.1")
 
-tau.multi_sowing.forest_pred=rename(tau.multi_sowing.forest_pred,"T2_20Nov-T5_16Dec"="predictions.T2...T5.Y.1")
+tau.multi_sowing.forest_pred=rename(tau.multi_sowing.forest_pred,"T2_20Nov-T5_16Dec"="predictions.T2_20Nov...T5_16Dec.Y.1")
 
-tau.multi_sowing.forest_pred=rename(tau.multi_sowing.forest_pred,"T1_10Nov-T5_16Dec"="predictions.T1...T5.Y.1")
+tau.multi_sowing.forest_pred=rename(tau.multi_sowing.forest_pred,"T1_10Nov-T5_16Dec"="predictions.T1_10Nov...T5_16Dec.Y.1")
 
 
 tau.multi_sowing.forest_pred_long=reshape2::melt(tau.multi_sowing.forest_pred[,1:4])
