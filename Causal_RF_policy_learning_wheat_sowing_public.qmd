@@ -84,6 +84,84 @@ summ_stats
 
 ```
 
+## Sowing dates at district level
+
+#### Percent of farmers
+
+```{r}
+
+table(LDSestim$A.q103_district, LDSestim$Sowing_Date_Schedule)
+
+library(modelsummary)
+
+Sowpercent=datasummary_crosstab(A.q103_district ~ Sowing_Date_Schedule, data = LDSestim,output = 'data.frame')
+
+library(reactable)
+library(htmltools)
+library(fontawesome)
+
+htmltools::browsable(
+  tagList(
+    tags$button(
+      tagList(fontawesome::fa("download"), "Download as CSV"),
+      onclick = "Reactable.downloadDataCSV('Sowpercent', 'Sowpercent.csv')"
+    ),
+
+    reactable(
+      Sowpercent,
+      searchable = TRUE,
+      defaultPageSize = 38,
+      elementId = "Sowpercent"
+    )
+  )
+)
+
+```
+
+#### Area share by sowing dates
+
+```{r}
+library(data.table)
+
+LDSestim_DT=data.table(LDSestim)
+
+SampleAcres_dist_sowdate <- LDSestim_DT[, (SampleAcres_by_sowdate <-sum(C.q306_cropLarestAreaAcre,na.rm=TRUE)), by = c("Sowing_Date_Schedule", "A.q103_district")]
+
+library(dplyr)
+SampleAcres_dist_sowdate <- rename(SampleAcres_dist_sowdate, SampleAcres_by_sowdate = V1)
+
+SampleAcres_dist <- LDSestim_DT[, (SampleAcres <-sum(C.q306_cropLarestAreaAcre,na.rm=TRUE)), by = c("A.q103_district")]
+
+SampleAcres_dist<- rename(SampleAcres_dist, SampleAcres = V1)
+
+SampleAcres_dist_sowdate_merged=merge(SampleAcres_dist_sowdate,SampleAcres_dist,by="A.q103_district")
+
+SampleAcres_dist_sowdate_merged$Share_acres_by_sowdate=SampleAcres_dist_sowdate_merged$SampleAcres_by_sowdate/SampleAcres_dist_sowdate_merged$SampleAcres
+
+Share_acres_by_sowdate_group=datasummary(A.q103_district*Share_acres_by_sowdate ~Sowing_Date_Schedule * (Mean),data =SampleAcres_dist_sowdate_merged, output="data.frame")
+
+library(reactable)
+library(htmltools)
+library(fontawesome)
+
+htmltools::browsable(
+  tagList(
+    tags$button(
+      tagList(fontawesome::fa("download"), "Download as CSV"),
+      onclick = "Reactable.downloadDataCSV('Share_acres_by_sowdate_group', 'Share_acres_by_sowdate_group.csv')"
+    ),
+
+    reactable(
+      Share_acres_by_sowdate_group,
+      searchable = TRUE,
+      defaultPageSize = 38,
+      elementId = "Share_acres_by_sowdate_group"
+    )
+  )
+)
+
+```
+
 # Causal Random Forest Model
 
 ```{r,message = FALSE}
