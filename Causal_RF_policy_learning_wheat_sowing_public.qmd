@@ -32,7 +32,7 @@ In this notebook, I use a causal machine learning estimator, i.e., multi-armed c
 
 It requires enough sample sizes for each of the options being compared. This mean that for new innovations which have not been extensively adopted, this approach would not be beneficial.
 
-**Stylized use case:** Targeting sowing date advisories to individual farmers While sowing date and many other recommendations are made on the basis of climatic, biophysical and economic aspects, there may be several individual level reasons for not following with the recommendation, e.g., family members are busy with other duties during those weeks. We propose a robust methodology that rests on causal machine learning and policy learning to make recommendations that are the most beneficial for each individual farmer.
+**Stylized use case:** While sowing dates and many other recommendations are made on the basis of climatic, biophysical and economic aspects, there may be several individual level reasons for not following with the recommendation, e.g., family members are busy with other duties during those weeks. We propose a robust methodology that rests on causal machine learning and policy learning to make recommendations that are the most beneficial for each individual farmer.
 
 **Input data requirements:** The data required is the same as for any conventional production function or impact assessment. These include yield, agronomic management variables (e.g., fertilizer applied), socio-economic variables, and input and output prices. One however, needs enough sample sizes for the treatment and control groups therefore the method works only for a technology which has been widely adopted.
 
@@ -364,6 +364,8 @@ tr_assignment_sowingspmapview
 
 # Distributional analysis
 
+The following code chunk and graph shows calculations of the distribution of yield gains to earlier sowing dates. Everyone in the sample would get a positive yield gain if they advance their planting strategy as compared to sowing after 16 December.  The highest yield gains are with planting before 10th November. However, the results in this figure do not prescribe a recommendation for that farmer. 
+
 ```{r,message = FALSE}
 library(ggridges)
 library(dplyr)
@@ -402,6 +404,8 @@ ggplot(tau.multi_sowing.forest_pred_long, aes(x=value, y=variable, fill = factor
 ```
 
 # Transition matrix of the policy change
+
+To prescribe a recommendation, we need to assume some objective function of the farmer. Policy learning uses minimum regret as an objective function to prescribe best practice for each farmer. The alluvial plot below shows the transition matrix from status quo to proposed agronomic practice for each individual farmer. 
 
 ```{r,message = FALSE}
 
@@ -451,7 +455,7 @@ Kakimoto, S., Mieno, T., Tanaka, T.S.T., and Bullock, D.S. 2022. "Causal forest 
 
 Kitagawa, T., and Tetenov, A. 2018. "Who should be treated? Empirical welfare maximization methods for treatment choice." *Econometrica* 86 (2): 591-616. Doi: <https://doi.org/10.3982/ECTA13288>.
 
-McCullough, E.B., Quinn, J.D., Simons, A.M. 2022. "Profitability of climate-smart soil fertility investment varies widely across sub-Saharan Africa". Nature Food
+McCullough, E.B., Quinn, J.D., Simons, A.M. 2022. "Profitability of climate-smart soil fertility investment varies widely across sub-Saharan Africa". Nature Food 3, 275--285 (2022). https://doi.org/10.1038/s43016-022-00493-z.
 
 Wager, S., and Athey, S. 2018. "Estimation and Inference of Heterogeneous Treatment Effects using Random Forests". *Journal of the American Statistical Association* 113(523): 1228-1242. Doi: <https://doi.org/10.1080/01621459.2017.1319839>.
 
