@@ -22,7 +22,27 @@ execute:
 
 In this notebook, I use a causal machine learning estimator, i.e., multi-armed causal random forest with augmented inverse propensity score weights (Athey et al 2019), to estimate conditional average treatment effects (CATES) for agronomic practices. These CATEs are estimated for each individual farm thereby providing personalized estimates of the potential effectiveness of the practices. I then use a debiased robust estimator in a policy tree optimization (Athey and Wager 2021) to generate optimal recommendations in the form of agronomic practices that maximize potential yield gains.
 
-# Preliminaries
+**Purpose:** To make individualized or personalized recommendations from observational data in a data-driven manner using causal machine learning frameworks.
+
+**Advantages**
+
+-   Data-driven approach of recommending alternatives without making functional form assumptions. This is especially useful for agricultural inputs for which we do not have a clear functional form e.g., irrigation, sowing dates.
+
+**Disadvantages**
+
+It requires enough sample sizes for each of the options being compared. This mean that for new innovations which have not been extensively adopted, this approach would not be beneficial.
+
+**Stylized use case:** Targeting sowing date advisories to individual farmers While sowing date and many other recommendations are made on the basis of climatic, biophysical and economic aspects, there may be several individual level reasons for not following with the recommendation, e.g., family members are busy with other duties during those weeks. We propose a robust methodology that rests on causal machine learning and policy learning to make recommendations that are the most beneficial for each individual farmer.
+
+**Input data requirements:** The data required is the same as for any conventional production function or impact assessment. These include yield, agronomic management variables (e.g., fertilizer applied), socio-economic variables, and input and output prices. One however, needs enough sample sizes for the treatment and control groups therefore the method works only for a technology which has been widely adopted.
+
+**Workflow:**
+
+Toolkit workflow shows a step-by-step workflow for implementing the policy learning optimization model.
+
+![](Policy_tree_workflow.png)
+
+# Exploratory Analysis
 
 ```{r, message = FALSE}
 load("LDS_Public_Workspace.RData")
@@ -40,7 +60,15 @@ table(LDSestim$Sowing_Date_Schedule)
 library(tidyverse) 
 library(ggplot2)  
 
-bar_chart=function(dat,var){   dat|>     drop_na({{var}})|>     mutate({{var}}:=factor({{var}})|>fct_infreq())|>     ggplot()+     geom_bar(aes(y={{var}}),fill="dodgerblue4")+     theme_minimal(base_size = 16) }   
+bar_chart=function(dat,var){
+  dat|>
+    drop_na({{var}})|>
+    mutate({{var}}:=factor({{var}})|>fct_infreq())|>
+    ggplot()+
+    geom_bar(aes(y={{var}}),width = 0.3,fill="dodgerblue4")+
+    theme_minimal(base_size = 16)
+}
+
 
 sow_plot=bar_chart(LDSestim,Sowing_Date_Schedule)+labs(y="Sowing dates") 
  
@@ -51,14 +79,15 @@ library(tidyverse)
 
 #Sowing dates 
 
-SowingDate_Options_Errorplot=   LDSestim%>%   
-  drop_na(Sowing_Date_Schedule) %>%   
-  ggerrorplot(x = "Sowing_Date_Schedule", y = "L.tonPerHectare",add = "mean", error.plot = "errorbar", color="steelblue", ggtheme=theme_bw())+   
-  labs(x="Sowing date options",y="Wheat yield (t/ha)")+   
-  theme_minimal(base_size = 16)+
-  coord_flip()  
-SowingDate_Options_Errorplot 
+SowingDate_Options_Errorplot=
+  LDSestim%>% 
+  drop_na(Sowing_Date_Schedule) %>%
+  ggerrorplot(x = "Sowing_Date_Schedule", y = "L.tonPerHectare",add = "mean", error.plot = "errorbar", color="black",size=1, ggtheme=theme_bw())+
+  labs(x="Sowing date options",y="Wheat yield (t/ha)")+
+  theme_bw(base_size = 16)+coord_flip()
 
+SowingDate_Options_Errorplot+aes(x = fct_reorder(Sowing_Date_Schedule, L.tonPerHectare))+
+ xlab("Sowing date options")
 
 
 
@@ -67,20 +96,24 @@ SowingDate_Options_Errorplot
 ## Descriptives
 
 ```{r,message = FALSE}
-setwd("D:/OneDrive/CIMMYT/Papers/IO5.3.1.CropResponseModels/WheatResponse/Policytree_Models") 
 
 library(fBasics)
 
-summ_stats <- fBasics::basicStats(LDSestim[,c("L.tonPerHectare","G.q5305_irrigTimes","Nperha","P2O5perha","Weedmanaged","variety_type_NMWV","Sowing_Date_Early")]) 
+library(fastDummies)
+LDSestim_Desc=fastDummies::dummy_cols(LDSestim, select_columns=c("G.q5305_irrigTimes_cat","Sowing_Date_Schedule","A.q112_fEdu_new"))
 
-summ_stats <- as.data.frame(t(summ_stats)) 
 
-# Rename some of the columns for convenience 
+library(fBasics)
+summ_stats <- fBasics::basicStats(LDSestim_Desc[,c("L.tonPerHectare","G.q5305_irrigTimes",
+  "G.q5305_irrigTimes_cat_One","G.q5305_irrigTimes_cat_Two",                 "G.q5305_irrigTimes_cat_Three","G.q5305_irrigTimes_cat_Fourplus","Sowing_Date_Schedule_T5_16Dec",               "Sowing_Date_Schedule_T4_15Dec","Sowing_Date_Schedule_T3_30Nov",             "Sowing_Date_Schedule_T2_20Nov","Sowing_Date_Schedule_T1_10Nov", "A.q112_fEdu_new_noSchooling","A.q112_fEdu_new_primary","A.q112_fEdu_new_matriculation", "A.q112_fEdu_new_seniorSecondary",          "A.q112_fEdu_new_bachelors","A.q112_fEdu_new_Postgrad","Nperha","P2O5perha","Weedmanaged","variety_type_NMWV","Sowing_Date_Early","I.q5505_weedSeverity_num","I.q5509_diseaseSeverity_num","I.q5506_insectSeverity_num","I.q5502_droughtSeverity_num",                                       "temp","precip","wc2.1_30s_elev","A.q111_fGenderdum","nitrogen_0.5cm","sand_0.5cm", "soc_5.15cm")])
 
-summ_stats <- summ_stats[c("Mean", "Stdev", "Minimum", "1. Quartile", "Median",  "3. Quartile", "Maximum")] %>%   
-rename("Lower quartile" = '1. Quartile', "Upper quartile"= "3. Quartile")  
+summ_stats <- as.data.frame(t(summ_stats))
 
-summ_stats 
+# Rename some of the columns for convenience
+summ_stats <- summ_stats[c("Mean", "Stdev", "Minimum", "1. Quartile", "Median",  "3. Quartile", "Maximum")] %>% 
+  rename("Lower quartile" = '1. Quartile', "Upper quartile"= "3. Quartile")
+
+summ_stats
 
 ```
 
@@ -160,6 +193,59 @@ htmltools::browsable(
   )
 )
 
+```
+
+# OLS and Shapley value regression
+
+Before using the causal ML model, we start with the basic OLS in which we control for the conventional crop response function inputs (e.g., fertilizer).
+
+```{r}
+LDSestim$Sowing_Date_Schedule_Unordered <- factor( LDSestim$Sowing_Date_Schedule, ordered = FALSE )
+# FGLS
+ols = lm(L.tonPerHectare ~Sowing_Date_Schedule_Unordered+Nperha+P2O5perha+variety_type_NMWV+G.q5305_irrigTimes+I.q5505_weedSeverity_num+I.q5509_diseaseSeverity_num+I.q5506_insectSeverity_num+                                      A.q111_fGenderdum+Weedmanaged+temp+precip+wc2.1_30s_elev+                                   M.q708_marketDistance+nitrogen_0.5cm+sand_0.5cm+soc_5.15cm+O.largestPlotGPS.Latitude+O.largestPlotGPS.Longitude, data = LDSestim)
+
+summary(ols)
+
+library(stargazer)
+stargazer(ols,
+          type="text",
+          keep.stat=c("n","rsq"))
+
+
+library(modelsummary)
+b <- list(geom_vline(xintercept = 0, color = 'orange'))
+modelplot(ols,background = b,coef_omit = "Interc")
+
+anova(ols)
+
+## Shapley value regression -----
+# library(ShapleyValue)
+# 
+# y <- LDSestim$L.tonPerHectare
+# x=subset(LDSestim, select=c("I.q5505_weedSeverity_num","I.q5509_diseaseSeverity_num","I.q5506_insectSeverity_num",
+#                                                   "Nperha","P2O5perha","variety_type_NMWV","G.q5305_irrigTimes","A.q111_fGenderdum","Weedmanaged","temp","precip","wc2.1_30s_elev",
+#                                                        "M.q708_marketDistance","nitrogen_0.5cm","sand_0.5cm", "soc_5.15cm","O.largestPlotGPS.Latitude","O.largestPlotGPS.Longitude"))
+# 
+# # Note: This takes a lot of time!
+# value <- shapleyvalue(y,x)
+# 
+# library(kableExtra)
+# value %>%
+#   kbl() %>%
+#   kable_classic(full_width = F, html_font = "Cambria")
+# 
+# 
+# shapleyvaluet=as.data.frame(t(value))
+# shapleyvaluet=cbind(rownames(shapleyvaluet), data.frame(shapleyvaluet, row.names=NULL))
+# names(shapleyvaluet)[1]="vars"
+# 
+# library(ggplot2)
+# shapleyvalueplot=ggplot(shapleyvaluet,aes(x=reorder(vars,Standardized.Shapley.Value),y=Standardized.Shapley.Value))+
+#   geom_jitter(color="steelblue")+
+#   coord_flip()+
+#   labs(x="Variables",y="Standardized.Shapley.Value")
+# previous_theme <- theme_set(theme_bw())
+# shapleyvalueplot
 ```
 
 # Causal Random Forest Model
@@ -354,3 +440,19 @@ transitionmatrixplot_sowing
 
 
 ```
+
+# References
+
+Athey, S., and Wager, S. 2021. "Policy learning with observational data." *Econometrica* 89(1): 133-161. Doi: <https://doi.org/10.3982/ECTA15732>.
+
+Inoue, K., Athey, S., and Tsugawa, Y. 2023. "Machine-learning-based high-benefit approach versus conventional high-risk approach in blood pressure management." *International Journal of Epidemiology* 1-14. Doi: <https://doi.org/10.1093/ije/dyad037>.
+
+Kakimoto, S., Mieno, T., Tanaka, T.S.T., and Bullock, D.S. 2022. "Causal forest approach for site-specific input management via on-farm precision experimentation". *Computers and Electronics in Agriculture* 199: 107164. Doi: <https://doi.org/10.1016/j.compag.2022.107164>.
+
+Kitagawa, T., and Tetenov, A. 2018. "Who should be treated? Empirical welfare maximization methods for treatment choice." *Econometrica* 86 (2): 591-616. Doi: <https://doi.org/10.3982/ECTA13288>.
+
+McCullough, E.B., Quinn, J.D., Simons, A.M. 2022. "Profitability of climate-smart soil fertility investment varies widely across sub-Saharan Africa". Nature Food
+
+Wager, S., and Athey, S. 2018. "Estimation and Inference of Heterogeneous Treatment Effects using Random Forests". *Journal of the American Statistical Association* 113(523): 1228-1242. Doi: <https://doi.org/10.1080/01621459.2017.1319839>.
+
+Zhou, Z., Athey, S., Wager, S. 2022. "Offline multi-action policy learning: Generalization and optimization." *Operations Research* 71 (1): 148-183. Doi: <https://doi.org/10.1287/opre.2022.2271>.
