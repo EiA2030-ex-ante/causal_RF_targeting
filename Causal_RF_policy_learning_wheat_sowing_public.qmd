@@ -27,6 +27,7 @@ In this notebook, I use a causal machine learning estimator, i.e., multi-armed c
 **Advantages**
 
 -   Data-driven approach of recommending alternatives without making functional form assumptions. This is especially useful for agricultural inputs for which we do not have a clear functional form e.g., irrigation, sowing dates.
+-   Doubly robust estimates using augmented inverse probability weighting which requires either the exposure or the outcome model to be correct.
 
 **Disadvantages**
 
@@ -248,19 +249,112 @@ anova(ols)
 # shapleyvalueplot
 ```
 
-# Causal Random Forest Model
+# Conventional Random Forest Model
+
+The challenge with the OLS approach shown above is that it is difficult to explore the heterogeneity in the yield gains to early sowing. For heterogeneity analyses, one has to interact sowing date schedules with other important variables of interest. This has complications for degrees of freedom. The conventional random forest approach is one ML approach that allows high dimensional interactions and heterogeneity in the predicted yields. We can then calculate the differences between predicted yields under different sowing dates to understand the yield contrasts.
+
+ggplot(rf_pred_contrasts_long, aes(x=value, y=variable, fill = factor(stat(quantile)))) +
+
+stat_density_ridges(
+
+geom = "density_ridges_gradient", calc_ecdf = TRUE,
+
+quantiles = 4, quantile_lines = TRUE
+
+) +
+
+scale_fill_viridis_d(name = "Quartiles")+
+
+theme_bw(base_size = 16)+labs(x="Wheat yield gain(t/ha)",y="Sowing date options")
 
 ```{r,message = FALSE}
 library(grf)
 library(policytree)
 
-LDSestim_sow=subset(LDSestim, select=c("Sowing_Date_Schedule","L.tonPerHectare","I.q5505_weedSeverity_num","I.q5509_diseaseSeverity_num","I.q5506_insectSeverity_num","I.q5502_droughtSeverity_num",                                       "Nperha","P2O5perha","variety_type_NMWV","G.q5305_irrigTimes","A.q111_fGenderdum","Weedmanaged","temp","precip","wc2.1_30s_elev","M.q708_marketDistance","nitrogen_0.5cm","sand_0.5cm", "soc_5.15cm","O.largestPlotGPS.Latitude","O.largestPlotGPS.Longitude"))
+LDSestim_sow=subset(LDSestim, select=c("Sowing_Date_Schedule_rating_num","Sowing_Date_Schedule","L.tonPerHectare","I.q5505_weedSeverity_num","I.q5509_diseaseSeverity_num","I.q5506_insectSeverity_num","I.q5502_droughtSeverity_num",                                       "Nperha","P2O5perha","variety_type_NMWV","G.q5305_irrigTimes","A.q111_fGenderdum","Weedmanaged","temp","precip","wc2.1_30s_elev","M.q708_marketDistance","nitrogen_0.5cm","sand_0.5cm", "soc_5.15cm","O.largestPlotGPS.Latitude","O.largestPlotGPS.Longitude"))
 
 library(tidyr)
 LDSestim_sow=LDSestim_sow %>% drop_na()
 
 
 Y_cf_sowing=as.vector(LDSestim_sow$L.tonPerHectare)
+
+# Fit regression forest yield gains
+X_rf_sowing=subset(LDSestim_sow, select=c("Sowing_Date_Schedule_rating_num","I.q5505_weedSeverity_num","I.q5509_diseaseSeverity_num","I.q5506_insectSeverity_num",
+                                                  "Nperha","P2O5perha","variety_type_NMWV","G.q5305_irrigTimes","A.q111_fGenderdum","Weedmanaged","temp","precip","wc2.1_30s_elev",
+                                                       "M.q708_marketDistance","nitrogen_0.5cm","sand_0.5cm", "soc_5.15cm","O.largestPlotGPS.Latitude","O.largestPlotGPS.Longitude"))
+
+Y.multi_sowing.forest.rf <- regression_forest(X_rf_sowing, Y_cf_sowing,
+  equalize.cluster.weights = FALSE,
+  seed = 2
+)
+
+print(Y.multi_sowing.forest.rf)
+varimp.multi_sowing.rf <- variable_importance(Y.multi_sowing.forest.rf)
+Y.hat.multi.all_sowing.rf <- predict(Y.multi_sowing.forest.rf, estimate.variance = TRUE)$predictions
+
+summary(Y.hat.multi.all_sowing.rf)
+
+X_rf_sowing.t1=X_rf_sowing
+X_rf_sowing.t1$Sowing_Date_Schedule_rating_num=5
+
+X_rf_sowing.t2=X_rf_sowing
+X_rf_sowing.t2$Sowing_Date_Schedule_rating_num=4
+
+X_rf_sowing.t3=X_rf_sowing
+X_rf_sowing.t3$Sowing_Date_Schedule_rating_num=3
+
+X_rf_sowing.t4=X_rf_sowing
+X_rf_sowing.t4$Sowing_Date_Schedule_rating_num=2
+
+X_rf_sowing.t5=X_rf_sowing
+X_rf_sowing.t5$Sowing_Date_Schedule_rating_num=1
+
+# Calculate yield differences against sowing date option 1 (after 16th Dec)
+Y.hat.rf.sowing.t1 = predict(Y.multi_sowing.forest.rf, newdata=X_rf_sowing.t1, estimate.variance=TRUE)
+Y.hat.rf.sowing.t2 = predict(Y.multi_sowing.forest.rf, newdata=X_rf_sowing.t2, estimate.variance=TRUE)
+Y.hat.rf.sowing.t3 = predict(Y.multi_sowing.forest.rf, newdata=X_rf_sowing.t3, estimate.variance=TRUE)
+Y.hat.rf.sowing.t4 = predict(Y.multi_sowing.forest.rf, newdata=X_rf_sowing.t4, estimate.variance=TRUE)
+Y.hat.rf.sowing.t5 = predict(Y.multi_sowing.forest.rf, newdata=X_rf_sowing.t5, estimate.variance=TRUE)
+
+
+Y.hat.rf.sowing.t1_t5 = Y.hat.rf.sowing.t1$predictions-Y.hat.rf.sowing.t5$predictions
+Y.hat.rf.sowing.t2_t5 = Y.hat.rf.sowing.t2$predictions-Y.hat.rf.sowing.t5$predictions
+Y.hat.rf.sowing.t3_t5 = Y.hat.rf.sowing.t3$predictions-Y.hat.rf.sowing.t5$predictions
+Y.hat.rf.sowing.t4_t5 = Y.hat.rf.sowing.t4$predictions-Y.hat.rf.sowing.t5$predictions
+
+library(fBasics)
+rf_pred_contrasts=as.data.frame(cbind(Y.hat.rf.sowing.t1_t5,Y.hat.rf.sowing.t2_t5,Y.hat.rf.sowing.t3_t5,Y.hat.rf.sowing.t4_t5))
+
+summ_stats_rf <- fBasics::basicStats(rf_pred_contrasts)
+
+summ_stats_rf <- as.data.frame(t(summ_stats_rf))
+
+# Rename some of the columns for convenience
+summ_stats_rf <- summ_stats_rf[c("Mean", "Stdev", "Minimum", "1. Quartile", "Median",  "3. Quartile", "Maximum")] %>% 
+  rename("Lower quartile" = '1. Quartile', "Upper quartile"= "3. Quartile")
+
+summ_stats_rf
+
+rf_pred_contrasts_long=reshape2::melt(rf_pred_contrasts)
+
+library(ggplot2)
+library(ggridges)
+ggplot(rf_pred_contrasts_long, aes(x=value, y=variable, fill = factor(stat(quantile)))) +
+  stat_density_ridges(
+    geom = "density_ridges_gradient", calc_ecdf = TRUE,
+    quantiles = 4, quantile_lines = TRUE
+  ) +
+  scale_fill_viridis_d(name = "Quartiles")+
+  theme_bw(base_size = 16)+labs(x="Wheat yield gain(t/ha)",y="Sowing date options")
+
+```
+
+# Causal Random Forest Model
+
+The core multi-arm causal random forest procedure involves first estimating an exposure model using a probability random forest then using the predicted propensity scores as weights in a second stage multivariate extension of the R-learner.
+
+```{r}
 ## Causal random forest -----------------
 
 X_cf_sowing=subset(LDSestim_sow, select=c("I.q5505_weedSeverity_num","I.q5509_diseaseSeverity_num","I.q5506_insectSeverity_num",
@@ -270,6 +364,7 @@ X_cf_sowing=subset(LDSestim_sow, select=c("I.q5505_weedSeverity_num","I.q5509_di
 
 W_cf_sowing <- as.factor(LDSestim_sow$Sowing_Date_Schedule)
 
+# Probability random forest to create weights
 W.multi_sowing.forest <- probability_forest(X_cf_sowing, W_cf_sowing,
   equalize.cluster.weights = FALSE,
   seed = 2
@@ -277,7 +372,7 @@ W.multi_sowing.forest <- probability_forest(X_cf_sowing, W_cf_sowing,
 W.hat.multi.all_sowing <- predict(W.multi_sowing.forest, estimate.variance = TRUE)$predictions
 
 
-
+# Regression forest to get expected responses 
 Y.multi_sowing.forest <- regression_forest(X_cf_sowing, Y_cf_sowing,
   equalize.cluster.weights = FALSE,
   seed = 2
@@ -287,17 +382,18 @@ print(Y.multi_sowing.forest)
 varimp.multi_sowing <- variable_importance(Y.multi_sowing.forest)
 Y.hat.multi.all_sowing <- predict(Y.multi_sowing.forest, estimate.variance = TRUE)$predictions
 
-
-
+# Fit multi-arm causal RF model
 multi_sowing.forest <- multi_arm_causal_forest(X = X_cf_sowing, Y = Y_cf_sowing, W = W_cf_sowing ,W.hat=W.hat.multi.all_sowing,Y.hat=Y.hat.multi.all_sowing,seed=2) 
 
 varimp.multi_sowing_cf <- variable_importance(multi_sowing.forest)
 
+# Average treatment effects
 multi_sowing_ate=average_treatment_effect(multi_sowing.forest, method="AIPW")
 multi_sowing_ate
 
 
 varimp.multi_sowing_cf <- variable_importance(multi_sowing.forest)
+
 vars_sowing=c("I.q5505_weedSeverity_num","I.q5509_diseaseSeverity_num","I.q5506_insectSeverity_num",
                                                   "Nperha","P2O5perha","variety_type_NMWV","G.q5305_irrigTimes","A.q111_fGenderdum","Weedmanaged","temp","precip","wc2.1_30s_elev",
                                                        "M.q708_marketDistance","nitrogen_0.5cm","sand_0.5cm", "soc_5.15cm","O.largestPlotGPS.Latitude","O.largestPlotGPS.Longitude")
@@ -315,56 +411,15 @@ varimpplotRF_sowing=ggplot(varimpvars_sowing,aes(x=reorder(vars_sowing,Variablei
  varimpplotRF_sowing
 
 
-# Policy tree --------------------------------------
-DR.scores_sowing <- double_robust_scores(multi_sowing.forest)
 
-tr_sowing <- policy_tree(X_cf_sowing, DR.scores_sowing, depth = 2) 
-plot(tr_sowing)
-
-
-tr_sowing3 <- hybrid_policy_tree(X_cf_sowing, DR.scores_sowing, depth = 3) 
-tr_sowing3
-plot(tr_sowing3)
-
-tr_sowing4 <- hybrid_policy_tree(X_cf_sowing, DR.scores_sowing, depth = 4) 
-tr_sowing4
-plot(tr_sowing4)
-
-tr_assignment_sowing=LDSestim_sow
-
-tr_assignment_sowing$depth2 <- predict(tr_sowing, X_cf_sowing)
-table(tr_assignment_sowing$depth2)
-tr_assignment_sowing$depth3 <- predict(tr_sowing3, X_cf_sowing)
-table(tr_assignment_sowing$depth3)
-tr_assignment_sowing$depth4 <- predict(tr_sowing4, X_cf_sowing)
-table(tr_assignment_sowing$depth4)
-
-```
-
-# Policy learning algorithm for treatment assignment
-
-```{r,message = FALSE}
-
-library(rgdal)
-
-tr_assignment_sowing$depth2_cat[tr_assignment_sowing$depth2==1]="T5_16Dec"
-tr_assignment_sowing$depth2_cat[tr_assignment_sowing$depth2==2]="T4_15Dec"
-tr_assignment_sowing$depth2_cat[tr_assignment_sowing$depth2==3]="T3_30Nov"
-tr_assignment_sowing$depth2_cat[tr_assignment_sowing$depth2==4]="T2_20Nov"
-tr_assignment_sowing$depth2_cat[tr_assignment_sowing$depth2==5]="T1_10Nov"
-
-tr_assignment_sowingsp= SpatialPointsDataFrame(cbind(tr_assignment_sowing$O.largestPlotGPS.Longitude,tr_assignment_sowing$O.largestPlotGPS.Latitude),data=tr_assignment_sowing,proj4string=CRS("+proj=longlat +datum=WGS84"))
-
-library(mapview)
-mapviewOptions(fgb = FALSE)
-tr_assignment_sowingspmapview=mapview(tr_assignment_sowingsp,zcol="depth2_cat",layer.name="Recommended sowing dates")
-tr_assignment_sowingspmapview
 
 ```
 
 # Distributional analysis
 
-The following code chunk and graph shows calculations of the distribution of yield gains to earlier sowing dates. Everyone in the sample would get a positive yield gain if they advance their planting strategy as compared to sowing after 16 December.  The highest yield gains are with planting before 10th November. However, the results in this figure do not prescribe a recommendation for that farmer. 
+The advantage of the random forest procedure is that it provides heterogenous estimates directly. We therefore need to explore the heterogeneity in these for each individual farmer.
+
+The following code chunk and graph shows calculations of the distribution of yield gains to earlier sowing dates. Everyone in the sample would get a positive yield gain if they advance their planting strategy as compared to sowing after 16 December. The highest yield gains are with planting before 10th November. However, the results in this figure do not prescribe a recommendation for that farmer.
 
 ```{r,message = FALSE}
 library(ggridges)
@@ -403,9 +458,114 @@ ggplot(tau.multi_sowing.forest_pred_long, aes(x=value, y=variable, fill = factor
 
 ```
 
+# Simple maximum yield treatment assignment
+
+Given the individual farm level yield gains to each of the sowing date categories, we can simply determine which of these gives the highest predicted yield gains for each farmer. To get these, we simply index the maximum sowing date. We then map this across space.
+
+```{r}
+library(rgdal)
+tau.multi_sowing.forest_pred$max_yield_gain_name=colnames(tau.multi_sowing.forest_pred)[max.col(tau.multi_sowing.forest_pred)]
+
+tau.multi_sowing.forest_pred$max_yield_gain<- pmax(tau.multi_sowing.forest_pred$`T1_10Nov-T5_16Dec`,tau.multi_sowing.forest_pred$`T2_20Nov-T5_16Dec`,tau.multi_sowing.forest_pred$`T3_30Nov-T5_16Dec`,tau.multi_sowing.forest_pred$`T4_15Dec - T5_16Dec`)
+
+simple_tr_assignment_sowing=cbind(LDSestim_sow,tau.multi_sowing.forest_pred)
+
+simple_tr_assignment_sowingsp= SpatialPointsDataFrame(cbind(simple_tr_assignment_sowing$O.largestPlotGPS.Longitude,simple_tr_assignment_sowing$O.largestPlotGPS.Latitude),data=simple_tr_assignment_sowing,proj4string=CRS("+proj=longlat +datum=WGS84"))
+
+library(mapview)
+mapviewOptions(fgb = FALSE)
+simple_tr_assignment_sowingspmapview=mapview(simple_tr_assignment_sowingsp,zcol="max_yield_gain_name",layer.name="Recommended sowing dates")
+simple_tr_assignment_sowingspmapview
+
+
+```
+
+## Yield gains to simple optimal choice
+
+```{r}
+
+simple_tr_assignment_sowingspmapview_yield=mapview(simple_tr_assignment_sowingsp,zcol="T1_10Nov-T5_16Dec",layer.name="Recommended sowing dates")
+simple_tr_assignment_sowingspmapview_yield
+
+# simple_tr_assignment_sowingspmapview_yield=mapview(simple_tr_assignment_sowingsp,zcol="T1_10Nov-T5_16Dec",layer.name="Recommended sowing dates")
+# simple_tr_assignment_sowingspmapview_yield
+# 
+# simple_tr_assignment_sowingspmapview_yield=mapview(simple_tr_assignment_sowingsp,zcol="T1_10Nov-T5_16Dec",layer.name="Recommended sowing dates")
+# simple_tr_assignment_sowingspmapview_yield
+# 
+# simple_tr_assignment_sowingspmapview_yield=mapview(simple_tr_assignment_sowingsp,zcol="T1_10Nov-T5_16Dec",layer.name="Recommended sowing dates")
+# simple_tr_assignment_sowingspmapview_yield
+
+
+```
+
+# Policy learning algorithm for treatment assignment
+
+Using a utilitarian regret policy optimization, we can choose a policy ($\pi=1 \text{or} 0$)--an assignment rule on who should be treated, using the supremum value function
+
+$$
+\hat \pi =argmax (\tilde V (\pi):\pi \in \Pi)
+$$
+
+where
+
+$$
+\tilde V=\frac{1}{n} \sum_{i=1}^n (2\pi (x_i)-1)\hat \Gamma_i
+$$
+
+$$
+\hat \Gamma_i = \hat u_1(x_i)- \hat u_0(x_i) +\frac{W_i}{\hat e(x_i)} (Y_i-u_1(x_i)-\frac{(1-w_i)}{1-\hat e(x_i)} (Y_i-\hat u_0(x_i))
+$$
+
+```{r,message = FALSE}
+
+# Policy tree algorithm --------------------------------------
+## Compute robust scores
+DR.scores_sowing <- double_robust_scores(multi_sowing.forest)
+
+tr_sowing <- policy_tree(X_cf_sowing, DR.scores_sowing, depth = 2) 
+plot(tr_sowing)
+
+
+tr_sowing3 <- hybrid_policy_tree(X_cf_sowing, DR.scores_sowing, depth = 3) 
+tr_sowing3
+plot(tr_sowing3)
+
+tr_sowing4 <- hybrid_policy_tree(X_cf_sowing, DR.scores_sowing, depth = 4) 
+tr_sowing4
+plot(tr_sowing4)
+
+tr_assignment_sowing=LDSestim_sow
+
+tr_assignment_sowing$depth2 <- predict(tr_sowing, X_cf_sowing)
+table(tr_assignment_sowing$depth2)
+tr_assignment_sowing$depth3 <- predict(tr_sowing3, X_cf_sowing)
+table(tr_assignment_sowing$depth3)
+tr_assignment_sowing$depth4 <- predict(tr_sowing4, X_cf_sowing)
+table(tr_assignment_sowing$depth4)
+
+
+
+library(rgdal)
+
+tr_assignment_sowing$depth2_cat[tr_assignment_sowing$depth2==1]="T5_16Dec"
+tr_assignment_sowing$depth2_cat[tr_assignment_sowing$depth2==2]="T4_15Dec"
+tr_assignment_sowing$depth2_cat[tr_assignment_sowing$depth2==3]="T3_30Nov"
+tr_assignment_sowing$depth2_cat[tr_assignment_sowing$depth2==4]="T2_20Nov"
+tr_assignment_sowing$depth2_cat[tr_assignment_sowing$depth2==5]="T1_10Nov"
+
+tr_assignment_sowingsp= SpatialPointsDataFrame(cbind(tr_assignment_sowing$O.largestPlotGPS.Longitude,tr_assignment_sowing$O.largestPlotGPS.Latitude),data=tr_assignment_sowing,proj4string=CRS("+proj=longlat +datum=WGS84"))
+
+library(mapview)
+mapviewOptions(fgb = FALSE)
+tr_assignment_sowingspmapview=mapview(tr_assignment_sowingsp,zcol="depth2_cat",layer.name="Recommended sowing dates")
+tr_assignment_sowingspmapview
+
+```
+
 # Transition matrix of the policy change
 
-To prescribe a recommendation, we need to assume some objective function of the farmer. Policy learning uses minimum regret as an objective function to prescribe best practice for each farmer. The alluvial plot below shows the transition matrix from status quo to proposed agronomic practice for each individual farmer. 
+To prescribe a recommendation, we need to assume some objective function of the farmer. Policy learning uses minimum regret as an objective function to prescribe best practice for each farmer. The alluvial plot below shows the transition matrix from status quo to proposed agronomic practice for each individual farmer. We see here that the all the sampled farmers can be assigned to sowing either by 10th November or by the 20th November. This is consistent with prior recommendations but the assigment rule allows us to determine who are the farmers that should make the transition.
 
 ```{r,message = FALSE}
 
@@ -445,6 +605,10 @@ transitionmatrixplot_sowing
 
 ```
 
+# Conclusion
+
+This workbook has demonstrated an integrative causal AI and policy tree optimization framework for making agro-advisories using a sowing date use case for Eastern India. This approach combines the power of causal inference and predictive accurancy. The framework is also flexible enough if one has data on cost of delivering the proposed advisories. In addition, one can use the causal ML results to make further geospatial analyses (using double machine learning concepts) and in producing spatially disaggregated economic surplus analyses (i.e., generating internal rate of return on investments). These extensions of the framework are explained in the accompanying workbooks for the case of binary treatment estimation.
+
 # References
 
 Athey, S., and Wager, S. 2021. "Policy learning with observational data." *Econometrica* 89(1): 133-161. Doi: <https://doi.org/10.3982/ECTA15732>.
@@ -455,7 +619,7 @@ Kakimoto, S., Mieno, T., Tanaka, T.S.T., and Bullock, D.S. 2022. "Causal forest 
 
 Kitagawa, T., and Tetenov, A. 2018. "Who should be treated? Empirical welfare maximization methods for treatment choice." *Econometrica* 86 (2): 591-616. Doi: <https://doi.org/10.3982/ECTA13288>.
 
-McCullough, E.B., Quinn, J.D., Simons, A.M. 2022. "Profitability of climate-smart soil fertility investment varies widely across sub-Saharan Africa". Nature Food 3, 275--285 (2022). https://doi.org/10.1038/s43016-022-00493-z.
+McCullough, E.B., Quinn, J.D., Simons, A.M. 2022. "Profitability of climate-smart soil fertility investment varies widely across sub-Saharan Africa". Nature Food 3, 275--285 (2022). Url: https://www.nature.com/articles/s43016-022-00493-z.
 
 Wager, S., and Athey, S. 2018. "Estimation and Inference of Heterogeneous Treatment Effects using Random Forests". *Journal of the American Statistical Association* 113(523): 1228-1242. Doi: <https://doi.org/10.1080/01621459.2017.1319839>.
 
