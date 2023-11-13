@@ -253,20 +253,6 @@ anova(ols)
 
 The challenge with the OLS approach shown above is that it is difficult to explore the heterogeneity in the yield gains to early sowing. For heterogeneity analyses, one has to interact sowing date schedules with other important variables of interest. This has complications for degrees of freedom. The conventional random forest approach is one ML approach that allows high dimensional interactions and heterogeneity in the predicted yields. We can then calculate the differences between predicted yields under different sowing dates to understand the yield contrasts.
 
-ggplot(rf_pred_contrasts_long, aes(x=value, y=variable, fill = factor(stat(quantile)))) +
-
-stat_density_ridges(
-
-geom = "density_ridges_gradient", calc_ecdf = TRUE,
-
-quantiles = 4, quantile_lines = TRUE
-
-) +
-
-scale_fill_viridis_d(name = "Quartiles")+
-
-theme_bw(base_size = 16)+labs(x="Wheat yield gain(t/ha)",y="Sowing date options")
-
 ```{r,message = FALSE}
 library(grf)
 library(policytree)

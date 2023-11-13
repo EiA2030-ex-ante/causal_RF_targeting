@@ -266,20 +266,6 @@ anova(ols)
 
 The challenge with the OLS approach shown above is that it is difficult to explore the heterogeneity in the yield gains to early sowing. For heterogeneity analyses, one has to interact sowing date schedules with other important variables of interest. This has complications for degrees of freedom. The conventional random forest approach is one ML approach that allows high dimensional interactions and heterogeneity in the predicted yields. We can then calculate the differences between predicted yields under different sowing dates to understand the yield contrasts.
 
-ggplot(rf_pred_contrasts_long, aes(x=value, y=variable, fill = factor(stat(quantile)))) +
-
-stat_density_ridges(
-
-geom = "density_ridges_gradient", calc_ecdf = TRUE,
-
-quantiles = 4, quantile_lines = TRUE
-
-) +
-
-scale_fill_viridis_d(name = "Quartiles")+
-
-theme_bw(base_size = 16)+labs(x="Wheat yield gain(t/ha)",y="Sowing date options")
-
 
 ```{r,message = FALSE}
 library(grf)
@@ -526,20 +512,22 @@ simple_tr_assignment_sowingspmapview_yield
 
 Using a utilitarian regret policy optimization, we can choose a policy ($\pi=1 \text{or} 0$)--an assignment rule on who should be treated, using the supremum value function
 
+
 $$
 \hat \pi =argmax (\tilde V (\pi):\pi \in \Pi)
 $$
+
 
 where
 
+
 $$
 \tilde V=\frac{1}{n} \sum_{i=1}^n (2\pi (x_i)-1)\hat \Gamma_i
 $$
-
+
 $$
 \hat \Gamma_i = \hat u_1(x_i)- \hat u_0(x_i) +\frac{W_i}{\hat e(x_i)} (Y_i-u_1(x_i)-\frac{(1-w_i)}{1-\hat e(x_i)} (Y_i-\hat u_0(x_i))
 $$
-
 
 ```{r,message = FALSE}
 
